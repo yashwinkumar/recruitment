@@ -8,7 +8,18 @@
 </head>
 <body>
 
-<%= yield %>
+<%= render 'layouts/header' %>
+<%= render 'shared/flash' %>
+
+<div class="row">
+  <div class="col-md-3">
+    <%= render partial: 'shared/left_navigation' %>
+  </div>
+  <div class="col-md-9">
+    <%= yield %>
+  </div>
+</div>
+
 
 </body>
 </html>
