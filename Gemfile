@@ -14,6 +14,7 @@ gem 'slim'
 gem 'simple_form'
 gem "figaro"
 gem 'sendgrid'
+gem 'devise'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
