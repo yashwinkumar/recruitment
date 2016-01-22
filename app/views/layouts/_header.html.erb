@@ -1,3 +1,4 @@
+<!-- Fixed navbar -->
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
@@ -7,44 +8,24 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/"><%= image_tag "logo.png", style: "width: 250px; height: 65px;"%></a>
+      <a class="navbar-brand" href="#"><%= image_tag 'logo.png', width: '80%' %></a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="/">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Contact Us</a></li>
-        <% if false && current_user %>
-          <li>
-            <a href="#" style="color: #92BED8"><%= current_user %></a>
-          </li>
-          <li>
-            <a style="font-size:medium" href="/signout" data-method="delete" rel="nofollow">
-					<span>
-						Log out
-					</span>
-            </a>
-          </li>
-        <% end %>
+          <% if current_user %>
+            <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
+          <% else %>
+            <li><%= link_to 'Login', new_user_session_path %></li>
+            <li><%= link_to 'Signup', new_user_registration_path %></li>
+          <% end %>
       </ul>
     </div><!--/.nav-collapse -->
   </div>
 </nav>
 
-<style>
-  body {
-    padding-top: 100px;
-    background: #DFE5F9;
-  }
-  .navbar-default .navbar-nav > li > a {
-    color: #ffffff;
-  }
-  .navbar-default{
-    background: #555;;
-    height: 100px;
-  }
+<style type="text/css">
+  .navbar-default { background-color: #555;}
+  .navbar-default .navbar-brand {padding: 2px 0;}
+  .navbar-default .navbar-nav > li > a {color: #ffffff;}
 
-  .navbar-right {
-    margin-top: 30px;
-  }
 </style>

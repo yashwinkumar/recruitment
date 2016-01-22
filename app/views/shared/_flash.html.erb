@@ -1,7 +1,7 @@
 <% flash.each do |key, value| %>
   <% alert_class = case key
-                     when :notice then "success"
-                     when :alert then "danger"
+                     when "notice" then "success"
+                     when "alert" then "danger"
                      else key
                    end %>
   <%= content_tag :div, class: "alert alert-#{alert_class}" do %>

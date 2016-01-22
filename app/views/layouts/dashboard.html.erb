@@ -9,9 +9,13 @@
 <body>
 
 <%= render 'layouts/header' %>
-<div class="container" style="margin-top: 6%">
-  <%= render 'shared/flash' %>
-  <div class="row">
+<%= render 'shared/flash' %>
+
+<div class="row">
+  <div class="col-md-3">
+    <%= render partial: 'shared/left_navigation' %>
+  </div>
+  <div class="col-md-9">
     <%= yield %>
   </div>
 </div>
