@@ -12,21 +12,33 @@
       <% end %>
       <div class="form-group">
         <%= f.label :email, class: "col-sm-3 control-label" %>
-        <div class="col-sm-6">
-          <%= f.email_field :email, class: 'form-control' %>
+        <div class="col-sm-7">
+          <%= f.email_field :email, class: 'form-control', required: :true %>
         </div>
       </div>
       <div class="form-group">
         <%= f.label :password, class: "col-sm-3 control-label" %>
-        <div class="col-sm-6">
-          <%= f.password_field :password, class: 'form-control' %>
+        <div class="col-sm-7">
+          <%= f.password_field :password, class: 'form-control', required: :true %>
           <div class="help-block">Minimum 8 characters</div>
         </div>
       </div>
       <div class="form-group">
         <%= f.label :password_confirmation, class: "col-sm-3 control-label" %>
-        <div class="col-sm-6">
-          <%= f.password_field :password_confirmation, class: 'form-control' %>
+        <div class="col-sm-7">
+          <%= f.password_field :password_confirmation, class: 'form-control', required: :true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">
+          Role
+        </label>
+        <div class="col-sm-7">
+          <% Role.where.not(name:'admin').each do |role| %>
+            <label class="radio-inline">
+              <input type="radio" name="role" value="<%= role.name %>" required><%= role.label %>
+            </label>
+          <% end %>
         </div>
       </div>
       <div class="form-group">
