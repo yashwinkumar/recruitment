@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          Basic Info
+          <%= link_to edit_profile_path(@profile), class: 'pull-right' do%>
+            <i class="glyphicon glyphicon-pencil"></i>
+          <% end %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <div class="col-md-9">
+          <dl class="dl-horizontal">
+            <dt>First Name:</dt>
+            <dd><%= @profile.first_name %></dd>
+            <dt>Last Name:</dt>
+            <dd><%= @profile.last_name %></dd>
+            <dt>Phone:</dt>
+            <dd><%= @profile.phone %></dd>
+            <dt>DOB:</dt>
+            <dd><%= @profile.dob %></dd>
+          </dl>
+        </div>
+        <div class="col-md-3">
+          <a href="#" class="thumbnail">
+            <%= image_tag 'profile.png' %>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
