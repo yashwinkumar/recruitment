@@ -11,7 +11,10 @@
 /log/*
 !/log/.keep
 /tmp
-.idea
-.idea/*
+/.idea
 /public/assets
 /public/assets/*
+/public/uploads/*
+
+# Ignore application configuration
+/config/application.yml

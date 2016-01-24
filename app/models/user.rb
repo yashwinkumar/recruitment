@@ -16,6 +16,14 @@ class User < ActiveRecord::Base
     profile.first_name.to_s + " " + profile.last_name.to_s
   end
 
+  def display_picture
+    profile.picture.present? ? profile.picture : 'profile.png'
+  end
+
+  def display_thumb_picture
+    (profile.picture.present? and profile.picture.thumb.present?) ? profile.picture.thumb : 'profile.png'
+  end
+
   private
 
   def welcome_email
