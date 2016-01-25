@@ -1,10 +1,70 @@
 <div class="row">
-<h2 class="text-center">Editing Profile</h2>
-</div>
+  <div class="col-md-8 col-md-offset-2">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          Editing Profile
+        </h3>
+      </div>
+      <div class="panel-body">
+        <%= form_for(@profile, html: {class: 'form-horizontal'}) do |f| %>
+          <% if @profile.errors.any? %>
+            <div class="well well-sm text-danger">
+              <ul>
+                <% @profile.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+          <div class="col-md-8">
 
-<div class="row">
-  <div class="col-md-offset-3 col-md-6">
-    <%= render 'form' %>
+            <div class="form-group">
+              <%= f.label :first_name, class: 'col-sm-3 control-label' %>
+              <div class="col-sm-9">
+                <%= f.text_field :first_name, class: 'form-control' %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :last_name, class: 'col-sm-3 control-label' %>
+              <div class="col-sm-9">
+                <%= f.text_field :last_name, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label :phone, class: 'col-sm-3 control-label' %>
+              <div class="col-sm-9">
+                <%= f.text_field :phone, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label :dob, 'DOB', class: 'col-sm-3 control-label' %>
+              <div class="col-sm-9">
+                <%= f.text_field :dob, class: 'form-control' %>
+              </div>
+            </div>
+
+          </div>
+          <div class="col-md-4">
+            <%= image_tag @profile.display_picture, class: 'thumbnail' ,width: '50%' %>
+
+            <div class="form-group">
+              <div class="col-sm-12 ">
+                <%= f.file_field :picture, class: 'form-control' %>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <div class="col-sm-offset-3 col-sm-6">
+                <%= f.submit :save, class: 'btn btn-success btn-block' %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
 

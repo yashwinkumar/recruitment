@@ -14,18 +14,19 @@
           <dl class="dl-horizontal">
             <dt>First Name:</dt>
             <dd><%= @profile.first_name %></dd>
+            <br>
             <dt>Last Name:</dt>
             <dd><%= @profile.last_name %></dd>
+            <br>
             <dt>Phone:</dt>
             <dd><%= @profile.phone %></dd>
+            <br>
             <dt>DOB:</dt>
             <dd><%= @profile.dob %></dd>
           </dl>
         </div>
         <div class="col-md-3">
-          <a href="#" class="thumbnail">
-            <%= image_tag 'profile.png' %>
-          </a>
+          <%= image_tag @profile.display_picture, class:'img-thumbnail' %>
         </div>
       </div>
     </div>
