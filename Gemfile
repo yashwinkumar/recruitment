@@ -15,7 +15,6 @@ gem 'simple_form'
 gem "figaro"
 gem 'sendgrid'
 gem 'devise'
-gem 'figaro'
 gem 'rmagick'
 gem 'carrierwave'
 gem 'pundit'
