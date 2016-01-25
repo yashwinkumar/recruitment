@@ -1,0 +1,12 @@
+- q_no = params[:q_no] ? params[:q_no].to_i + 1 : ''
+= fields_for "template[sections_attributes][#{q_no}]", @section do |q|
+  div class="section_field_#{q_no}"
+    .form-group
+      = s.label :name, "Label", class: "col-md-3  col-sm-3  col-xs-3 control-label"
+      .col-md-7.col-sm-7.col-xs-7
+        = s.text_field :name, class: "form-control section_field"
+      .col-md-2.col-sm-2.col-sx-2
+        = link_to '#', class: 'btn btn-danger remove_j_qtn', data: {qid: q_no} do
+          i.entypo-cancel
+  = s.hidden_field :_destroy
+  = s.hidden_field :field_type, value:'check_box'

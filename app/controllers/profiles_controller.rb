@@ -1,6 +1,6 @@
 class ProfilesController < ApplicationController
   before_action :set_profile, only: [:show, :edit, :update]
-  layout 'application'
+  layout 'dashboard'
   def show
   end
 

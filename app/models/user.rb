@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   rolify
 
   attr_accessor :role_id
+  has_many :templates
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
