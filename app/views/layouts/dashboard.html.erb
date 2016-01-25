@@ -9,8 +9,8 @@
 <body>
 
 <%= render 'layouts/dashboard_header' %>
-<%= render 'shared/flash' %>
-
+<div class="container-fluid">
+  <%= render 'shared/flash' %>
 <div class="row">
   <div class="col-md-3">
     <%= render partial: 'shared/left_navigation' %>
@@ -18,6 +18,7 @@
   <div class="col-md-9">
     <%= yield %>
   </div>
+</div>
 </div>
 
 

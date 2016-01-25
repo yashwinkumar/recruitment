@@ -9,6 +9,7 @@ class ProfilesController < ApplicationController
 
   def update
     respond_to do |format|
+      profile_params[:dob] = Date.parse(profile_params[:dob])
       if @profile.update(profile_params)
         format.html { redirect_to @profile, notice: 'Profile was successfully updated.' }
         format.json { render :show, status: :ok, location: @profile }
