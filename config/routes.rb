@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :templates
+  resources :templates do
+    get :add_more_sections, on: :collection
+  end
   resources :profiles
   devise_for :users, :controllers => {:registrations => "registrations"}
   root "dashboard#index"

@@ -1,4 +1,31 @@
-<p id="notice"><%= notice %></p>
+<div class="row">
+  <h3>
+    <%= @template.name %>
+  </h3>
 
+  <div class="col-md-4">
+    <table class="table table-responsive table-bordered">
+      <thead>
+      <tr>
+        <th>Sections</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @sections.each do |section| %>
+        <tr>
+          <td><%= section.name %></td>
+        </tr>
+      <% end %>
+      <% if @sections.empty? %>
+        <tr>
+          <td>No Sections</td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+
+</div>
 <%= link_to 'Edit', edit_template_path(@template) %> |
 <%= link_to 'Back', templates_path %>
