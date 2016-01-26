@@ -8,17 +8,18 @@ class TemplatesController < ApplicationController
   end
 
   def show
+    @sections = @template.sections
   end
 
   def new
-    @template = Template.new
+    @template = current_user.templates.new
   end
 
   def edit
   end
 
   def create
-    @template = Template.new(template_params)
+    @template = current_user.templates.new(template_params)
 
     respond_to do |format|
       if @template.save
@@ -51,12 +52,16 @@ class TemplatesController < ApplicationController
     end
   end
 
-  private
-    def set_template
-      @template = Template.find(params[:id])
-    end
+  def add_more_sections
 
-    def template_params
-      params.require(:template).permit(:name)
-    end
+  end
+
+  private
+  def set_template
+    @template = Template.find(params[:id])
+  end
+
+  def template_params
+    params.require(:template).permit(:name, {:sections_attributes => [:name, :id, :_destroy]})
+  end
 end
