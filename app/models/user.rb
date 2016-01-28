@@ -29,6 +29,26 @@ class User < ActiveRecord::Base
     (profile.picture.present? and profile.picture.thumb.present?) ? profile.picture.thumb : 'profile.png'
   end
 
+  def role
+    roles.first
+  end
+
+  def role_name
+    role ? role.name : nil
+  end
+
+  def candidate?
+    role_name == "candidate"
+  end
+
+  def hm?
+    role_name == "hm"
+  end
+
+  def consultant?
+    role_name == "consultant"
+  end
+
   private
 
   def welcome_email

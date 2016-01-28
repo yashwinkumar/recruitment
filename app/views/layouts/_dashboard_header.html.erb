@@ -12,6 +12,9 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <% if current_user %>
+          <li>
+            <%= link_to current_user.email, 'javascript:void(0)' %>
+          </li>
           <li class="dropdown">
             <%= link_to '#', class: 'dropdown-toggle', data: {toggle: "dropdown"} do%>
               <%= current_user.profile.first_name %> <span class="caret"></span>

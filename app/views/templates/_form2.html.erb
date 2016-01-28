@@ -1,0 +1,57 @@
+<%= form_for(@template, html: {class: 'form-horizontal'}) do |f| %>
+  <% if @template.errors.any? %>
+    <div id="error_explanation">
+      <h5>
+        <%= pluralize(@template.errors.count, "error") %>
+        prohibited this template from being saved:
+      </h5>
+      <ul>
+        <% @template.errors.full_messages.each do |message| %>
+          <li>
+            <%= message %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="form-group">
+    <%= f.label :name, "Name", class: "col-md-3 control-label" %>
+    <div class="col-md-7">
+      <%= f.text_field :name, class: "form-control" %>
+    </div>
+  </div>
+
+  <% sno=0 %>
+  <%= f.fields_for :sections, wrapper: :horizontal_form do |s| %>
+    <div id="section_field_<%= sno %>" class="section_field">
+      <div class="form-group">
+        <%= s.label :name, "Section", class: "col-md-3 control-label" %>
+        <div class="col-md-7">
+          <%= s.text_field :name, class: "form-control" %>
+        </div>
+        <div class="col-md-2 col-sm-2">
+          <%= link_to 'javascript:void(0)', class: 'btn btn-danger remove_j_qtn', data: {sid: sno} do %>
+            <i class="glyphicon glyphicon-remove"></i>
+          <% end %>
+        </div>
+        <% sno+=1 %>
+      </div>
+    </div>
+    <%= s.hidden_field :_destroy %>
+    <%= s.hidden_field :field_type, value:'check_box' %>
+  <% end %>
+  <div class="add_more_sections"></div>
+
+  <div class="question_field_last">
+    <div class="form-group">
+      <%= label_tag :section_last, "Section", class: "col-md-3  col-sm-3 col-xs-3 control-label" %>
+      <div class="col-md-7 col-sm-7 col-xs-7">
+        <%= text_field_tag :section_last, nil, name: "template[sections_attributes][999][name]", class: "form-control", id: "section_last" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <%= f.submit class: 'btn btn-primary' %>
+  </div>
+<% end %>

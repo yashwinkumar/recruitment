@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :jobs
   resources :templates do
     get :add_more_sections, on: :collection
   end
