@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="col-md-10">
+    <h2>
+      <strong><%= @job.title %></strong>
+    </h2>
+  </div>
+  <div class="col-md-2">
+    <%= link_to 'Edit', edit_job_path(@job), class: 'btn btn-primary' %>
+  </div>
+  <div class="col-md-12">
+    <i class="glyphicon glyphicon-map-marker"></i>&nbsp;<%= @job.location %>
+    |
+      <span>
+        <i class="glyphicon glyphicon-calendar"></i>&nbsp;<i>posted <%=time_ago_in_words @job.created_at %> ago</i>
+      </span>
+    <br/>
+    <strong>Template:</strong>
+    <%= @job.template.name %>
+  </div>
+</div>
+
+<hr>
+<h4>Description:</h4>
+
+<div class="row">
+  <div class="col-md-12">
+    <%= @job.description %>
+  </div>
+</div>
+
+
+<!-- This needs to be shown to Employer and Consultant-->
+<% if false && (current_user.hm? || current_user.consultant?) %>
+<div class="row" style="margin-top: 7%">
+  <div class="col-md-12">
+    <h2>Candidates</h2>
+  </div>
+
+  <div class="col-md-12">
+      <% @job.resumes.each do |resume| %>
+        <div class="row">
+          <%= resume %>
+        </div>
+      <% end %>
+  </div>
+</div>
+<% end %>
+
