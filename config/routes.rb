@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :jobs
   resources :templates do
     get :add_more_sections, on: :collection
   end
@@ -7,6 +6,12 @@ Rails.application.routes.draw do
   devise_for :users, :controllers => {:registrations => "registrations"}
   root "dashboard#index"
 
+  resources :jobs do
+    resources :submissions do
+      resources :resumes
+      resources :resume_sections
+    end
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

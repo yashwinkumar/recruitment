@@ -5,7 +5,9 @@
     </h2>
   </div>
   <div class="col-md-2">
-    <%= link_to 'Edit', edit_job_path(@job), class: 'btn btn-primary' %>
+    <% if policy(@job).edit? %>
+      <%= link_to 'Edit', edit_job_path(@job), class: 'btn btn-primary' %>
+    <% end %>
   </div>
   <div class="col-md-12">
     <i class="glyphicon glyphicon-map-marker"></i>&nbsp;<%= @job.location %>
@@ -23,8 +25,11 @@
 <h4>Description:</h4>
 
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-9">
     <%= @job.description %>
+  </div>
+  <div class="col-md-3">
+    <%= link_to "Apply", new_job_submission_path(@job), class: 'btn btn-info btn-sm btn-block' %>
   </div>
 </div>
 
