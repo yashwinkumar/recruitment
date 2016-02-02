@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
 
   attr_accessor :role_id
   has_many :templates
+  has_many :submissions
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

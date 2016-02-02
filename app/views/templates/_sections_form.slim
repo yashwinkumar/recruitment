@@ -2,8 +2,8 @@
 = fields_for "template[sections_attributes][#{s_no}]", @section do |s|
   div id="section_field_#{s_no}"
     .form-group
-      = s.label :name, "Section", class: "col-md-3  col-sm-3  col-xs-3 control-label"
-      .col-md-7.col-sm-7.col-xs-7
+      = s.label :name, "Section", class: "col-md-2  col-sm-2  col-xs-3 control-label"
+      .col-md-8.col-sm-8.col-xs-7
         = s.text_field :name, class: "form-control section_field"
       .col-md-2.col-sm-2.col-sx-2
         = link_to 'javascript:void(0)', class: 'btn btn-danger remove_j_qtn', data: {sid: s_no} do

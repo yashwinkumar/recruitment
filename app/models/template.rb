@@ -4,5 +4,6 @@ class Template < ActiveRecord::Base
   has_many :resumes
   accepts_nested_attributes_for :sections, :reject_if => lambda { |a| a[:name].blank? }, :allow_destroy => true
 
-  validates :user_id, presence: true
+  validates_presence_of :user_id, :name
+  validates_uniqueness_of :name, scope: :user_id
 end

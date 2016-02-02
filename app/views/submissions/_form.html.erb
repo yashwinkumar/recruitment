@@ -1,11 +1,36 @@
-<%= simple_form_for([@job, @submission]) do |f| %>
-  <%= f.error_notification %>
+<%= form_for([@job, @submission], html: {class: 'form-horizontal'}) do |f| %>
+  <% if @submission.errors.any? %>
+    <div class="well well-sm text-danger">
+      <ul>
+        <% @submission.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= f.fields_for :resume_sections do |resume_sec| %>
+    <% @template_sections.to_ary.each_with_index do|section,i| %>
+      <%= resume_sec.hidden_field :section_id, value: section.id ,name: "submission[resume_sections_attributes][#{i}][section_id]"%>
+      <h4><%= section.name.titleize %></h4>
+      <div class="form-group">
+        <%= resume_sec.label :video, class: 'col-sm-2 control-label' %>
+        <div class="col-sm-4">
+          <%= resume_sec.file_field :video,name: "submission[resume_sections_attributes][#{i}][video]", class: 'form-control', required: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= resume_sec.label :rating, class: 'col-sm-2 control-label' %>
+        <div class="col-sm-4">
+          <%= resume_sec.select :rating, options_for_select((1..10)),{prompt: 'Select Rating'}, { class: 'form-control', name: "submission[resume_sections_attributes][#{i}][rating]", required: true} %>
+        </div>
+      </div>
+      <hr>
+    <% end %>
+  <% end %>
 
-  <div class="form-inputs">
-
-  </div>
-
-  <div class="form-actions">
-    <%= f.button :submit %>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-4">
+      <%= f.submit :submit, class: 'btn btn-success btn-block' %>
+    </div>
   </div>
 <% end %>

@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Listing Jobs</h1>
 
 <% if policy(@jobs).create? %>
@@ -15,7 +13,7 @@
       <th>Description</th>
       <th>Location</th>
       <% if policy(@jobs).update? || policy(@jobs).destroy? %>
-        <th></th>
+        <th>Actions</th>
       <% end %>
     </tr>
   </thead>
@@ -26,12 +24,13 @@
         <td><%= link_to job.title, job_path(job) %></td>
         <td><%=truncate(job.description, length: 20) %></td>
         <td><%= job.location %></td>
-
+        <td>
         <% if policy(job).update? || policy(job).destroy? %>
-          <td>
-            <%= link_to 'Edit', edit_job_path(job) %>&nbsp;&nbsp;
-            <%= link_to 'Destroy', job, method: :delete, data: { confirm: 'Are you sure?' } %>
-          </td>
+          <%= link_to 'Edit', edit_job_path(job) %>&nbsp;&nbsp;
+          <%= link_to 'Destroy', job, method: :delete, data: { confirm: 'Are you sure?' } %> &nbsp;&nbsp;
+            <%= link_to 'Submissions', job_submissions_path(job) %>
+        <% else %>
+            <%= link_to "Apply", new_job_submission_path(job) %>
         <% end %>
       </tr>
     <% end %>
