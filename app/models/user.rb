@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
   attr_accessor :role_id
   has_many :templates
   has_many :submissions
+  has_many :consultant_jobs, class_name: 'Job', foreign_key: 'consultant_user_id'
+  has_many :hm_jobs, class_name: 'Job', foreign_key: 'hiring_user_id'
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -11,6 +13,14 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
   after_create :build_profile
   has_one :profile, :dependent => :destroy
+
+  def my_jobs
+    if hm?
+      hm_jobs
+    elsif consultant?
+      consultant_jobs
+    end
+  end
 
   # Override devise confirm! message
   def confirm!
@@ -31,11 +41,11 @@ class User < ActiveRecord::Base
   end
 
   def role
-    roles.first
+    @role ||= roles.first
   end
 
   def role_name
-    role ? role.name : nil
+    @role_name ||= role ? role.name : nil
   end
 
   def candidate?

@@ -3,7 +3,7 @@ class JobsController < ApplicationController
   layout "dashboard"
 
   def index
-    @jobs = Job.all
+    @jobs = current_user.my_jobs
   end
 
   def show
@@ -19,7 +19,7 @@ class JobsController < ApplicationController
   end
 
   def create
-    @job = Job.new(job_params)
+    @job = current_user.consultant_jobs.new(job_params)
     authorize @job
     respond_to do |format|
       if @job.save
@@ -30,6 +30,10 @@ class JobsController < ApplicationController
         format.json { render json: @job.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def openings
+    @jobs = Job.all
   end
 
   def update
@@ -60,6 +64,6 @@ class JobsController < ApplicationController
     end
 
     def job_params
-      params.require(:job).permit(:title, :description, :location, :template_id)
+      params.require(:job).permit(:title, :description, :location, :template_id, :consultant_user_id, :hiring_user_id)
     end
 end
