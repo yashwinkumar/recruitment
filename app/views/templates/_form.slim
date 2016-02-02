@@ -1,6 +1,6 @@
 = form_for(@template, html: {class: 'form-horizontal'}) do |f|
   - if @template.errors.any?
-    #error_explanation
+    #error_explanation.well.text-danger
       h5
         = pluralize(@template.errors.count, "error")
         |  prohibited this template from being saved: 
@@ -9,8 +9,8 @@
           li
             = message
   .form-group
-    = f.label :name, "Name", class: "col-md-3 control-label"
-    .col-md-7
+    = f.label :name, "Name", class: "col-md-2 control-label"
+    .col-md-8
       = f.text_field :name, class: "form-control"
   - sno=0
   = f.fields_for :sections, wrapper: :horizontal_form do |s|
@@ -18,11 +18,11 @@
     = sno
     | " class="section_field"> 
     .form-group
-      = s.label :name, "Section", class: "col-md-3 control-label"
-      .col-md-7
+      = s.label :name, "Section", class: "col-md-2 control-label"
+      .col-md-8
         = s.text_field :name, class: "form-control"
       .col-md-2.col-sm-2
-        = link_to 'javascript:void(0)', class: 'btn btn-danger remove_j_qtn', data: {sid: sno} do
+        = link_to '#', class: 'btn btn-danger remove_j_qtn', data: {sid: sno} do
           i.glyphicon.glyphicon-remove
       - sno+=1
     = s.hidden_field :_destroy
@@ -30,8 +30,8 @@
   .add_more_sections
   .question_field_last
     .form-group
-      = label_tag :section_last, "Section", class: "col-md-3  col-sm-3 col-xs-3 control-label"
-      .col-md-7.col-sm-7.col-xs-7
+      = label_tag :section_last, "Section", class: "col-md-2  col-sm-2 col-xs-3 control-label"
+      .col-md-8.col-sm-8.col-xs-7
         = text_field_tag :section_last, nil, name: "template[sections_attributes][999][name]", class: "form-control", id: "section_last"
-  .actions
+  .actions.text-center
     = f.submit class: 'btn btn-primary'

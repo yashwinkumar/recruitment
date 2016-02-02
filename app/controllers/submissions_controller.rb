@@ -4,30 +4,38 @@ class SubmissionsController < ApplicationController
   layout 'dashboard'
 
   def index
-    @submissions = Submission.all
+    @submissions = @job.submissions.all
   end
 
   def show
   end
 
   def new
-    @resume = @job.build_resume
-    @submission = @job.submissions.new
+    @submission = current_user.submissions.new
+    @template = @job.template
+    @template_sections = @template.sections || []
   end
 
   def edit
   end
 
   def create
-    @submission = Submission.new(submission_params)
-
-    respond_to do |format|
+    ActiveRecord::Base.transaction do
+      @submission = current_user.submissions.new
+      @submission.job_id = @job.id
       if @submission.save
-        format.html { redirect_to @submission, notice: 'Submission was successfully created.' }
-        format.json { render :show, status: :created, location: @submission }
+        @resume = @submission.build_resume
+        @resume.template = @job.template
+        @resume.save
+        submission_params[:resume_sections_attributes].each do|k,v|
+          @resume_section = @resume.resume_sections.new(v)
+          @resume_section.save!
+        end
+        redirect_to jobs_path, notice: 'Submission was successfully created.'
       else
-        format.html { render :new }
-        format.json { render json: @submission.errors, status: :unprocessable_entity }
+        @template = @job.template
+        @template_sections = @template.sections || []
+        render :new
       end
     end
   end
@@ -62,6 +70,6 @@ class SubmissionsController < ApplicationController
     end
 
     def submission_params
-      params[:submission]
+      params.require(:submission).permit({:resume_sections_attributes => [:video, :rating, :section_id]})
     end
 end

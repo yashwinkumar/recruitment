@@ -2,7 +2,7 @@
   <%= f.error_notification %>
 
   <%= f.input :title %>
-  <%= f.input :description %>
+  <%= f.input :description, as: :text %>
   <%= f.input :location %>
 
   <% if f.object.new_record? %>
@@ -34,7 +34,7 @@
       <div class="col-sm-9">
         <!--<input class="string optional form-control" type="text" value="Hyderabad India" name="job[location]" id="job_location">-->
         <label class="form-control" style="    background: transparent;border: none;box-shadow: inherit;">
-          <%#= f.object.template.name %>
+          <%= f.object.template.name %>
         </label>
       </div>
     </div>
