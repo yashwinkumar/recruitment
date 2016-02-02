@@ -1,0 +1,20 @@
+h1 Job Openings
+- if policy(@jobs).create?
+  .pull-right
+    = link_to 'Post Job', new_job_path
+table.table.table-bordered.table-responsive
+  thead
+    tr
+      th Title
+      th Description
+      th Location
+      th
+  tbody
+    - @jobs.each do |job|
+      tr
+        td= link_to job.title, job_path(job)
+        td= truncate(job.description, length: 20)
+        td= job.location
+        td
+          - if current_user.candidate?
+            = link_to "Apply", new_job_submission_path(job)

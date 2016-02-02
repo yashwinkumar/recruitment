@@ -1,6 +1,12 @@
 <%= simple_form_for(@job, html: {class: 'form-horizontal'}, wrapper: :horizontal_form) do |f| %>
   <%= f.error_notification %>
 
+  <div class="form-group">
+      <label class="col-sm-3 control-label">Hiring Manager</label>
+    <div class="col-md-9">
+      <%= f.select :hiring_user_id, Role.where(name: "hm").first.users.map{ |l| [l.email, l.id] }, {}, class:'form-control' %>
+    </div>
+  </div>
   <%= f.input :title %>
   <%= f.input :description, as: :text %>
   <%= f.input :location %>

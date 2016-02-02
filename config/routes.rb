@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   root "dashboard#index"
 
   resources :jobs do
+    get 'openings', on: :collection
     resources :submissions do
       resources :resumes
       resources :resume_sections

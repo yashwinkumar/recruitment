@@ -6,5 +6,7 @@ div class="panel panel-info"
       - if current_user.consultant?
         li
           = link_to 'Templates', templates_path
+        li
+          = link_to "My Jobs", jobs_path
       li
-        = link_to "Jobs", jobs_path
+        = link_to "Openings", openings_jobs_path
