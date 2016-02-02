@@ -14,8 +14,8 @@
         <tr>
           <td><%= submission.user.full_name %></td>
           <td>
-            <%= link_to 'View Resume', '#' %>&nbsp;&nbsp;
-            <%= link_to 'Destroy', '#', method: :delete, data: { confirm: 'Are you sure?' } %>
+            <%= link_to 'View Resume', job_submission_resume_path(@job,submission,submission.resume.id) %>&nbsp;&nbsp;
+            <%= link_to 'Destroy', job_submission_path(@job,submission), method: :delete, data: { confirm: 'Are you sure?' } %>
           </td>
         </tr>
       <% end %>

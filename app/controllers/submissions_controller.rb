@@ -4,7 +4,7 @@ class SubmissionsController < ApplicationController
   layout 'dashboard'
 
   def index
-    @submissions = @job.submissions.all
+    @submissions = @job.submissions.includes(:user,:job)
   end
 
   def show
@@ -55,7 +55,7 @@ class SubmissionsController < ApplicationController
   def destroy
     @submission.destroy
     respond_to do |format|
-      format.html { redirect_to submissions_url, notice: 'Submission was successfully destroyed.' }
+      format.html { redirect_to job_submissions_path(@job), notice: 'Submission was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

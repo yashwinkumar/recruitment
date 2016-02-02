@@ -7,6 +7,7 @@ class JobsController < ApplicationController
   end
 
   def show
+    @submission_record = @job.submissions.find_by_user_id current_user.id
   end
 
   def new
