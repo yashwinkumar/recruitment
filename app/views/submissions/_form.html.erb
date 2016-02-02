@@ -19,9 +19,10 @@
         </div>
       </div>
       <div class="form-group">
-        <%= resume_sec.label :rating, class: 'col-sm-2 control-label' %>
+        <%= resume_sec.label :rating, class: 'col-sm-2 radio-inline' %>
         <div class="col-sm-4">
-          <%= resume_sec.select :rating, options_for_select((1..10)),{prompt: 'Select Rating'}, { class: 'form-control', name: "submission[resume_sections_attributes][#{i}][rating]", required: true} %>
+          <%#= resume_sec.select :rating, options_for_select((1..10)),{prompt: 'Select Rating'}, { class: 'form-control', name: "submission[resume_sections_attributes][#{i}][rating]", required: true} %>
+          <%= resume_sec.collection_radio_buttons :rating,(1..5).map{|n| [n, n]}, :first, :last,{} ,{ class: 'radio-inline', name: "submission[resume_sections_attributes][#{i}][rating]", required: true, style: 'margin: 10px 5px 10px 10px'} %>
         </div>
       </div>
       <hr>

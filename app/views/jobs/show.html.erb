@@ -31,7 +31,11 @@
   </div>
   <div class="col-md-3">
     <% unless policy(@job).update? || policy(@job).destroy? %>
-      <%= link_to "Apply", new_job_submission_path(@job), class: 'btn btn-info btn-sm btn-block' %>
+      <% if @submission_record %>
+        <a href="#" class="btn btn-default btn-sm disabled btn-block" role="button">Submitted</a>
+      <% else %>
+        <%= link_to "Apply", new_job_submission_path(@job), class: 'btn btn-info btn-sm btn-block' %>
+      <% end %>
     <% end %>
   </div>
 </div>
