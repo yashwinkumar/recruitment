@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="col-md-10">
+    <%= simple_form_for([@job, @submission,@interview], html: {class: 'form-horizontal'}) do |f| %>
+      <%= f.error_notification %>
+
+      <%= f.input :user_id, input_html: { value: current_user.id}, as: :hidden %>
+      <%= f.input :job_id, input_html: { value: @job.id }, as: :hidden %>
+      <%= f.input :date %>
+      <%= f.input :description, as: :text %>
+      <%= f.submit class: 'btn btn-success' %>
+    <% end %>
+  </div>
+</div>

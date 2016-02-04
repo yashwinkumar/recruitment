@@ -4,6 +4,7 @@
   <thead>
     <tr>
       <th>Name</th>
+      <th>Status</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -14,7 +15,26 @@
         <tr>
           <td><%= submission.user.full_name %></td>
           <td>
-            <%= link_to 'View Resume', job_submission_resume_path(@job,submission,submission.resume.id) %>&nbsp;&nbsp;
+            <%= submission.status.titleize %>
+            <% if submission.interview_scheduled? %>
+              on <%= submission.interview.date.strftime('%Y %b %d') %>
+              at <%= submission.interview.date.strftime('%I:%M %P') %>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to 'View Resume', job_submission_resume_path(@job,submission,submission.resume.id) %>&nbsp;&nbsp; |
+            <% if policy(submission).update? %>
+              <% if submission.submitted? %>
+                <%= link_to 'Shortlist', change_status_job_submission_path(@job,submission, status: 'shortlist') %>&nbsp;&nbsp;|
+                <%= link_to 'Interview', new_job_submission_interview_path(@job,submission) %>&nbsp;&nbsp;|
+              <% elsif submission.shortlisted? %>
+                <%= link_to 'Interview', new_job_submission_interview_path(@job,submission) %>&nbsp;&nbsp;|
+              <% elsif submission.interview_scheduled? %>
+                <%= link_to 'Edit Interview', edit_job_submission_interview_path(@job,submission, submission.interview) %>&nbsp;&nbsp;|
+                <%= link_to 'Hire', change_status_job_submission_path(@job,submission, status: 'hire') %>&nbsp;&nbsp;|
+              <% end %>
+              <%= link_to 'Discard', change_status_job_submission_path(@job,submission, status: 'discard') %>&nbsp;&nbsp;
+            <% end %>
             <% if policy(submission).destroy? %>
               <%= link_to 'Destroy', job_submission_path(@job,submission), method: :delete, data: { confirm: 'Are you sure?' } %>
             <% end %>

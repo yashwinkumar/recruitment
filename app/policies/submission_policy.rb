@@ -18,11 +18,11 @@ class SubmissionPolicy < ApplicationPolicy
   end
 
   def destroy?
-    record.job.consultant_user_id == user.id
+    user.consultant?
   end
 
   def update?
-    record.job.consultant_user_id == user.id
+    user.hm?
   end
 
 end

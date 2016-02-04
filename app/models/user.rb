@@ -2,10 +2,11 @@ class User < ActiveRecord::Base
   rolify
 
   attr_accessor :role_id
-  has_many :templates
-  has_many :submissions
+  has_many :templates, dependent: :destroy
+  has_many :submissions, dependent: :destroy
   has_many :consultant_jobs, class_name: 'Job', foreign_key: 'consultant_user_id'
   has_many :hm_jobs, class_name: 'Job', foreign_key: 'hiring_user_id'
+  has_many :interviews, dependent: :destroy
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

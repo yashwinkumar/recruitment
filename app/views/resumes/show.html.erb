@@ -2,10 +2,9 @@
   <div class="row">
       <div class="thumbnail">
         <h3><%= resume_sec.section.name %></h3>
-        <%= video_tag resume_sec.video, :size => "280x240", :controls => true %>
+        <%= video_tag resume_sec.video, :size => "400x240", :controls => true %>
         <div class="caption">
-
-          <p>Rating: <%= resume_sec.rating %></p>
+          <p><strong>Rating:</strong> <%= resume_sec.rating %> out of 5</p>
         </div>
       </div>
   </div>
