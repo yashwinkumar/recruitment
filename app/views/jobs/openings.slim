@@ -16,5 +16,7 @@ table.table.table-bordered.table-responsive
         td= truncate(job.description, length: 20)
         td= job.location
         td
-          - if current_user.candidate?
-            = link_to "Apply", new_job_submission_path(job)
+          - if job.submissions.find_by_user_id current_user.id
+            a.btn.btn-default.btn-sm.disabled href="#" role="button"  Submitted
+          - elsif current_user.candidate?
+            = link_to "Apply", new_job_submission_path(job), class: 'btn btn-sm btn-info'

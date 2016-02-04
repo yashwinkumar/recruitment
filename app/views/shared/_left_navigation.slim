@@ -1,12 +1,20 @@
 div class="panel panel-info"
   div class="panel-heading"
-    = current_user.role.label
+    h4
+      = current_user.role.label
   div class="panel-body"
     ul.nav.nav-stacked
       - if current_user.consultant?
         li
-          = link_to 'Templates', templates_path
+          = link_to 'Templates', templates_path, class: "#{params[:controller] == 'templates' ? 'active' : ''} "
+      - if current_user.consultant? || current_user.hm?
         li
-          = link_to "My Jobs", jobs_path
+          = link_to "My Jobs", jobs_path, class: "#{params[:controller] == 'jobs' && params[:action] == 'index' ? 'active' : ''} "
       li
-        = link_to "Openings", openings_jobs_path
+        = link_to "Openings", openings_jobs_path, class: "#{params[:controller] == 'jobs' && params[:action] == 'openings' ? 'active' : ''} "
+
+css:
+  .active{
+    text-decoration: none;
+    background-color: #eee;
+  }

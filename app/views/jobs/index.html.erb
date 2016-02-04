@@ -8,33 +8,36 @@
 
 <table class="table table-bordered table-responsive">
   <thead>
-    <tr>
-      <th>Title</th>
-      <th>Description</th>
-      <th>Location</th>
-      <th>Actions</th>
-    </tr>
+  <tr>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Location</th>
+    <th>Actions</th>
+  </tr>
   </thead>
 
   <tbody>
-    <% @jobs.each do |job| %>
-      <tr>
-        <td><%= link_to job.title, job_path(job) %></td>
-        <td><%=truncate(job.description, length: 20) %></td>
-        <td><%= job.location %></td>
-        <td>
-        <% if policy(job).update? || policy(job).destroy? %>
+  <% @jobs.each do |job| %>
+    <tr>
+      <td><%= link_to job.title, job_path(job) %></td>
+      <td><%= truncate(job.description, length: 20) %></td>
+      <td><%= job.location %></td>
+      <td>
+        <% if policy(job).edit? || policy(job).destroy? %>
           <%= link_to 'Edit', edit_job_path(job) %>&nbsp;&nbsp;
-          <%= link_to 'Destroy', job, method: :delete, data: { confirm: 'Are you sure?' } %> &nbsp;&nbsp;
-          <%= link_to 'Submissions', job_submissions_path(job) %>
+          <%= link_to 'Destroy', job, method: :delete, data: {confirm: 'Are you sure?'} %> &nbsp;&nbsp;
         <% else %>
-            <% if job.submissions.find_by_user_id current_user.id%>
-              <a href="#" class="btn btn-default btn-sm disabled" role="button">Submitted</a>
-            <% elsif current_user.candidate? %>
-              <%= link_to "Apply", new_job_submission_path(job), class: 'btn btn-sm btn-info' %>
-            <% end %>
+          <% if job.submissions.find_by_user_id current_user.id %>
+            <a href="#" class="btn btn-default btn-sm disabled" role="button">Submitted</a>
+          <% elsif current_user.candidate? %>
+            <%= link_to "Apply", new_job_submission_path(job), class: 'btn btn-sm btn-info' %>
+          <% end %>
         <% end %>
-      </tr>
-    <% end %>
+
+        <% if policy(job).update? %>
+          <%= link_to 'Submissions', job_submissions_path(job) %>
+        <% end %>
+        </tr>
+  <% end %>
   </tbody>
 </table>
