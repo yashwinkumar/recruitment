@@ -4,6 +4,7 @@ class JobsController < ApplicationController
 
   def index
     @jobs = current_user.my_jobs
+    authorize @jobs
   end
 
   def show

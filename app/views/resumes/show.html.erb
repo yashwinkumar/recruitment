@@ -1,13 +1,12 @@
-<div class="row">
-  <% @resume_sections.each do|resume_sec| %>
-  <div class="col-sm-6 col-md-4">
-    <div class="thumbnail">
-      <%= video_tag resume_sec.video, :size => "280x240", :controls => true %>
-      <div class="caption">
-        <h4><%= resume_sec.section.name %></h4>
-        <p>Rating: <%= resume_sec.rating %></p>
+<% @resume_sections.each do |resume_sec| %>
+  <div class="row">
+      <div class="thumbnail">
+        <h3><%= resume_sec.section.name %></h3>
+        <%= video_tag resume_sec.video, :size => "280x240", :controls => true %>
+        <div class="caption">
+
+          <p>Rating: <%= resume_sec.rating %></p>
+        </div>
       </div>
-    </div>
   </div>
-  <% end %>
-</div>
+<% end %>

@@ -5,6 +5,7 @@ class SubmissionsController < ApplicationController
 
   def index
     @submissions = @job.submissions.includes(:user,:job)
+    authorize @submissions
   end
 
   def show
@@ -31,7 +32,7 @@ class SubmissionsController < ApplicationController
           @resume_section = @resume.resume_sections.new(v)
           @resume_section.save!
         end
-        redirect_to jobs_path, notice: 'Submission was successfully created.'
+        redirect_to openings_jobs_path, notice: 'Submission was successfully created.'
       else
         @template = @job.template
         @template_sections = @template.sections || []

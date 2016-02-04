@@ -1,5 +1,9 @@
 class JobPolicy < ApplicationPolicy
 
+  def index?
+    user.consultant? || user.hm?
+  end
+
   def new?
     user.consultant?
   end
@@ -9,11 +13,15 @@ class JobPolicy < ApplicationPolicy
   end
 
   def destroy?
-    new?
+    create?
+  end
+
+  def edit?
+    create?
   end
 
   def update?
-    new?
+    record.hiring_user_id == user.id || record.consultant_user_id == user.id
   end
 
 end
