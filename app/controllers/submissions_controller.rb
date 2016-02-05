@@ -1,6 +1,6 @@
 class SubmissionsController < ApplicationController
   before_action :find_job
-  before_action :set_submission, only: [:show, :edit, :update, :destroy]
+  before_action :set_submission, except: [:index, :new, :create]
   layout 'dashboard'
 
   def index
@@ -59,6 +59,17 @@ class SubmissionsController < ApplicationController
       format.html { redirect_to job_submissions_path(@job), notice: 'Submission was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def change_status
+    if params[:status] == 'shortlist'
+      @submission.shortlist
+    elsif params[:status] == 'discard'
+      @submission.discard
+    elsif params[:status] == 'hire'
+      @submission.hire
+    end
+    redirect_to :back
   end
 
   private

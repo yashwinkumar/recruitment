@@ -9,8 +9,10 @@ Rails.application.routes.draw do
   resources :jobs do
     get 'openings', on: :collection
     resources :submissions do
+      get :change_status, on: :member
       resources :resumes
       resources :resume_sections
+      resources :interviews
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.
