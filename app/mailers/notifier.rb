@@ -1,4 +1,5 @@
 class Notifier < ApplicationMailer
+  include SendGrid
   default from: "recruitment@gmail.com"
   layout 'mailer'
 

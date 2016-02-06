@@ -81,12 +81,13 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: "video-resume.herokuapp.com" }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :user_name => Figaro.env.smtp_user_name,
-    :password => Figaro.env.smtp_password,
-    :domain => Figaro.env.smtp_domain,
-    :address => Figaro.env.smtp_address,
-    :port => Figaro.env.smtp_port,
+    :address => "smtp.sendgrid.net",
+    :port => 25,
+    :domain => "videoresume.com",
     :authentication => :plain,
-    :enable_starttls_auto => true
+    :user_name => ENV["sendgrid_username"],
+    :password => ENV["sendgrid_password"]
+    # :user_name => Figaro.env.sendgrid_username,
+    # :password => Figaro.env.sendgrid_password
   }
 end

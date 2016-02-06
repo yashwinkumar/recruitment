@@ -1,4 +1,5 @@
 class UserMailer < ApplicationMailer
+  include SendGrid
   default from: "recruitment@gmail.com"
   layout 'mailer'
 
