@@ -14,9 +14,9 @@
       = f.text_field :name, class: "form-control"
   - sno=0
   = f.fields_for :sections, wrapper: :horizontal_form do |s|
-    |  <div id="section_field_
+    | <div id="section_field_
     = sno
-    | " class="section_field"> 
+    | " class="section_field">
     .form-group
       = s.label :name, "Section", class: "col-md-2 control-label"
       .col-md-8
@@ -26,7 +26,7 @@
           i.glyphicon.glyphicon-remove
       - sno+=1
     = s.hidden_field :_destroy
-    = s.hidden_field :field_type, value:'check_box'
+    = s.hidden_field :field_type, value: 'check_box'
   .add_more_sections
   .question_field_last
     .form-group
