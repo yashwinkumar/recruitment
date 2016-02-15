@@ -12,5 +12,6 @@
  *
  *= require bootstrap
  *= require jquery-ui
+  *= require jquery.datetimepicker
  *= require_self
  */

@@ -16,3 +16,4 @@
 //= require turbolinks
 //= require bootstrap
 //= require templates
+//= require jquery.datetimepicker.full.min

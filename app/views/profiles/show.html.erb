@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-8">
+  <div class="col-md-10">
     <div class="panel panel-info">
       <div class="panel-heading">
         <h3 class="panel-title">
@@ -21,8 +21,39 @@
             <dt>Phone:</dt>
             <dd><%= @profile.phone %></dd>
             <br>
-            <dt>DOB:</dt>
+            <dt>Location:</dt>
+            <dd><%= @profile.location %></dd>
+            <br>
+            <dt>Current Employer</dt>
+            <dd><%= @profile.current_employer %></dd>
+            <br>
+            <dt>DOB</dt>
             <dd><%= @profile.dob %></dd>
+            <br>
+            <% if current_user.candidate? %>
+              <dt>Experience:</dt>
+              <dd><%= @profile.experience %></dd>
+              <br>
+              <dt>Compensation:</dt>
+              <dd><%= @profile.compensation %></dd>
+              <br>
+              <dt>Primary Skills:</dt>
+              <dd>
+                <% @profile.primary_skills.split(',').each do|skill| %>
+                  <span class="label label-primary"><%= skill %></span>
+                <% end %>
+              </dd>
+              <br>
+              <dt>Secondary Skills:</dt>
+              <dd>
+                <% @profile.secondary_skills.split(',').each do|skill| %>
+                  <span class="label label-info"><%= skill %></span>
+                <% end %>
+              </dd>
+            <% else %>
+              <dt>Title:</dt>
+              <dd><%= @profile.title %></dd>
+            <% end %>
           </dl>
         </div>
         <div class="col-md-3">
