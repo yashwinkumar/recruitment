@@ -4,6 +4,7 @@ class ResumesController < ApplicationController
 
   def show
     @resume_sections = @resume.resume_sections
+    @comments = @submission.comments.where(user_id: current_user.id)
   end
 
   private

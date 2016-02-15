@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
 
   def require_on_board
     if current_user and !current_user.profile.on_board?
-      flash[:danger] = 'Please update your profile, before continue.'
+      flash[:warning] = 'Please update your profile, before continue.'
       redirect_to edit_profile_path(current_user.profile)
     end
   end

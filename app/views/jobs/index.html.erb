@@ -1,43 +1,28 @@
 <h1>Listing Jobs</h1>
 
-<% if policy(@jobs).create? %>
-  <div class="pull-right">
-    <%= link_to 'Post Job', new_job_path %>
+<div class="pull-right">
+  <%= link_to 'Post Job', new_job_path %>
+</div>
+
+<ul id="myTabs" class="nav nav-tabs" role="tablist">
+  <li role="presentation" class="active">
+    <a href="#active" id="active-tab" role="tab" data-toggle="tab" aria-controls="active" aria-expanded="true">Active</a></li>
+  <li role="presentation" class="">
+    <a href="#hold" role="tab" id="hold-tab" data-toggle="tab" aria-controls="hold" aria-expanded="false">Hold</a>
+  </li>
+  <li role="presentation" class="">
+    <a href="#close" role="tab" id="close-tab" data-toggle="tab" aria-controls="close" aria-expanded="false">Close</a>
+  </li>
+</ul>
+<div id="myTabContent" class="tab-content">
+  <div role="tabpanel" class="tab-pane fade active in" id="active" aria-labelledby="active-tab">
+    <%= render partial: 'jobs', locals: {jobs: @active_jobs} %>
   </div>
-<% end %>
+  <div role="tabpanel" class="tab-pane fade" id="hold" aria-labelledby="hold-tab">
+    <%= render partial: 'jobs', locals: {jobs: @hold_jobs} %>
+  </div>
+  <div role="tabpanel" class="tab-pane fade" id="close" aria-labelledby="close-tab">
+    <%= render partial: 'jobs', locals: {jobs: @closed_jobs} %>
+  </div>
+</div>
 
-<table class="table table-bordered table-responsive">
-  <thead>
-  <tr>
-    <th>Title</th>
-    <th>Description</th>
-    <th>Location</th>
-    <th>Actions</th>
-  </tr>
-  </thead>
-
-  <tbody>
-  <% @jobs.each do |job| %>
-    <tr>
-      <td><%= link_to job.title, job_path(job) %></td>
-      <td><%= truncate(job.description, length: 20) %></td>
-      <td><%= job.location %></td>
-      <td>
-        <% if policy(job).edit? || policy(job).destroy? %>
-          <%= link_to 'Edit', edit_job_path(job) %>&nbsp;&nbsp;
-          <%= link_to 'Destroy', job, method: :delete, data: {confirm: 'Are you sure?'} %> &nbsp;&nbsp;
-        <% else %>
-          <% if job.submissions.find_by_user_id current_user.id %>
-            <a href="#" class="btn btn-default btn-sm disabled" role="button">Submitted</a>
-          <% elsif current_user.candidate? %>
-            <%= link_to "Apply", new_job_submission_path(job), class: 'btn btn-sm btn-info' %>
-          <% end %>
-        <% end %>
-
-        <% if policy(job).update? %>
-          <%= link_to 'Submissions', job_submissions_path(job) %>
-        <% end %>
-        </tr>
-  <% end %>
-  </tbody>
-</table>

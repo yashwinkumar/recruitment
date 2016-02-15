@@ -1,50 +1,36 @@
 <h1><%= @job.title %> Submissions</h1>
 
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Status</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% if @submissions.any? %>
-      <% @submissions.each do |submission| %>
-        <tr>
-          <td><%= submission.user.full_name %></td>
-          <td>
-            <%= submission.status.titleize %>
-            <% if submission.interview_scheduled? %>
-              on <%= submission.interview.date.strftime('%Y %b %d') %>
-              at <%= submission.interview.date.strftime('%I:%M %P') %>
-            <% end %>
-          </td>
-          <td>
-            <%= link_to 'View Resume', job_submission_resume_path(@job,submission,submission.resume.id) %>&nbsp;&nbsp; |
-            <% if policy(submission).update? %>
-              <% if submission.submitted? %>
-                <%= link_to 'Shortlist', change_status_job_submission_path(@job,submission, status: 'shortlist') %>&nbsp;&nbsp;|
-                <%= link_to 'Interview', new_job_submission_interview_path(@job,submission) %>&nbsp;&nbsp;|
-              <% elsif submission.shortlisted? %>
-                <%= link_to 'Interview', new_job_submission_interview_path(@job,submission) %>&nbsp;&nbsp;|
-              <% elsif submission.interview_scheduled? %>
-                <%= link_to 'Edit Interview', edit_job_submission_interview_path(@job,submission, submission.interview) %>&nbsp;&nbsp;|
-                <%= link_to 'Hire', change_status_job_submission_path(@job,submission, status: 'hire') %>&nbsp;&nbsp;|
-              <% end %>
-              <%= link_to 'Discard', change_status_job_submission_path(@job,submission, status: 'discard') %>&nbsp;&nbsp;
-            <% end %>
-            <% if policy(submission).destroy? %>
-              <%= link_to 'Destroy', job_submission_path(@job,submission), method: :delete, data: { confirm: 'Are you sure?' } %>
-            <% end %>
-          </td>
-        </tr>
-      <% end %>
-  <% else %>
-    <tr class="text-info">
-      <td colspan="2">No submissions</td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
+<ul id="myTabs" class="nav nav-tabs" role="tablist">
+  <li role="presentation" class="active">
+    <a href="#new" id="new-tab" role="tab" data-toggle="tab" aria-controls="new" aria-expanded="true">New</a>
+  </li>
+  <li role="presentation">
+    <a href="#processing" id="new-tab" role="tab" data-toggle="tab" aria-controls="processing" aria-expanded="true">Processing</a>
+  </li>
+  <li role="presentation" class="">
+    <a href="#park" role="tab" id="park-tab" data-toggle="tab" aria-controls="park" aria-expanded="false">Parked</a>
+  </li>
+  <li role="presentation" class="">
+    <a href="#reject" role="tab" id="close-tab" data-toggle="tab" aria-controls="reject" aria-expanded="false">Rejected</a>
+  </li>
+  <li role="presentation" class="">
+    <a href="#hire" role="tab" id="close-tab" data-toggle="tab" aria-controls="hire" aria-expanded="false">Hired</a>
+  </li>
+</ul>
+<div id="myTabContent" class="tab-content">
+  <div role="tabpanel" class="tab-pane fade active in" id="new" aria-labelledby="new-tab">
+    <%= render partial: 'submissions', locals: {job: @job, submissions: @new_submissions} %>
+  </div>
+  <div role="tabpanel" class="tab-pane fade" id="processing" aria-labelledby="processing-tab">
+    <%= render partial: 'submissions', locals: {job: @job, submissions: @processing_submissions} %>
+  </div>
+  <div role="tabpanel" class="tab-pane fade" id="park" aria-labelledby="park-tab">
+    <%= render partial: 'submissions', locals: {job: @job, submissions: @parked_submissions} %>
+  </div>
+  <div role="tabpanel" class="tab-pane fade" id="reject" aria-labelledby="reject-tab">
+    <%= render partial: 'submissions', locals: {job: @job, submissions: @rejected_submissions} %>
+  </div>
+  <div role="tabpanel" class="tab-pane fade" id="hire" aria-labelledby="hire-tab">
+    <%= render partial: 'submissions', locals: {job: @job, submissions: @hired_submissions} %>
+  </div>
+</div>
