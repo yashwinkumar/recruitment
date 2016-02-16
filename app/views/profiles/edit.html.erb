@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-8">
+  <div class="col-md-11">
     <div class="panel panel-info">
       <div class="panel-heading">
         <h3 class="panel-title">
@@ -7,7 +7,8 @@
         </h3>
       </div>
       <div class="panel-body">
-        <%= form_for(@profile, html: {class: 'form-horizontal'}) do |f| %>
+        <%= form_for(@profile, html: {class: 'form-horizontal validate'}) do |f| %>
+          <%= f.hidden_field :on_board , value: true%>
           <% if @profile.errors.any? %>
             <div class="well well-sm text-danger">
               <ul>
@@ -20,31 +21,75 @@
           <div class="col-md-8">
 
             <div class="form-group">
-              <%= f.label :first_name, class: 'col-sm-3 control-label' %>
-              <div class="col-sm-9">
-                <%= f.text_field :first_name, class: 'form-control' %>
+              <%= f.label :first_name, class: 'col-sm-4 control-label' %>
+              <div class="col-sm-8">
+                <%= f.text_field :first_name, class: 'form-control', required: true %>
               </div>
             </div>
 
             <div class="form-group">
-              <%= f.label :last_name, class: 'col-sm-3 control-label' %>
-              <div class="col-sm-9">
-                <%= f.text_field :last_name, class: 'form-control' %>
+            <%= f.label :last_name, class: 'col-sm-4 control-label' %>
+            <div class="col-sm-8">
+              <%= f.text_field :last_name, class: 'form-control', required: true %>
+            </div>
+          </div>
+            <div class="form-group">
+              <%= f.label :phone, class: 'col-sm-4 control-label' %>
+              <div class="col-sm-8">
+                <%= f.text_field :phone, class: 'form-control', required: true %>
               </div>
             </div>
             <div class="form-group">
-              <%= f.label :phone, class: 'col-sm-3 control-label' %>
-              <div class="col-sm-9">
-                <%= f.text_field :phone, class: 'form-control' %>
+              <%= f.label :location, class: 'col-sm-4 control-label' %>
+              <div class="col-sm-8">
+                <%= f.text_field :location, class: 'form-control loc_auto_comp', required: true %>
               </div>
             </div>
             <div class="form-group">
-              <%= f.label :dob, 'DOB', class: 'col-sm-3 control-label' %>
-              <div class="col-sm-9">
+              <%= f.label :current_employer, class: 'col-sm-4 control-label' %>
+              <div class="col-sm-8">
+                <%= f.text_field :current_employer, class: 'form-control'%>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label :dob, 'DOB', class: 'col-sm-4 control-label' %>
+              <div class="col-sm-8">
                 <%= f.text_field :dob, class: 'form-control has_datepicker' %>
               </div>
             </div>
-
+            <% if current_user.candidate?  %>
+              <div class="form-group">
+                <%= f.label :experience, class: 'col-sm-4 control-label' %>
+                <div class="col-sm-8">
+                  <%= f.text_field :experience, class: 'form-control' %>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= f.label :compensation, class: 'col-sm-4 control-label' %>
+                <div class="col-sm-8">
+                  <%= f.text_field :compensation, class: 'form-control' %>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= f.label :primary_skills, class: 'col-sm-4 control-label' %>
+                <div class="col-sm-8">
+                  <%= f.text_area :primary_skills, class: 'form-control' %>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= f.label :secondary_skills, class: 'col-sm-4 control-label' %>
+                <div class="col-sm-8">
+                  <%= f.text_area :secondary_skills, class: 'form-control' %>
+                </div>
+              </div>
+            <% else %>
+              <div class="form-group">
+                <%= f.label :title, class: 'col-sm-4 control-label' %>
+                <div class="col-sm-8">
+                  <%= f.text_field :title, class: 'form-control' %>
+                </div>
+              </div>
+            <% end %>
           </div>
           <div class="col-md-4">
             <%= image_tag @profile.display_picture, class: 'thumbnail' ,width: '50%' %>
@@ -70,10 +115,23 @@
 
 <script>
   $(function() {
-    $(".has_datepicker" ).datepicker({
-      dateFormat: "yy-mm-dd",
-      changeMonth: true,
-      changeYear: true
+    $(".has_datepicker" ).datetimepicker({
+      timepicker:false,
+      format: 'Y/m/d'
+    });
+  });
+
+  // location auto completer
+  $('.loc_auto_comp').click(function (e) {
+    var id = $(this).attr('id');
+    var inputxx = document.getElementById(id);
+    var optionsxx = {
+      types: ['geocode']
+    };
+
+    var autocomplete = new google.maps.places.Autocomplete(inputxx, optionsxx);
+    google.maps.event.addListener(autocomplete, 'place_changed', function () {
+      var place = autocomplete.getPlace();
     });
   });
 </script>

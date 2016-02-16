@@ -4,8 +4,12 @@ class SubmissionsController < ApplicationController
   layout 'dashboard'
 
   def index
-    @submissions = @job.submissions.includes(:user,:job)
-    authorize @submissions
+    @new_submissions = @job.submissions.includes(:user,:job).active
+    @processing_submissions = @job.submissions.includes(:user,:job).process
+    @parked_submissions = @job.submissions.includes(:user,:job).parked
+    @rejected_submissions = @job.submissions.includes(:user,:job).discarded
+    @hired_submissions = @job.submissions.includes(:user,:job).hired
+    # authorize @submissions
   end
 
   def show
@@ -24,7 +28,10 @@ class SubmissionsController < ApplicationController
     ActiveRecord::Base.transaction do
       @submission = current_user.submissions.new
       @submission.job_id = @job.id
-      if @submission.save
+      @submission.availability_1 = params[:submission][:availability_1]
+      @submission.availability_2 = params[:submission][:availability_2]
+      @submission.availability_3 = params[:submission][:availability_3]
+      if @submission.save!
         @resume = @submission.build_resume
         @resume.template = @job.template
         @resume.save
@@ -32,7 +39,7 @@ class SubmissionsController < ApplicationController
           @resume_section = @resume.resume_sections.new(v)
           @resume_section.save!
         end
-        redirect_to openings_jobs_path, notice: 'Submission was successfully created.'
+        redirect_to openings_jobs_path, notice: 'Your profile was successfully submitted.'
       else
         @template = @job.template
         @template_sections = @template.sections || []
@@ -44,7 +51,7 @@ class SubmissionsController < ApplicationController
   def update
     respond_to do |format|
       if @submission.update(submission_params)
-        format.html { redirect_to @submission, notice: 'Submission was successfully updated.' }
+        format.html { redirect_to @submission, notice: 'profile was successfully updated.' }
         format.json { render :show, status: :ok, location: @submission }
       else
         format.html { render :edit }
@@ -62,14 +69,31 @@ class SubmissionsController < ApplicationController
   end
 
   def change_status
-    if params[:status] == 'shortlist'
-      @submission.shortlist
+    if params[:status] == 'process'
+      @submission.process
     elsif params[:status] == 'discard'
       @submission.discard
     elsif params[:status] == 'hire'
       @submission.hire
     end
-    redirect_to :back
+    redirect_to job_submissions_path(@job)
+  end
+
+  def save_comment
+    comment = @submission.comments.new
+    comment.description = params[:comment]
+    comment.user_id = current_user.id
+    if comment.save
+      if params[:status] == 'park'
+        @submission.park
+      elsif params[:status] == 'discard'
+        @submission.discard
+      end
+      redirect_to job_submissions_path(@job)
+    else
+      flash[:danger] = 'Something went wrong.'
+      redirect_to :back
+    end
   end
 
   private
@@ -82,6 +106,6 @@ class SubmissionsController < ApplicationController
     end
 
     def submission_params
-      params.require(:submission).permit({:resume_sections_attributes => [:video, :rating, :section_id]})
+      params.require(:submission).permit(:availability_1, :availability_2, :availability_3, {:resume_sections_attributes => [:video, :rating, :section_id]})
     end
 end

@@ -1,8 +1,15 @@
 class Submission < ActiveRecord::Base
   has_one :resume, dependent: :destroy
   has_one :interview, dependent: :destroy
+  has_many :comments, as: :commentable, dependent: :destroy
   belongs_to :user
   belongs_to :job
+
+  scope :active, -> {where status: 'submitted'}
+  scope :process, -> {where status: 'processing'}
+  scope :discarded, -> {where status: 'discarded'}
+  scope :parked, -> {where status: 'parked'}
+  scope :hired, -> {where status: 'hired'}
 
   validates_presence_of :user_id, :job_id
   validates_uniqueness_of :user_id, scope: :job_id, message: 'Already submitted for this position.'
@@ -14,22 +21,27 @@ class Submission < ActiveRecord::Base
     after_transition :on => :refer, :do => :submission_email
 
     event :discard do
-      transition :submitted => :discarded
+      transition :submitted => :discarded, :parked => :discarded
     end
     after_transition :on => :discard, :do => :discard_email
 
-    event :shortlist do
-      transition :submitted => :shortlisted
+    event :process do
+      transition :submitted => :processing, :parked => :processing, :discarded => :processing
     end
-    after_transition :on => :shortlisted, :do => :shortlist_email
+    after_transition :on => :processing, :do => :processing_email
+
+    event :park do
+      transition :submitted => :parked, :discarded => :parked
+    end
+    after_transition :on => :parking, :do => :parked_email
 
     event :schedule_interview do
-      transition :submitted => :interview_scheduled, :shortlisted => :interview_scheduled
+      transition :submitted => :interview_scheduled, :processing => :interview_scheduled
     end
     after_transition :on => :schedule_interview, :do => :interview_email
 
     event :hire do
-      transition :interview_scheduled => :hired, :shortlisted => :hired
+      transition :interview_scheduled => :hired, :processing => :hired
     end
     after_transition :on => :hire, :do => :hire_email
   end
@@ -42,8 +54,12 @@ class Submission < ActiveRecord::Base
     Notifier.discard_email(self).deliver_now
   end
 
-  def shortlist_email
-    Notifier.shortlist_email(self).deliver_now
+  def processing_email
+    Notifier.processing_email(self).deliver_now
+  end
+
+  def parked_email
+    Notifier.parked_email(self).deliver_now
   end
 
   def interview_email
@@ -58,9 +74,18 @@ class Submission < ActiveRecord::Base
     status == 'submitted'
   end
 
-  def shortlisted?
-    status == 'shortlisted'
+  def processing?
+    status == 'processing'
   end
+
+  def parked?
+    status == 'parked'
+  end
+
+  def discarded?
+    status == 'discarded'
+  end
+
 
   def interview_scheduled?
     status == 'interview_scheduled' and interview

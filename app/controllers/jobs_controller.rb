@@ -1,10 +1,12 @@
 class JobsController < ApplicationController
-  before_action :set_job, only: [:show, :edit, :update, :destroy]
+  before_action :set_job, only: [:show, :edit, :update, :destroy, :change_status]
   layout "dashboard"
 
   def index
-    @jobs = current_user.my_jobs
-    authorize @jobs
+    @active_jobs = current_user.my_jobs.active
+    @hold_jobs = current_user.my_jobs.hold
+    @closed_jobs = current_user.my_jobs.closed
+    # authorize @jobs
   end
 
   def show
@@ -25,7 +27,7 @@ class JobsController < ApplicationController
     authorize @job
     respond_to do |format|
       if @job.save
-        format.html { redirect_to @job, notice: 'Job was successfully created.' }
+        format.html { redirect_to @job, notice: 'Job was successfully posted.' }
         format.json { render :show, status: :created, location: @job }
       else
         format.html { render :new }
@@ -58,6 +60,17 @@ class JobsController < ApplicationController
       format.html { redirect_to jobs_url, notice: 'Job was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def change_status
+    if params[:status] == 'active'
+      @job.active
+    elsif params[:status] == 'hold'
+      @job.hold
+    elsif params[:status] == 'close'
+      @job.close
+    end
+    redirect_to :back
   end
 
   private

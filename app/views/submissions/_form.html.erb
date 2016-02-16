@@ -19,7 +19,7 @@
         </div>
       </div>
       <div class="form-group">
-        <%= resume_sec.label :rating, class: 'col-sm-2 radio-inline' %>
+        <%= resume_sec.label :rating, class: 'col-sm-2 control-label' %>
         <div class="col-sm-4">
           <%#= resume_sec.select :rating, options_for_select((1..10)),{prompt: 'Select Rating'}, { class: 'form-control', name: "submission[resume_sections_attributes][#{i}][rating]", required: true} %>
           <%= resume_sec.collection_radio_buttons :rating,(1..5).map{|n| [n, n]}, :first, :last,{} ,{ class: 'radio-inline', name: "submission[resume_sections_attributes][#{i}][rating]", required: true, style: 'margin: 10px 5px 10px 10px'} %>
@@ -30,8 +30,47 @@
   <% end %>
 
   <div class="form-group">
+    <%= f.label :availability_1, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+      <%= f.text_field :availability_1, class: 'form-control has_datetimepicker', required: true %>
+      <span class="help-block">Pick time slots for interview in next 15-30 days</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :availability_2, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+      <%= f.text_field :availability_2, class: 'form-control has_datetimepicker', required: true %>
+      <span class="help-block">Pick time slots for interview in next 15-30 days</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :availability_3, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+      <%= f.text_field :availability_3, class: 'form-control has_datetimepicker', required: true %>
+      <span class="help-block">Pick time slots for interview in next 15-30 days</span>
+    </div>
+  </div>
+
+  <div class="form-group">
     <div class="col-sm-offset-2 col-sm-4">
       <%= f.submit :submit, class: 'btn btn-success btn-block' %>
     </div>
   </div>
 <% end %>
+
+
+
+<script>
+
+  $(function() {
+    $(".has_datetimepicker" ).datetimepicker({
+      minDate:'+1970/01/15',//next 15th day is minimum date(for today use 0 or -1970/01/01)
+      maxDate:'+1970/01/30',//next 30th day is maximum date calendar
+      scrollMonth: false
+    });
+  });
+
+
+</script>

@@ -17,10 +17,16 @@ class Notifier < ApplicationMailer
     mail(to: @user.email, subject: "Discarded application for #{@job.title}")
   end
 
-  def shortlist_email(submission)
+  def processing_email(submission)
     @job = submission.job
     @user  = submission.user
-    mail(to: @user.email, subject: "Shortlisted application for #{@job.title}")
+    mail(to: @user.email, subject: "You application is processing for #{@job.title}")
+  end
+
+  def parked_email(submission)
+    @job = submission.job
+    @user  = submission.user
+    mail(to: @user.email, subject: "You application is parked for #{@job.title}")
   end
 
   def interview_email(submission)

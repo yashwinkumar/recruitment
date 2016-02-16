@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160204191544) do
+ActiveRecord::Schema.define(version: 20160215193804) do
+
+  create_table "comments", force: :cascade do |t|
+    t.integer  "user_id",          limit: 4
+    t.integer  "commentable_id",   limit: 4
+    t.string   "commentable_type", limit: 255
+    t.text     "description",      limit: 65535
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
 
   create_table "interviews", force: :cascade do |t|
     t.integer  "user_id",       limit: 4
@@ -32,17 +41,26 @@ ActiveRecord::Schema.define(version: 20160204191544) do
     t.datetime "updated_at",                     null: false
     t.integer  "hiring_user_id",     limit: 4
     t.integer  "consultant_user_id", limit: 4
+    t.string   "status",             limit: 255
   end
 
   create_table "profiles", force: :cascade do |t|
-    t.integer  "user_id",    limit: 4
-    t.string   "first_name", limit: 255
-    t.string   "last_name",  limit: 255
-    t.string   "phone",      limit: 255
-    t.string   "picture",    limit: 255
+    t.integer  "user_id",          limit: 4
+    t.string   "first_name",       limit: 255
+    t.string   "last_name",        limit: 255
+    t.string   "phone",            limit: 255
+    t.string   "picture",          limit: 255
     t.date     "dob"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.string   "location",         limit: 255
+    t.string   "current_employer", limit: 255
+    t.string   "title",            limit: 255
+    t.string   "experience",       limit: 255
+    t.text     "primary_skills",   limit: 65535
+    t.text     "secondary_skills", limit: 65535
+    t.string   "compensation",     limit: 255
+    t.boolean  "on_board"
   end
 
   create_table "resume_sections", force: :cascade do |t|
@@ -81,12 +99,15 @@ ActiveRecord::Schema.define(version: 20160204191544) do
   end
 
   create_table "submissions", force: :cascade do |t|
-    t.integer  "user_id",    limit: 4
-    t.integer  "resume_id",  limit: 4
-    t.integer  "job_id",     limit: 4
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.string   "status",     limit: 255
+    t.integer  "user_id",        limit: 4
+    t.integer  "resume_id",      limit: 4
+    t.integer  "job_id",         limit: 4
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.string   "status",         limit: 255
+    t.datetime "availability_1"
+    t.datetime "availability_2"
+    t.datetime "availability_3"
   end
 
   create_table "templates", force: :cascade do |t|
