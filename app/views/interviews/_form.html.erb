@@ -5,7 +5,7 @@
 
       <%= f.input :user_id, input_html: { value: current_user.id}, as: :hidden %>
       <%= f.input :job_id, input_html: { value: @job.id }, as: :hidden %>
-      <%= f.input :date %>
+      <%= f.collection_radio_buttons :date, [[@submission.availability_1.strftime('%d/%b/%Y %I:%M %P'), @submission.availability_1.strftime('%d/%b%Y %I:%M %P')] ,[@submission.availability_2, @submission.availability_2.strftime('%d/%b/%Y %I:%M %P')], [@submission.availability_3, @submission.availability_3.strftime('%d/%b/%Y %I:%M %P')]], :first, :last %>
       <%= f.input :description, as: :text %>
       <%= f.submit class: 'btn btn-success' %>
     <% end %>

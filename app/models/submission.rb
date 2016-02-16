@@ -7,8 +7,9 @@ class Submission < ActiveRecord::Base
 
   scope :active, -> {where status: 'submitted'}
   scope :process, -> {where status: 'processing'}
-  scope :discarded, -> {where status: 'discarded'}
-  scope :parked, -> {where status: 'parked'}
+  scope :discarded, -> (activity_user_id) { where(status: 'discarded', activity_user_id: activity_user_id) }
+  scope :parked, -> (activity_user_id) { where(status: 'parked', activity_user_id: activity_user_id) }
+  scope :interview, -> {where status: 'interview_scheduled'}
   scope :hired, -> {where status: 'hired'}
 
   validates_presence_of :user_id, :job_id
@@ -44,6 +45,8 @@ class Submission < ActiveRecord::Base
       transition :interview_scheduled => :hired, :processing => :hired
     end
     after_transition :on => :hire, :do => :hire_email
+
+    #after_transition :update_activity_user
   end
 
   def submission_email
@@ -51,7 +54,7 @@ class Submission < ActiveRecord::Base
   end
 
   def discard_email
-    Notifier.discard_email(self).deliver_now
+     Notifier.discard_email(self).deliver_now
   end
 
   def processing_email
@@ -59,7 +62,7 @@ class Submission < ActiveRecord::Base
   end
 
   def parked_email
-    Notifier.parked_email(self).deliver_now
+     Notifier.parked_email(self).deliver_now
   end
 
   def interview_email

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160215193804) do
+ActiveRecord::Schema.define(version: 20160216074925) do
 
   create_table "comments", force: :cascade do |t|
     t.integer  "user_id",          limit: 4
@@ -99,15 +99,16 @@ ActiveRecord::Schema.define(version: 20160215193804) do
   end
 
   create_table "submissions", force: :cascade do |t|
-    t.integer  "user_id",        limit: 4
-    t.integer  "resume_id",      limit: 4
-    t.integer  "job_id",         limit: 4
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.string   "status",         limit: 255
+    t.integer  "user_id",          limit: 4
+    t.integer  "resume_id",        limit: 4
+    t.integer  "job_id",           limit: 4
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.string   "status",           limit: 255
     t.datetime "availability_1"
     t.datetime "availability_2"
     t.datetime "availability_3"
+    t.integer  "activity_user_id", limit: 4
   end
 
   create_table "templates", force: :cascade do |t|

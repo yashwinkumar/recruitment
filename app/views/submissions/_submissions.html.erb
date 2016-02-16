@@ -21,25 +21,13 @@
           <% end %>
         </td>
         <td>
-          <%= link_to 'View Resume', job_submission_resume_path(job,submission,submission.resume.id) %>&nbsp;&nbsp;
-          <% if policy(submission).update? %>
-            <% if submission.submitted? %>
-              <%= link_to 'Shortlist', change_status_job_submission_path(job,submission, status: 'shortlist') %>&nbsp;&nbsp;|
-              <%= link_to 'Interview', new_job_submission_interview_path(job,submission) %>&nbsp;&nbsp;|
-            <% elsif submission.shortlisted? %>
-              <%= link_to 'Interview', new_job_submission_interview_path(job,submission) %>&nbsp;&nbsp;|
-            <% elsif submission.interview_scheduled? %>
-              <%= link_to 'Edit Interview', edit_job_submission_interview_path(job,submission, submission.interview) %>&nbsp;&nbsp;|
-              <%= link_to 'Hire', change_status_job_submission_path(job,submission, status: 'hire') %>&nbsp;&nbsp;|
-            <% end %>
-            <%= link_to 'Discard', change_status_job_submission_path(job,submission, status: 'discard') %>&nbsp;&nbsp;
-          <% end %>
+          <%= link_to 'View Resume', job_submission_resume_path(job,submission,submission.resume.id) %>
         </td>
       </tr>
     <% end %>
   <% else %>
     <tr class="text-info">
-      <td colspan="2">No submissions</td>
+      <td colspan="3">No submissions</td>
     </tr>
   <% end %>
   </tbody>

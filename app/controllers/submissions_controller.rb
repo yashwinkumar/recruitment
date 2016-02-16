@@ -6,8 +6,9 @@ class SubmissionsController < ApplicationController
   def index
     @new_submissions = @job.submissions.includes(:user,:job).active
     @processing_submissions = @job.submissions.includes(:user,:job).process
-    @parked_submissions = @job.submissions.includes(:user,:job).parked
-    @rejected_submissions = @job.submissions.includes(:user,:job).discarded
+    @parked_submissions = @job.submissions.includes(:user,:job).parked(current_user.id)
+    @rejected_submissions = @job.submissions.includes(:user,:job).discarded(current_user.id)
+    @interview_submissions = @job.submissions.includes(:user,:job).interview
     @hired_submissions = @job.submissions.includes(:user,:job).hired
     # authorize @submissions
   end
@@ -31,7 +32,7 @@ class SubmissionsController < ApplicationController
       @submission.availability_1 = params[:submission][:availability_1]
       @submission.availability_2 = params[:submission][:availability_2]
       @submission.availability_3 = params[:submission][:availability_3]
-      if @submission.save!
+      if @submission.save
         @resume = @submission.build_resume
         @resume.template = @job.template
         @resume.save
@@ -71,8 +72,6 @@ class SubmissionsController < ApplicationController
   def change_status
     if params[:status] == 'process'
       @submission.process
-    elsif params[:status] == 'discard'
-      @submission.discard
     elsif params[:status] == 'hire'
       @submission.hire
     end
@@ -86,8 +85,11 @@ class SubmissionsController < ApplicationController
     if comment.save
       if params[:status] == 'park'
         @submission.park
+        @submission.update_attribute(:activity_user_id, current_user.id)
       elsif params[:status] == 'discard'
         @submission.discard
+        @submission.update_attribute(:activity_user_id, current_user.id)
+        Notifier.discard_email_to_consultant(@submission).deliver_now if current_user.hm?
       end
       redirect_to job_submissions_path(@job)
     else
