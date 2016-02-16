@@ -1,9 +1,10 @@
-Hi <%= @user.full_name %>
+Hi <%= @consultant.full_name %>
 
-<p> Your application is Discarded for <%= @job.title %> position.</p>
+<p> Your applicant <%= @user.full_name %> is Discarded for <%= @job.title %> position.</p>
 <p><strong>Comments:</strong></p>
 <ul>
   <% @submission.comments.each do|comment| %>
     <li><%= comment.description %></li>
   <% end %>
 </ul>
+

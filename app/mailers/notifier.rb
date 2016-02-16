@@ -12,9 +12,18 @@ class Notifier < ApplicationMailer
   end
 
   def discard_email(submission)
+    @submission = submission
     @job = submission.job
     @user  = submission.user
     mail(to: @user.email, subject: "Discarded application for #{@job.title}")
+  end
+
+  def discard_email_to_consultant(submission)
+    @submission = submission
+    @job = submission.job
+    @consultant  = @job.consultant
+    @candidate  = submission.user
+    mail(to: @consultant.email, subject: "Discarded application for #{@job.title}")
   end
 
   def processing_email(submission)

@@ -1,36 +1,54 @@
 <h1><%= @job.title %> Submissions</h1>
 
 <ul id="myTabs" class="nav nav-tabs" role="tablist">
-  <li role="presentation" class="active">
-    <a href="#new" id="new-tab" role="tab" data-toggle="tab" aria-controls="new" aria-expanded="true">New</a>
-  </li>
-  <li role="presentation">
-    <a href="#processing" id="new-tab" role="tab" data-toggle="tab" aria-controls="processing" aria-expanded="true">Processing</a>
-  </li>
+  <% if current_user.hm? %>
+    <li role="presentation" class="active">
+      <a href="#new" id="new-tab" role="tab" data-toggle="tab" aria-controls="new" aria-expanded="true">New</a>
+    </li>
+  <% else %>
+    <li role="presentation" class="active">
+      <a href="#new" id="new-tab" role="tab" data-toggle="tab" aria-controls="new" aria-expanded="true">New</a>
+    </li>
+    <li role="presentation">
+      <a href="#processing" id="new-tab" role="tab" data-toggle="tab" aria-controls="processing" aria-expanded="true">Processing</a>
+    </li>
+  <% end %>
   <li role="presentation" class="">
     <a href="#park" role="tab" id="park-tab" data-toggle="tab" aria-controls="park" aria-expanded="false">Parked</a>
   </li>
   <li role="presentation" class="">
-    <a href="#reject" role="tab" id="close-tab" data-toggle="tab" aria-controls="reject" aria-expanded="false">Rejected</a>
+    <a href="#interview" role="tab" id="close-tab" data-toggle="tab" aria-controls="interview" aria-expanded="false">Interview</a>
   </li>
   <li role="presentation" class="">
     <a href="#hire" role="tab" id="close-tab" data-toggle="tab" aria-controls="hire" aria-expanded="false">Hired</a>
   </li>
+  <li role="presentation" class="">
+    <a href="#reject" role="tab" id="close-tab" data-toggle="tab" aria-controls="reject" aria-expanded="false">Rejected</a>
+  </li>
 </ul>
 <div id="myTabContent" class="tab-content">
-  <div role="tabpanel" class="tab-pane fade active in" id="new" aria-labelledby="new-tab">
-    <%= render partial: 'submissions', locals: {job: @job, submissions: @new_submissions} %>
-  </div>
-  <div role="tabpanel" class="tab-pane fade" id="processing" aria-labelledby="processing-tab">
-    <%= render partial: 'submissions', locals: {job: @job, submissions: @processing_submissions} %>
-  </div>
+  <% if current_user.hm? %>
+    <div role="tabpanel" class="tab-pane fade active in" id="new" aria-labelledby="new-tab">
+      <%= render partial: 'submissions', locals: {job: @job, submissions: @processing_submissions} %>
+    </div>
+  <% else %>
+    <div role="tabpanel" class="tab-pane fade" id="new" aria-labelledby="new-tab">
+      <%= render partial: 'submissions', locals: {job: @job, submissions: @new_submissions} %>
+    </div>
+    <div role="tabpanel" class="tab-pane fade" id="processing" aria-labelledby="processing-tab">
+      <%= render partial: 'submissions', locals: {job: @job, submissions: @processing_submissions} %>
+    </div>
+  <% end %>
   <div role="tabpanel" class="tab-pane fade" id="park" aria-labelledby="park-tab">
     <%= render partial: 'submissions', locals: {job: @job, submissions: @parked_submissions} %>
   </div>
-  <div role="tabpanel" class="tab-pane fade" id="reject" aria-labelledby="reject-tab">
-    <%= render partial: 'submissions', locals: {job: @job, submissions: @rejected_submissions} %>
+  <div role="tabpanel" class="tab-pane fade" id="interview" aria-labelledby="interview-tab">
+    <%= render partial: 'submissions', locals: {job: @job, submissions: @interview_submissions} %>
   </div>
   <div role="tabpanel" class="tab-pane fade" id="hire" aria-labelledby="hire-tab">
     <%= render partial: 'submissions', locals: {job: @job, submissions: @hired_submissions} %>
+  </div>
+  <div role="tabpanel" class="tab-pane fade" id="reject" aria-labelledby="reject-tab">
+    <%= render partial: 'submissions', locals: {job: @job, submissions: @rejected_submissions} %>
   </div>
 </div>

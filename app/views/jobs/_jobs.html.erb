@@ -19,13 +19,13 @@
         <% if policy(job).edit? %>
           <%= link_to 'Edit', edit_job_path(job) %>&nbsp;&nbsp;
           <% if job.active? %>
-            | &nbsp;&nbsp;<%= link_to 'Hold', change_status_job_path(job, status: 'hold') %>&nbsp;&nbsp;
-            | &nbsp;&nbsp; <%= link_to 'Close', change_status_job_path(job, status: 'close') %>&nbsp;&nbsp;
+            <%= link_to 'Hold', change_status_job_path(job, status: 'hold') %>&nbsp;&nbsp;
+            <%= link_to 'Close', change_status_job_path(job, status: 'close') %>&nbsp;&nbsp;
           <% elsif job.hold? %>
-            | &nbsp;&nbsp;<%= link_to 'Active', change_status_job_path(job, status: 'active') %> &nbsp;&nbsp;
-            | &nbsp;&nbsp;<%= link_to 'Close', change_status_job_path(job, status: 'close') %> &nbsp;&nbsp;
+            <%= link_to 'Active', change_status_job_path(job, status: 'active') %> &nbsp;&nbsp;
+            <%= link_to 'Close', change_status_job_path(job, status: 'close') %> &nbsp;&nbsp;
           <% elsif job.closed? %>
-            | &nbsp;&nbsp;<%= link_to 'Active', change_status_job_path(job, status: 'active') %> &nbsp;&nbsp;
+            <%= link_to 'Active', change_status_job_path(job, status: 'active') %> &nbsp;&nbsp;
           <% end %>
         <% else %>
           <% if job.submissions.find_by_user_id current_user.id %>
@@ -36,7 +36,7 @@
         <% end %>
 
         <% if policy(job).update? %>
-          | &nbsp;&nbsp; <%= link_to 'Submissions', job_submissions_path(job) %>
+          <%= link_to 'Submissions', job_submissions_path(job) %>
         <% end %>
         </tr>
   <% end %>
