@@ -1,0 +1,18 @@
+h2 style="text-align:center"
+  ' Phone Verification
+
+.col-md-6.col-md-offset-3
+  = form_tag verify_phones_path, :method => :put, :class => "form-horizontal" do
+    .form-group
+      = label_tag :phone, nil, class: "col-sm-2 control-label"
+      .col-sm-10
+        label.form-control
+          = "xxxxxx#{current_user.profile.phone.last(5)}"
+    .form-group
+      = label_tag :pin, nil, class: "col-sm-2 control-label"
+      .col-sm-10
+        = text_field_tag :pin, nil, placeholder: 'PIN', class: "form-control", autocomplete: :off
+
+    .form-group
+      .col-sm-offset-2.col-sm-10
+        = submit_tag "Verify", class: 'btn btn-primary'
