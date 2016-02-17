@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+
+  resource :phones do
+    put :verify
+  end
   resources :templates do
     get :add_more_sections, on: :collection
   end

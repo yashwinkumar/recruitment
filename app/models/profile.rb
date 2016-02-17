@@ -1,4 +1,5 @@
 class Profile < ActiveRecord::Base
+  include UserOnBoard
   belongs_to :user
 
   mount_uploader :picture, ProfileUploader

@@ -1,7 +1,9 @@
 <h1>Listing Jobs</h1>
 
 <div class="pull-right">
-  <%= link_to 'Post Job', new_job_path %>
+  <% if policy(@active_jobs).create? %>
+    <%= link_to 'Post Job', new_job_path %>
+  <% end %>
 </div>
 
 <ul id="myTabs" class="nav nav-tabs" role="tablist">
@@ -25,4 +27,3 @@
     <%= render partial: 'jobs', locals: {jobs: @closed_jobs} %>
   </div>
 </div>
-
