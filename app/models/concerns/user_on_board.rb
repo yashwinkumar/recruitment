@@ -31,16 +31,16 @@ module UserOnBoard
   private
 
   def send_pin
-    begin
-      client = Twilio::REST::Client.new
+    # begin
+      client = Twilio::REST::Client.new("AC876aa6ede2d2a4307e809e126b2e4699", "85b5f9b5a6cc27b7a3c12ae20c456ce3")
       client.messages.create(
         from: "+14242851283",
         to: self.phone,
         body: "Your PIN #{self.phone_verification_code} to verify."
       )
-    rescue Exception => e
-      self.errors.add(:phone, "Phone number not valid")
-    end
+    # rescue Exception => e
+    #   self.errors.add(:phone, "Phone number not valid")
+    # end
   end
 
   def generate_phone_code
