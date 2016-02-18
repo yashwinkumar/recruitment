@@ -10,7 +10,7 @@ class ProfilesController < ApplicationController
 
   def update
     respond_to do |format|
-      if @profile.update(profile_params)
+      if @profile.update(profile_params) && @profile.errors.messages.empty?
         format.html { redirect_to @profile, notice: 'Profile was successfully updated.' }
         format.json { render :show, status: :ok, location: @profile }
       else
