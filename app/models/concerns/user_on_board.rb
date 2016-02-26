@@ -36,7 +36,7 @@ module UserOnBoard
       client.messages.create(
         from: "+14242851283",
         to: self.phone,
-        body: "Your PIN #{self.phone_verification_code} to verify."
+        body: "VideoResume Application. Your PIN #{self.phone_verification_code} to verify."
       )
     rescue Exception => e
       self.errors.add(:phone, " number is not valid")
