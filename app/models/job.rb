@@ -8,6 +8,8 @@ class Job < ActiveRecord::Base
   scope :hold, -> {where(status: 'hold')}
   scope :closed, -> {where(status: 'closed')}
 
+  validates :template_id, :title, :description, :hiring_user_id, :consultant_user_id, presence: true
+
   state_machine :status, :initial => :active do
     event :active do
       transition any => :active
