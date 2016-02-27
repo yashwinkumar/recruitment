@@ -26,26 +26,27 @@ class SubmissionsController < ApplicationController
   end
 
   def create
+    @submission = current_user.submissions.new
+    @submission.job_id = @job.id
+    @submission.availability_1 = params[:submission][:availability_1]
+    @submission.availability_2 = params[:submission][:availability_2]
+    @submission.availability_3 = params[:submission][:availability_3]
     ActiveRecord::Base.transaction do
-      @submission = current_user.submissions.new
-      @submission.job_id = @job.id
-      @submission.availability_1 = params[:submission][:availability_1]
-      @submission.availability_2 = params[:submission][:availability_2]
-      @submission.availability_3 = params[:submission][:availability_3]
-      if @submission.save
-        @resume = @submission.build_resume
-        @resume.template = @job.template
-        @resume.save
-        submission_params[:resume_sections_attributes].each do|k,v|
-          @resume_section = @resume.resume_sections.new(v)
-          @resume_section.save!
-        end
-        redirect_to openings_jobs_path, notice: 'Your profile was successfully submitted.'
-      else
-        @template = @job.template
-        @template_sections = @template.sections || []
-        render :new
+      @submission.save
+      @resume = @submission.build_resume
+      @resume.template = @job.template
+      @resume.save
+      submission_params[:resume_sections_attributes].each do|k,v|
+        @resume_section = @resume.resume_sections.new(v)
+        @resume_section.save!
       end
+    end
+    if @submission.persisted?
+      redirect_to openings_jobs_path, notice: 'Your profile was successfully submitted.'
+    else
+      @template = @job.template
+      @template_sections = @template.sections || []
+      render :new
     end
   end
 
