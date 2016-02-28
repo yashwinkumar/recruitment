@@ -35,15 +35,15 @@
   <div class="form-group">
     <%= f.label :availability_1, class: 'col-sm-2 control-label' %>
     <div class="col-sm-4">
-      <%= f.text_field :availability_1, class: 'form-control has_datetimepicker', required: true %>
-      <span class="help-block">Pick time slots for interview in next 15-30 days</span>
+      <%= f.text_field :availability_1, class: 'form-control has_datetimepicker_15', required: true, autocomplete: :off %>
+      <span class="help-block">Pick time slots for interview in next 15 days</span>
     </div>
   </div>
 
   <div class="form-group">
     <%= f.label :availability_2, class: 'col-sm-2 control-label' %>
     <div class="col-sm-4">
-      <%= f.text_field :availability_2, class: 'form-control has_datetimepicker', required: true %>
+      <%= f.text_field :availability_2, class: 'form-control has_datetimepicker_15_30', required: true, autocomplete: :off %>
       <span class="help-block">Pick time slots for interview in next 15-30 days</span>
     </div>
   </div>
@@ -51,8 +51,8 @@
   <div class="form-group">
     <%= f.label :availability_3, class: 'col-sm-2 control-label' %>
     <div class="col-sm-4">
-      <%= f.text_field :availability_3, class: 'form-control has_datetimepicker', required: true %>
-      <span class="help-block">Pick time slots for interview in next 15-30 days</span>
+      <%= f.text_field :availability_3, class: 'form-control has_datetimepicker_30_45', required: true, autocomplete: :off %>
+      <span class="help-block">Pick time slots for interview in next 30-45 days</span>
     </div>
   </div>
 
@@ -68,9 +68,19 @@
 <script>
 
   $(function() {
-    $(".has_datetimepicker" ).datetimepicker({
+    $(".has_datetimepicker_15_30").datetimepicker({
       minDate:'+1970/01/15',//next 15th day is minimum date(for today use 0 or -1970/01/01)
       maxDate:'+1970/01/30',//next 30th day is maximum date calendar
+      scrollMonth: false
+    });
+    $(".has_datetimepicker_15").datetimepicker({
+      minDate:'+1970/01/01',//next 15th day is minimum date(for today use 0 or -1970/01/01)
+      maxDate:'+1970/01/15',//next 30th day is maximum date calendar
+      scrollMonth: false
+    });
+    $(".has_datetimepicker_30_45").datetimepicker({
+      minDate:'+1970/02/01',//next 15th day is minimum date(for today use 0 or -1970/01/01)
+      maxDate:'+1970/02/15',//next 30th day is maximum date calendar
       scrollMonth: false
     });
   });
