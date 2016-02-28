@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
   after_create :build_profile
+  after_initialize :check_role, if: Proc.new {|u| u.role.nil?}
   has_one :profile, :dependent => :destroy
 
   def my_jobs
@@ -62,6 +63,10 @@ class User < ActiveRecord::Base
   end
 
   private
+
+  def check_role
+    self.add_role :candidate
+  end
 
   def welcome_email
     UserMailer.welcome_email(self).deliver_now

@@ -41,14 +41,14 @@
               <dd>
                 <% @profile.primary_skills.split(',').each do|skill| %>
                   <span class="label label-primary"><%= skill %></span>
-                <% end %>
+                <% end if @profile.primary_skills %>
               </dd>
               <br>
               <dt>Secondary Skills:</dt>
               <dd>
                 <% @profile.secondary_skills.split(',').each do|skill| %>
                   <span class="label label-info"><%= skill %></span>
-                <% end %>
+                <% end if @profile.secondary_skills %>
               </dd>
             <% else %>
               <dt>Title:</dt>

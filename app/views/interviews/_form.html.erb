@@ -1,11 +1,11 @@
 <div class="row">
   <div class="col-md-10">
-    <%= simple_form_for([@job, @submission,@interview], html: {class: 'form-horizontal'}) do |f| %>
+    <%= simple_form_for([@job, @submission, @interview], html: {class: 'form-horizontal'}) do |f| %>
       <%= f.error_notification %>
 
-      <%= f.input :user_id, input_html: { value: current_user.id}, as: :hidden %>
-      <%= f.input :job_id, input_html: { value: @job.id }, as: :hidden %>
-      <%= f.collection_radio_buttons :date, [[@submission.availability_1.strftime('%d/%b/%Y %I:%M %P'), @submission.availability_1.strftime('%d/%b%Y %I:%M %P')] ,[@submission.availability_2, @submission.availability_2.strftime('%d/%b/%Y %I:%M %P')], [@submission.availability_3, @submission.availability_3.strftime('%d/%b/%Y %I:%M %P')]], :first, :last %>
+      <%= f.input :user_id, input_html: {value: current_user.id}, as: :hidden %>
+      <%= f.input :job_id, input_html: {value: @job.id}, as: :hidden %>
+      <%= f.collection_radio_buttons :date, @submission.interview_availabilities, :first, :last, item_label_class: "radio-inline", item_wrapper_tag: false %>
       <%= f.input :description, as: :text %>
       <%= f.submit class: 'btn btn-success' %>
     <% end %>
