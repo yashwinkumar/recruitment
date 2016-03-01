@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160216105118) do
+ActiveRecord::Schema.define(version: 20160229114446) do
 
   create_table "comments", force: :cascade do |t|
     t.integer  "user_id",          limit: 4
@@ -66,12 +66,14 @@ ActiveRecord::Schema.define(version: 20160216105118) do
   end
 
   create_table "resume_sections", force: :cascade do |t|
-    t.integer  "section_id", limit: 4
-    t.integer  "resume_id",  limit: 4
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.string   "video",      limit: 255
-    t.integer  "rating",     limit: 4
+    t.integer  "section_id",            limit: 4
+    t.integer  "resume_id",             limit: 4
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.string   "video",                 limit: 255
+    t.integer  "rating",                limit: 4
+    t.integer  "consultant_rating",     limit: 4
+    t.integer  "hiring_manager_rating", limit: 4
   end
 
   create_table "resumes", force: :cascade do |t|
