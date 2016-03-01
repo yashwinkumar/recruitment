@@ -1,0 +1,20 @@
+<div class="row">
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <td>Job Title</td>
+      <td>Status</td>
+      <td>Applied on</td>
+    </tr>
+    </thead>
+    <tbody>
+    <% @submissions.each do|submission| %>
+      <tr>
+        <td><%= link_to submission.job.title, job_path(submission.job) %></td>
+        <td><%= submission.status.titlecase %></td>
+        <td><%= submission.created_at.strftime('%B %d, %Y') %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>

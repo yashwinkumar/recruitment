@@ -4,12 +4,12 @@
       <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingOne">
           <h4 class="panel-title">
-            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#<%= resume_sec.section.name %>" aria-expanded="true" aria-controls="<%= resume_sec.section.name %>">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#<%= resume_sec.section.id %>" aria-expanded="true" aria-controls="<%= resume_sec.section.name %>">
               <%= resume_sec.section.name %>
             </a>
           </h4>
         </div>
-        <div id="<%= resume_sec.section.name %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+        <div id="<%= resume_sec.section.id %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
           <div class="panel-body">
             <p>
               <%= video_tag resume_sec.video, :size => "400x240", :controls => true %>
@@ -26,8 +26,7 @@
   <div class="row">
     <div class="col-md-10">
       <div class="jumbotron" style="padding-top: 10px">
-        <h3>Make Decision -
-          <small class="label label-default"><%= @submission.status.titlecase %></small>
+        <h3>Make Decision
           <%= link_to "Back", job_submissions_path(@job), class: 'pull-right' %>
         </h3>
         <div>
@@ -45,6 +44,9 @@
               <%= link_to 'Reject', '#', class: 'btn btn-danger comment-btn', data: {status: 'discard'} %>
             <% end %>
           <% elsif current_user.consultant? %>
+            <% if @submission.processing? %>
+              <%= link_to 'Submitted to HM', '#', class: 'btn btn-primary disabled' %>
+            <% end %>
             <% if @submission.submitted? %>
               <%= link_to 'Submit to HM', change_status_job_submission_path(@job, @submission, status: 'process'), class: 'btn btn-primary' %>
               <%= link_to 'Park', '#', class: 'btn btn-info comment-btn', data: {status: 'park'} %>

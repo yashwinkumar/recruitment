@@ -2,7 +2,6 @@
   <thead>
   <tr>
     <th>Name</th>
-    <th>Status</th>
     <th>Actions</th>
   </tr>
   </thead>
@@ -14,14 +13,12 @@
       <tr>
         <td><%= submission.user.full_name %></td>
         <td>
-          <%= submission.status.titleize %>
+          <%= link_to 'View Resume', job_submission_resume_path(job,submission,submission.resume.id) %>
           <% if submission.interview_scheduled? %>
+            &nbsp;|&nbsp; Interview scheduled
             on <%= submission.interview.date.strftime('%Y %b %d') %>
             at <%= submission.interview.date.strftime('%I:%M %P') %>
           <% end %>
-        </td>
-        <td>
-          <%= link_to 'View Resume', job_submission_resume_path(job,submission,submission.resume.id) %>
         </td>
       </tr>
     <% end %>

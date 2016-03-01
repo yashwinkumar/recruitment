@@ -1,6 +1,6 @@
 class SubmissionsController < ApplicationController
-  before_action :find_job
-  before_action :set_submission, except: [:index, :new, :create]
+  before_action :find_job , except: [:my_submissions]
+  before_action :set_submission, except: [:index, :new, :create, :my_submissions]
   layout 'dashboard'
 
   def index
@@ -96,6 +96,10 @@ class SubmissionsController < ApplicationController
       flash[:danger] = 'Something went wrong.'
       redirect_to :back
     end
+  end
+
+  def my_submissions
+     @submissions = current_user.submissions
   end
 
   private

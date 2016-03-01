@@ -20,7 +20,7 @@ class RolifyCreateRoles < ActiveRecord::Migration
     {
       "Admin" => 'admin',
       "Candidate" => 'candidate',
-      "Consultant" => 'consultant',
+      "Consulting Company" => 'consultant',
       "Hiring Manager" => 'hm'
     }.each do |label, name|
       Role.create(name: name, label: label)

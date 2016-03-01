@@ -10,8 +10,11 @@ div class="panel panel-info"
       - if current_user.consultant? || current_user.hm?
         li
           = link_to "My Jobs", jobs_path, class: "#{params[:controller] == 'jobs' && params[:action] == 'index' ? 'active' : ''} "
-      li
-        = link_to "Openings", openings_jobs_path, class: "#{params[:controller] == 'jobs' && params[:action] == 'openings' ? 'active' : ''} "
+      -if current_user.candidate?
+        li
+          = link_to "Openings", openings_jobs_path, class: "#{params[:controller] == 'jobs' && params[:action] == 'openings' ? 'active' : ''} "
+        li
+          = link_to "Submissions",my_submissions_path, class: "#{params[:controller] == 'submissions' && params[:action] == 'my_submissions' ? 'active' : ''} "
 
 css:
   .active{

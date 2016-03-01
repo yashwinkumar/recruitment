@@ -16,6 +16,9 @@
         <%= resume_sec.label :video, class: 'col-sm-2 control-label' %>
         <div class="col-sm-4">
           <%= resume_sec.file_field :video,name: "submission[resume_sections_attributes][#{i}][video]", class: 'form-control', required: true %>
+          <span class="text-muted" style="font-size: 11px;">
+            formats: flv, mp4, avi, mkv. Size Limit: 10MB
+          </span>
         </div>
       </div>
       <div class="form-group">
@@ -32,24 +35,24 @@
   <div class="form-group">
     <%= f.label :availability_1, class: 'col-sm-2 control-label' %>
     <div class="col-sm-4">
-      <%= f.text_field :availability_1, class: 'form-control has_datetimepicker', required: true %>
-      <span class="help-block">Pick time slots for interview in next 15-30 days</span>
+      <%= f.text_field :availability_1, class: 'form-control has_datetimepicker_7', required: true, autocomplete: :off %>
+      <span class="help-block">Pick time slots for interview in next 7 days</span>
     </div>
   </div>
 
   <div class="form-group">
     <%= f.label :availability_2, class: 'col-sm-2 control-label' %>
     <div class="col-sm-4">
-      <%= f.text_field :availability_2, class: 'form-control has_datetimepicker', required: true %>
-      <span class="help-block">Pick time slots for interview in next 15-30 days</span>
+      <%= f.text_field :availability_2, class: 'form-control has_datetimepicker_7_14', required: true, autocomplete: :off %>
+      <span class="help-block">Pick time slots for interview in next 7-14 days</span>
     </div>
   </div>
 
   <div class="form-group">
     <%= f.label :availability_3, class: 'col-sm-2 control-label' %>
     <div class="col-sm-4">
-      <%= f.text_field :availability_3, class: 'form-control has_datetimepicker', required: true %>
-      <span class="help-block">Pick time slots for interview in next 15-30 days</span>
+      <%= f.text_field :availability_3, class: 'form-control has_datetimepicker_14_21', required: true, autocomplete: :off %>
+      <span class="help-block">Pick time slots for interview in next 14-21 days</span>
     </div>
   </div>
 
@@ -65,10 +68,36 @@
 <script>
 
   $(function() {
-    $(".has_datetimepicker" ).datetimepicker({
-      minDate:'+1970/01/15',//next 15th day is minimum date(for today use 0 or -1970/01/01)
-      maxDate:'+1970/01/30',//next 30th day is maximum date calendar
-      scrollMonth: false
+    $(".has_datetimepicker_7").datetimepicker({
+      minDate:'+1970/01/03',//next 2nd day is minimum date(for today use 0 or -1970/01/01)
+      maxDate:'+1970/01/11',//next 7th day is maximum date calendar
+      scrollMonth: false,
+      allowTimes:['08:00', '10:00','12:00', '13:00', '15:00','17:00', '17:05', '17:20', '19:00', '20:00'],
+      onGenerate:function( ct ){
+        jQuery(this).find('.xdsoft_date.xdsoft_weekend')
+          .addClass('xdsoft_disabled');
+      }
+    });
+    $(".has_datetimepicker_7_14").datetimepicker({
+      minDate:'+1970/01/12',//next 7th day is minimum date(for today use 0 or -1970/01/01)
+      maxDate:'+1970/01/20',//next 14th day is maximum date calendar
+      scrollMonth: false,
+      allowTimes:['08:00', '10:00','12:00', '13:00', '15:00','17:00', '17:05', '17:20', '19:00', '20:00'],
+      onGenerate:function( ct ){
+        jQuery(this).find('.xdsoft_date.xdsoft_weekend')
+          .addClass('xdsoft_disabled');
+      }
+    });
+
+    $(".has_datetimepicker_14_21").datetimepicker({
+      minDate:'+1970/01/21',//next 14th day is minimum date(for today use 0 or -1970/01/01)
+      maxDate:'+1970/01/29',//next 21th day is maximum date calendar
+      scrollMonth: false,
+      allowTimes:['08:00', '10:00','12:00', '13:00', '15:00','17:00', '17:05', '17:20', '19:00', '20:00'],
+      onGenerate:function( ct ){
+        jQuery(this).find('.xdsoft_date.xdsoft_weekend')
+          .addClass('xdsoft_disabled');
+      }
     });
   });
 

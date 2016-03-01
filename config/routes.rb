@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+
+  resource :phones do
+    put :verify
+  end
   resources :templates do
     get :add_more_sections, on: :collection
   end
@@ -17,6 +21,10 @@ Rails.application.routes.draw do
       resources :interviews
     end
   end
+
+  get '/my_submissions' => 'submissions#my_submissions', as: 'my_submissions'
+
+  get "/signup_success" => "home#signup_success"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
