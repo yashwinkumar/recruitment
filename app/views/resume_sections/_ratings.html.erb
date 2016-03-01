@@ -1,0 +1,21 @@
+<% if (resume_sec.consultant_rating && @job.consultant == current_user) || (resume_sec.consultant_rating && resume_sec.hiring_manager_rating && @job.hm == current_user) %>
+  <%= resume_sec.candidate_rating %>
+  <%= raw "<p><strong>Consultant Rating:</strong> #{resume_sec.consultant_rating} out of 5</p>" if resume_sec.consultant_rating %>
+  <%= raw "<p><strong>Hiring Manager Rating:</strong> #{resume_sec.hiring_manager_rating} out of 5</p>" if resume_sec.hiring_manager_rating && @job.hm == current_user %>
+<% end %>
+
+<% if @job.consultant == current_user && resume_sec.consultant_rating.nil? %>
+  <%= simple_form_for([@job, @submission, resume_sec]) do |f| %>
+    <%= f.label :consultant_rating, label: "Consultant Ratings:", class: 'col-sm-3 col-md-3 control-label' %>
+    <%= f.collection_radio_buttons :consultant_rating, (1..5).map { |n| [n, n] }, :first, :last, {}, {class: 'radio-inline', required: true, style: 'margin: 10px 5px 10px 10px'} %>
+    <%= f.submit "Submit Rating", class: 'btn btn-small btn-primary' %>
+  <% end %>
+<% elsif @job.hm == current_user && resume_sec.hiring_manager_rating.nil? %>
+  <%= simple_form_for([@job, @submission, resume_sec]) do |f| %>
+    <%= f.label :hiring_manager_rating, label: "Hiring Manager Ratings:", class: 'col-sm-3 col-md-3 control-label' %>
+    <%= f.collection_radio_buttons :hiring_manager_rating, (1..5).map { |n| [n, n] }, :first, :last, {}, {class: 'radio-inline', required: true, style: 'margin: 10px 5px 10px 10px'} %>
+    <%= f.submit "Submit Rating", class: 'btn btn-small btn-primary' %>
+  <% end %>
+<% end %>
+
+

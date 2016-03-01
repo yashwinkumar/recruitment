@@ -47,7 +47,7 @@ module UserOnBoard
     self.phone_verification_code = rand(0000..9999).to_s.rjust(4, "0")
     self.phone_verified = false
     self.on_board = false
-    send_pin
+    send_pin unless Rails.env.development?
   end
 
 end
