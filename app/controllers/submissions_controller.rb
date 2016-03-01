@@ -100,7 +100,7 @@ class SubmissionsController < ApplicationController
   end
 
   def my_submissions
-     @submissions = current_user.submissions
+     @submissions = current_user.submissions.includes(:job, :resume)
   end
 
   private

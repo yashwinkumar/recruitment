@@ -4,14 +4,17 @@
     <tr>
       <td>Job Title</td>
       <td>Status</td>
+      <td>Resume</td>
       <td>Applied on</td>
     </tr>
     </thead>
     <tbody>
     <% @submissions.each do|submission| %>
       <tr>
-        <td><%= link_to submission.job.title, job_path(submission.job) %></td>
+        <% job = submission.job %>
+        <td><%= link_to job.title, job_path(job) %></td>
         <td><%= submission.status.titlecase %></td>
+        <td><%= link_to 'View Resume', job_submission_resume_path(job,submission,submission.resume.id) %></td>
         <td><%= submission.created_at.strftime('%B %d, %Y') %></td>
       </tr>
     <% end %>
