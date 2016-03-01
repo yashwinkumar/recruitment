@@ -21,6 +21,10 @@ gem 'pundit'
 gem 'rolify'
 gem 'state_machine'
 gem 'state_machines-activerecord'
+gem 'twilio-ruby'
+gem 'fog', '~> 1.37'
+gem "fog-aws"
+gem "active_decorator"
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

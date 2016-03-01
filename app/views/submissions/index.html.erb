@@ -32,7 +32,7 @@
       <%= render partial: 'submissions', locals: {job: @job, submissions: @processing_submissions} %>
     </div>
   <% else %>
-    <div role="tabpanel" class="tab-pane fade" id="new" aria-labelledby="new-tab">
+    <div role="tabpanel" class="tab-pane fade active in" id="new" aria-labelledby="new-tab">
       <%= render partial: 'submissions', locals: {job: @job, submissions: @new_submissions} %>
     </div>
     <div role="tabpanel" class="tab-pane fade" id="processing" aria-labelledby="processing-tab">

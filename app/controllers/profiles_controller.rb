@@ -1,5 +1,5 @@
 class ProfilesController < ApplicationController
-  skip_before_action :require_on_board, only: [:edit, :update]
+  skip_before_action :require_on_board, only: [:edit, :update, :show]
   before_action :set_profile, only: [:show, :edit, :update]
   layout 'dashboard'
   def show
@@ -10,7 +10,7 @@ class ProfilesController < ApplicationController
 
   def update
     respond_to do |format|
-      if @profile.update(profile_params)
+      if @profile.update(profile_params) && @profile.errors.messages.empty?
         format.html { redirect_to @profile, notice: 'Profile was successfully updated.' }
         format.json { render :show, status: :ok, location: @profile }
       else
@@ -28,6 +28,6 @@ class ProfilesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def profile_params
-      params.require(:profile).permit(:first_name, :last_name, :phone, :dob, :picture, :location, :current_employer, :title, :experience, :primary_skills, :secondary_skills, :compensation, :on_board)
+      params.require(:profile).permit(:first_name, :last_name, :phone, :dob, :picture, :location, :current_employer, :title, :experience, :primary_skills, :secondary_skills, :compensation)
     end
 end

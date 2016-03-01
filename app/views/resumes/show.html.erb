@@ -15,7 +15,7 @@
               <%= video_tag resume_sec.video, :size => "400x240", :controls => true %>
             </p>
 
-            <p><strong>Rating:</strong> <%= resume_sec.rating %> out of 5</p>
+            <%= render partial: 'resume_sections/ratings', locals:{resume_sec:resume_sec} %>
           </div>
         </div>
       </div>

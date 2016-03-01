@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160216074925) do
+ActiveRecord::Schema.define(version: 20160229114446) do
 
   create_table "comments", force: :cascade do |t|
     t.integer  "user_id",          limit: 4
@@ -45,31 +45,35 @@ ActiveRecord::Schema.define(version: 20160216074925) do
   end
 
   create_table "profiles", force: :cascade do |t|
-    t.integer  "user_id",          limit: 4
-    t.string   "first_name",       limit: 255
-    t.string   "last_name",        limit: 255
-    t.string   "phone",            limit: 255
-    t.string   "picture",          limit: 255
+    t.integer  "user_id",                 limit: 4
+    t.string   "first_name",              limit: 255
+    t.string   "last_name",               limit: 255
+    t.string   "phone",                   limit: 255
+    t.string   "picture",                 limit: 255
     t.date     "dob"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
-    t.string   "location",         limit: 255
-    t.string   "current_employer", limit: 255
-    t.string   "title",            limit: 255
-    t.string   "experience",       limit: 255
-    t.text     "primary_skills",   limit: 65535
-    t.text     "secondary_skills", limit: 65535
-    t.string   "compensation",     limit: 255
+    t.datetime "created_at",                                            null: false
+    t.datetime "updated_at",                                            null: false
+    t.string   "location",                limit: 255
+    t.string   "current_employer",        limit: 255
+    t.string   "title",                   limit: 255
+    t.string   "experience",              limit: 255
+    t.text     "primary_skills",          limit: 65535
+    t.text     "secondary_skills",        limit: 65535
+    t.string   "compensation",            limit: 255
     t.boolean  "on_board"
+    t.boolean  "phone_verified",                        default: false
+    t.string   "phone_verification_code", limit: 255
   end
 
   create_table "resume_sections", force: :cascade do |t|
-    t.integer  "section_id", limit: 4
-    t.integer  "resume_id",  limit: 4
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.string   "video",      limit: 255
-    t.integer  "rating",     limit: 4
+    t.integer  "section_id",            limit: 4
+    t.integer  "resume_id",             limit: 4
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.string   "video",                 limit: 255
+    t.integer  "rating",                limit: 4
+    t.integer  "consultant_rating",     limit: 4
+    t.integer  "hiring_manager_rating", limit: 4
   end
 
   create_table "resumes", force: :cascade do |t|

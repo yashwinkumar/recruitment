@@ -7,7 +7,7 @@
   <div class="col-md-2">
     <% if policy(@job).edit? %>
       <%= link_to 'Edit', edit_job_path(@job) , class: 'btn btn-primary btn-sm'%>
-      <%= link_to 'Destroy', @job, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %>
+      <%= link_to 'Delete', @job, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %>
     <% end %>
   </div>
   <div class="col-md-12">

@@ -1,7 +1,4 @@
 class RegistrationsController < Devise::RegistrationsController
-  # def new
-  #   super
-  # end
 
   def create
     build_resource(sign_up_params)
@@ -17,7 +14,8 @@ class RegistrationsController < Devise::RegistrationsController
       else
         set_flash_message :notice, :"signed_up_but_#{resource.inactive_message}" if is_flashing_format?
         expire_data_after_sign_in!
-        respond_with resource, location: after_inactive_sign_up_path_for(resource)
+        # respond_with resource, location: after_inactive_sign_up_path_for(resource)
+        respond_with resource, location: '/signup_success'
       end
     else
       clean_up_passwords resource
@@ -26,7 +24,9 @@ class RegistrationsController < Devise::RegistrationsController
     end
   end
 
-  # def update
-  #   super
-  # end
+  protected
+
+  def after_inactive_sign_up_path_for(resource)
+    '/signup_success'
+  end
 end

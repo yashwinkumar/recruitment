@@ -6,7 +6,9 @@ class JobsController < ApplicationController
     @active_jobs = current_user.my_jobs.active
     @hold_jobs = current_user.my_jobs.hold
     @closed_jobs = current_user.my_jobs.closed
-    # authorize @jobs
+    authorize @active_jobs
+    authorize @hold_jobs
+    authorize @closed_jobs
   end
 
   def show

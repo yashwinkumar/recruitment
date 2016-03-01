@@ -14,7 +14,11 @@ class InterviewsController < ApplicationController
   def create
     @interview = @submission.build_interview(interview_params)
     respond_to do |format|
-      if @interview.save and @submission.schedule_interview
+      ActiveRecord::Base.transaction do
+        @interview.save
+        @submission.schedule_interview
+      end
+      if @interview.persisted?
         format.html { redirect_to job_submissions_path, notice: 'Interview was successfully created.' }
         format.json { render :show, status: :created, location: @interview }
       else
