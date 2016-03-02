@@ -12,7 +12,12 @@
   <% if jobs.any? %>
     <% jobs.each do |job| %>
     <tr>
-      <td><%= link_to job.title, job_path(job) %></td>
+      <td>
+        <%= link_to job.title, job_path(job) %>
+        <% if job.new_submission_display? %>
+          <label class="label-danger label">New(<%= job.new_submission_size %>)</label>
+        <% end %>
+      </td>
       <td><%= truncate(job.description, length: 20) %></td>
       <td><%= job.location %></td>
       <td>
