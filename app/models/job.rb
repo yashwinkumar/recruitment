@@ -43,4 +43,12 @@ class Job < ActiveRecord::Base
   def closed?
     status == "closed"
   end
+
+  def new_submissions
+    @new_submissions ||= submissions.active
+  end
+
+  def processing_submissions
+    @processing_submissions ||= submissions.process
+  end
 end

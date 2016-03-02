@@ -1,59 +1,63 @@
 <div class="row">
-<%= simple_form_for(@job, html: {class: 'form-horizontal', autocomplete: 'off'}, wrapper: :horizontal_form) do |f| %>
-  <%= f.error_notification %>
+  <%= simple_form_for(@job, html: {class: 'form-horizontal', autocomplete: 'off'}, wrapper: :horizontal_form) do |f| %>
+    <%= f.error_notification %>
 
-  <div class="form-group">
+    <% if f.object.new_record? %>
+
+      <div class="form-group">
+        <div class="col-md-offset-3 col-md-9">
+          <strong>
+            Pick Template from the following or <%= link_to 'Create Template', new_template_path %>
+          </strong>
+        </div>
+        <div class="col-md-offset-3">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-md-offset-3 col-md-9">
+          <%= f.input :template_id,
+                      :collection => current_user.templates.map { |t| [t.id, t.name] },
+                      :label_method => :last,
+                      :value_method => :first,
+                      :label => false,
+                      :item_label_class => 'radio-inline',
+                      :item_wrapper_tag => false,
+                      :as => :radio_buttons, readonly: true %>
+        </div>
+      </div>
+    <% else %>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Template</label>
+
+        <div class="col-sm-9">
+          <!--<input class="string optional form-control" type="text" value="Hyderabad India" name="job[location]" id="job_location">-->
+          <label class="form-control" style="    background: transparent;border: none;box-shadow: inherit;">
+            <%= f.object.template.name %>
+          </label>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="form-group">
       <label class="col-sm-3 control-label">Hiring Manager</label>
-    <div class="col-md-9">
-      <%= f.select :hiring_user_id, Role.where(name: "hm").first.users.map{ |l| [l.email, l.id] }, {}, class:'form-control' %>
-    </div>
-  </div>
-  <%= f.input :title %>
-  <%= f.input :description, as: :text %>
-  <%= f.input :location %>
 
-  <% if f.object.new_record? %>
-
-    <div class="form-group">
-      <div class="col-md-offset-3">
-        <strong>
-          Pick Template from the following or <%= link_to 'Create Template', new_template_path %>
-        </strong>
-      </div>
-      <div class="col-md-offset-3">
+      <div class="col-md-9">
+        <%= f.select :hiring_user_id, Role.where(name: "hm").first.users.map { |l| [l.email, l.id] }, {}, class: 'form-control' %>
       </div>
     </div>
+    <%= f.input :title %>
+    <%= f.input :description, as: :text %>
+    <%= f.input :location %>
 
     <div class="form-group">
-      <div class="col-md-offset-3">
-        <%= f.input :template_id,
-                    :collection => current_user.templates.map { |t| [t.id, t.name] },
-                    :label_method => :last,
-                    :value_method => :first,
-                    :label => false,
-                    :item_label_class => 'radio-inline',
-                    :item_wrapper_tag => false,
-                    :as => :radio_buttons, readonly: true %>
-      </div>
-    </div>
-  <% else %>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Template</label>
-
-      <div class="col-sm-9">
-        <!--<input class="string optional form-control" type="text" value="Hyderabad India" name="job[location]" id="job_location">-->
-        <label class="form-control" style="    background: transparent;border: none;box-shadow: inherit;">
-          <%= f.object.template.name %>
-        </label>
+      <div class="col-md-offset-3 col-md-9">
+        <%= f.button :submit, class: 'btn-primary' %>
       </div>
     </div>
   <% end %>
-
-
-  <div class="form-group">
-    <div class="col-md-offset-3">
-      <%= f.button :submit %>
-    </div>
-  </div>
-<% end %>
 </div>
+
+<script>
+  $(".job_template_id").removeClass("form-group");
+</script>

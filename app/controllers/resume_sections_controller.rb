@@ -4,9 +4,9 @@ class ResumeSectionsController < ApplicationController
 
   def update
     if @resume_section.update(resume_section_params)
-      flash[:success] = "Successful Updated."
+      flash[:success] = "Successfully updated ratings."
     else
-      flash[:success] = "Error Updated."
+      flash[:success] = "Error Updating ratings."
     end
     redirect_to job_submission_resume_path(@job, @submission, @resume_section.resume)
   end

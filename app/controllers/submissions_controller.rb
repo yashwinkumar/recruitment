@@ -73,8 +73,10 @@ class SubmissionsController < ApplicationController
   def change_status
     if params[:status] == 'process'
       @submission.process
+      flash[:success] = "Successfully submitted resume to hiring manager."
     elsif params[:status] == 'hire'
       @submission.hire
+      flash[:success] = "Candidate Hiring successful."
     end
     redirect_to job_submissions_path(@job)
   end
@@ -86,10 +88,12 @@ class SubmissionsController < ApplicationController
     if comment.save
       if params[:status] == 'park'
         @submission.park
+        flash[:success] = "Successfully Parked resume."
         @submission.update_attribute(:activity_user_id, current_user.id)
         Notifier.parked_email_to_consultant(@submission).deliver_now if current_user.hm?
       elsif params[:status] == 'discard'
         @submission.discard
+        flash[:success] = "Successfully Discarded resume."
         @submission.update_attribute(:activity_user_id, current_user.id)
         Notifier.discard_email_to_consultant(@submission).deliver_now if current_user.hm?
       end
