@@ -1,0 +1,9 @@
+Hi <%= @consultant.full_name %>
+
+<p> Your applicant <%= @candidate.full_name %> is Parked for <%= @job.title %> position.</p>
+<p><strong>Comments:</strong></p>
+<ul>
+  <% @submission.comments.each do|comment| %>
+    <li><%= comment.description %></li>
+  <% end %>
+</ul>

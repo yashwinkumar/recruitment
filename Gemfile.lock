@@ -339,6 +339,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_decorator
   byebug
   carrierwave
   coffee-rails (~> 4.1.0)

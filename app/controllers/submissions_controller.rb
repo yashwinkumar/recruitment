@@ -87,6 +87,7 @@ class SubmissionsController < ApplicationController
       if params[:status] == 'park'
         @submission.park
         @submission.update_attribute(:activity_user_id, current_user.id)
+        Notifier.parked_email_to_consultant(@submission).deliver_now if current_user.hm?
       elsif params[:status] == 'discard'
         @submission.discard
         @submission.update_attribute(:activity_user_id, current_user.id)
