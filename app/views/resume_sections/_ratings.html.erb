@@ -1,8 +1,14 @@
-<% if (resume_sec.consultant_rating && @job.consultant == current_user) || (resume_sec.consultant_rating && resume_sec.hiring_manager_rating && @job.hm == current_user) %>
+<% if (resume_sec.consultant_rating && @job.consultant == current_user) || (@job.hm == current_user && resume_sec.hiring_manager_rating) %>
   <%= resume_sec.candidate_rating %>
-  <%= raw "<p><strong>Consultant Rating:</strong> #{resume_sec.consultant_rating} out of 5</p>" if resume_sec.consultant_rating %>
+  <p><strong>Consultant Rating:</strong>
+    <%= resume_sec.consultant_rating ? "#{resume_sec.consultant_rating} out of 5" : 'NA' %>
+  </p>
+<% end %>
+
+<% if resume_sec.hiring_manager_rating && @job.hm == current_user %>
   <%= raw "<p><strong>Hiring Manager Rating:</strong> #{resume_sec.hiring_manager_rating} out of 5</p>" if resume_sec.hiring_manager_rating && @job.hm == current_user %>
 <% end %>
+
 
 <% if @job.consultant == current_user && resume_sec.consultant_rating.nil? %>
   <%= simple_form_for([@job, @submission, resume_sec]) do |f| %>
@@ -17,9 +23,3 @@
     <%= f.submit "Submit Rating", class: 'btn btn-small btn-primary' %>
   <% end %>
 <% end %>
-
-<% if current_user.candidate? %>
-  <%= resume_sec.candidate_rating %>
-<% end %>
-
-
