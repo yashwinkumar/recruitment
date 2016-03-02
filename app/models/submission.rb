@@ -59,14 +59,16 @@ class Submission < ActiveRecord::Base
 
   def processing_email
     Notifier.processing_email(self).deliver_now
+    Notifier.processing_email_to_hm(self).deliver_now
   end
 
   def parked_email
-     Notifier.parked_email(self).deliver_now
+     # Notifier.parked_email(self).deliver_now
   end
 
   def interview_email
     Notifier.interview_email(self).deliver_now
+    Notifier.interview_email_to_consultant(self).deliver_now
   end
 
   def hire_email

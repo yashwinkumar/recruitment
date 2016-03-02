@@ -1,0 +1,6 @@
+Hi <%= @consultant.full_name %>
+
+<p> Hiring Manager Re-Scheduled interview for Your applicant <%= @user.full_name%> for <%= @job.title %> position. Scheduled on <%= @interview.date.strftime('%Y %b %d') %>
+  at <%= @interview.date.strftime('%I:%M %P') %>.</p>
+<p><strong>Mode of Interview:</strong> <%= @interview.mode.titlecase %></p>
+<p><strong>Additional info:</strong> <%= @interview.description %></p>

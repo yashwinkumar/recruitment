@@ -31,6 +31,8 @@ class InterviewsController < ApplicationController
   def update
     respond_to do |format|
       if @interview.update(interview_params)
+        Notifier.interview_email(@interview.submission).deliver_now
+        Notifier.interview_email_to_consultant(@interview.submission).deliver_now
         format.html { redirect_to job_submissions_path, notice: 'Interview was successfully updated.' }
       else
         format.html { render :edit }
@@ -59,6 +61,6 @@ class InterviewsController < ApplicationController
   end
 
   def interview_params
-    params.require(:interview).permit(:user_id, :job_id,:date, :description)
+    params.require(:interview).permit(:user_id, :job_id,:date, :description, :mode)
   end
 end
