@@ -22,7 +22,7 @@ class ResumeSectionsController < ApplicationController
   end
 
   def find_submission
-    @submission = @job.submissions.where(params[:submission_id]).first
+    @submission = @job.submissions.where(id: params[:submission_id]).first
   end
 
   def resume_section_params
