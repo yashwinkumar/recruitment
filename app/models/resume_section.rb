@@ -7,7 +7,7 @@ class ResumeSection < ActiveRecord::Base
   validates :video,
             :presence => true,
             :file_size => {
-              :maximum => 10.megabytes.to_i
+              :maximum => 12.megabytes.to_i
             }
   validates_presence_of :video, :rating, :resume_id, :section_id
 end

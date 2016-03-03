@@ -48,7 +48,7 @@
     </div>
     <%= f.input :title %>
     <%= f.input :description, as: :text %>
-    <%= f.input :location %>
+    <%= f.input :location, input_html: {class: 'loc_auto_comp'} %>
 
     <div class="form-group">
       <div class="col-md-offset-3 col-md-9">

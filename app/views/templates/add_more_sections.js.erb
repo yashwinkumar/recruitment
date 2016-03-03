@@ -4,8 +4,7 @@ $('.add_more_sections').append(section_html);
 
 $('.remove_j_qtn').on('click',function (e) {
   e.preventDefault();
-  sid = $(this).data('sid');
-  console.log(sid);
+  var sid = $(this).data('sid');
   $('#template_sections_attributes_' + sid + '__destroy').val(1);
   $('#section_field_' + sid).remove();
   $(this).remove();

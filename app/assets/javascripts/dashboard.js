@@ -17,3 +17,21 @@
 //= require bootstrap
 //= require templates
 //= require jquery.datetimepicker.full.min
+//= require submissions
+
+
+$(document).ready(function(){
+
+  $('.loc_auto_comp').click(function (e) {
+    var id = $(this).attr('id');
+    var inputxx = document.getElementById(id);
+    var optionsxx = {
+      types: ['geocode']
+    };
+
+    var autocomplete = new google.maps.places.Autocomplete(inputxx, optionsxx);
+    google.maps.event.addListener(autocomplete, 'place_changed', function () {
+      var place = autocomplete.getPlace();
+    });
+  });
+});

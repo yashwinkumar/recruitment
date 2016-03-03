@@ -17,20 +17,21 @@
         <div class="col-sm-4">
           <%= resume_sec.file_field :video,name: "submission[resume_sections_attributes][#{i}][video]", class: 'form-control', required: true %>
           <span class="text-muted" style="font-size: 11px;">
-            formats: flv, mp4, avi, mkv. Size Limit: 10MB
+            formats: flv, mp4, avi, mkv. Size Limit: 12MB
           </span>
         </div>
       </div>
       <div class="form-group">
         <%= resume_sec.label :rating, class: 'col-sm-2 control-label' %>
         <div class="col-sm-4">
-          <%#= resume_sec.select :rating, options_for_select((1..10)),{prompt: 'Select Rating'}, { class: 'form-control', name: "submission[resume_sections_attributes][#{i}][rating]", required: true} %>
           <%= resume_sec.collection_radio_buttons :rating,(1..5).map{|n| [n, n]}, :first, :last,{} ,{ class: 'radio-inline', name: "submission[resume_sections_attributes][#{i}][rating]", required: true, style: 'margin: 10px 5px 10px 10px'} %>
         </div>
       </div>
       <hr>
     <% end %>
   <% end %>
+
+  <h4>Interview Availability</h4>
 
   <div class="form-group">
     <%= f.label :availability_1, class: 'col-sm-2 control-label' %>
@@ -56,9 +57,22 @@
     </div>
   </div>
 
+  <hr>
+  <h4>Attachments</h4>
+  <div class="add_more_attachments"></div>
+
+  <div class="form-group">
+    <div class="col-md-4 col-md-offset-2">
+      <%= text_field_tag :name, nil, name: "submission[attachments_attributes][999][name]", class: 'form-control', data: {job_id: params[:job_id]}, id: 'last_attachment', placeholder: "eg: Resume, Cover Letter", autocomplete: :off %>
+    </div>
+    <div class="col-md-4">
+      <%= file_field_tag :file, name: "submission[attachments_attributes][999][file]", class: "form-control", id: 'last_attachment_name' %>
+    </div>
+  </div>
+
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-4">
-      <%= f.submit :submit, class: 'btn btn-success btn-block' %>
+      <%= f.submit "Submit Application", class: 'btn btn-success btn-block' %>
     </div>
   </div>
 <% end %>
@@ -101,5 +115,14 @@
     });
   });
 
+  $("#last_attachment, #last_attachment_name").on('click', function(e){
+    e.preventDefault()
+    var aid = $('.attachment_field').length;
+    var job_id = $("#last_attachment").data('job-id');
+    $.get('/jobs/' + job_id + '/submissions/add_attachments', {aid: aid})
+      .done(function (data) {
+        $('.attachment_field').last().focus();
+      });
+  });
 
 </script>
