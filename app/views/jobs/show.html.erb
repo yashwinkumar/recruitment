@@ -27,7 +27,9 @@
 
 <div class="row">
   <div class="col-md-9">
-    <%= @job.description %>
+    <p class="lead">
+      <%= @job.description %>
+    </p>
   </div>
   <div class="col-md-3">
     <% unless policy(@job).update? || policy(@job).destroy? %>
@@ -39,22 +41,4 @@
     <% end %>
   </div>
 </div>
-
-
-<!-- This needs to be shown to Employer and Consultant-->
-<% if false && (current_user.hm? || current_user.consultant?) %>
-<div class="row" style="margin-top: 7%">
-  <div class="col-md-12">
-    <h2>Candidates</h2>
-  </div>
-
-  <div class="col-md-12">
-      <% @job.resumes.each do |resume| %>
-        <div class="row">
-          <%= resume %>
-        </div>
-      <% end %>
-  </div>
-</div>
-<% end %>
 
