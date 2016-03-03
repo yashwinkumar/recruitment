@@ -28,6 +28,11 @@ module UserOnBoard
     self.save!
   end
 
+  def phone_verify!
+    self.phone_verified = true
+    save!
+  end
+
   private
 
   def send_pin
@@ -47,7 +52,9 @@ module UserOnBoard
     self.phone_verification_code = rand(0000..9999).to_s.rjust(4, "0")
     self.phone_verified = false
     self.on_board = false
-    send_pin unless Rails.env.development?
+    if user.candidate?
+      send_pin
+    end
   end
 
 end

@@ -4,6 +4,8 @@ class Submission < ActiveRecord::Base
   has_many :comments, as: :commentable, dependent: :destroy
   belongs_to :user
   belongs_to :job
+  has_many :attachments, dependent: :destroy
+  accepts_nested_attributes_for :attachments, :reject_if => lambda { |a| a[:file].blank? }, allow_destroy: true
 
   scope :active, -> {where status: 'submitted'}
   scope :process, -> {where status: 'processing'}

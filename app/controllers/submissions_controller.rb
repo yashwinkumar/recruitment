@@ -1,6 +1,6 @@
 class SubmissionsController < ApplicationController
   before_action :find_job , except: [:my_submissions]
-  before_action :set_submission, except: [:index, :new, :create, :my_submissions]
+  before_action :set_submission, except: [:index, :new, :create, :my_submissions, :add_attachments]
   layout 'dashboard'
 
   def index
@@ -39,6 +39,11 @@ class SubmissionsController < ApplicationController
       submission_params[:resume_sections_attributes].each do|k,v|
         @resume_section = @resume.resume_sections.new(v)
         @resume_section.save!
+      end
+      submission_params[:attachments_attributes].each do|k,v|
+        next if v[:file].nil?
+        @attachments = @submission.attachments.new(v)
+        @attachments.save!
       end
     end
     if @submission.persisted?
@@ -108,6 +113,9 @@ class SubmissionsController < ApplicationController
      @submissions = current_user.submissions.includes(:job, :resume)
   end
 
+  def add_attachments
+  end
+
   private
     def find_job
       @job = Job.find(params[:job_id])
@@ -118,6 +126,6 @@ class SubmissionsController < ApplicationController
     end
 
     def submission_params
-      params.require(:submission).permit(:availability_1, :availability_2, :availability_3, {:resume_sections_attributes => [:video, :rating, :section_id]})
+      params.require(:submission).permit(:availability_1, :availability_2, :availability_3, {:resume_sections_attributes => [:video, :rating, :section_id]}, attachments_attributes: [:name, :file])
     end
 end

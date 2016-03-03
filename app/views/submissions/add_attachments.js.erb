@@ -1,0 +1,11 @@
+$('.add_more_attachments').append(("<%= escape_javascript render partial: '/submissions/attachments_form' %>"));
+
+$('.remove_j_qtn').on('click',function (e) {
+  e.preventDefault();
+  var aid = $(this).data('aid');
+  console.log(aid);
+  $('#submission_attachments_attributes_' + aid + '__destroy').val(1);
+  $('#attachment_field_' + aid).remove();
+  $(this).remove();
+  return false;
+});
