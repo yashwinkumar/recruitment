@@ -3,7 +3,7 @@ class ResumesController < ApplicationController
   layout 'dashboard'
 
   def show
-    @resume_sections = @resume.resume_sections
+    @resume_sections = @resume.resume_sections.order('id asc')
     @comments = @submission.comments.where(user_id: current_user.id)
   end
 
