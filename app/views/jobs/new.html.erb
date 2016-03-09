@@ -1,10 +1,11 @@
 <h1 style="text-align: center; margin-bottom: 5%">Post Job</h1>
+<div class="container-fluid">
+  <% if current_user.templates.count == 0 %>
+    <div class="alert alert-danger" role="alert">
+      Need template before posting job. Click here to <%= link_to 'Create Template.', new_template_path %>
+    </div>
+  <% end %>
 
-<% if current_user.templates.count == 0 %>
-  <div class="alert alert-danger" role="alert">
-    Need template before posting job. Click here to <%= link_to 'Create Template.', new_template_path %>
-  </div>
-<% end %>
+  <%= render 'form' %>
 
-<%= render 'form' %>
-
+</div>

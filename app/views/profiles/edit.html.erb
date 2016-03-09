@@ -50,45 +50,44 @@
                 <%= f.text_field :current_employer, class: 'form-control'%>
               </div>
             </div>
-            <div class="form-group">
-              <%= f.label :dob, 'DOB', class: 'col-sm-4 control-label' %>
-              <div class="col-sm-8">
-                <%= f.text_field :dob, class: 'form-control has_datepicker' %>
+            <% if current_user.candidate? %>
+              <div class="form-group">
+                <%= f.label :dob, 'DOB', class: 'col-sm-4 control-label' %>
+                <div class="col-sm-8">
+                  <%= f.text_field :dob, class: 'form-control has_datepicker' %>
+                </div>
               </div>
-            </div>
-            <% if current_user.candidate?  %>
+            <% end %>
               <div class="form-group">
                 <%= f.label :experience, class: 'col-sm-4 control-label' %>
                 <div class="col-sm-8">
-                  <%= f.text_field :experience, class: 'form-control' %>
+                  <%= f.text_field :experience, class: 'form-control', required: true %>
                 </div>
               </div>
               <div class="form-group">
                 <%= f.label :compensation, class: 'col-sm-4 control-label' %>
                 <div class="col-sm-8">
-                  <%= f.text_field :compensation, class: 'form-control' %>
+                  <%= f.text_field :compensation, class: 'form-control', required: true %>
                 </div>
               </div>
               <div class="form-group">
                 <%= f.label :primary_skills, class: 'col-sm-4 control-label' %>
                 <div class="col-sm-8">
-                  <%= f.text_area :primary_skills, class: 'form-control' %>
+                  <%= f.text_area :primary_skills, class: 'form-control', required: true %>
                 </div>
               </div>
               <div class="form-group">
                 <%= f.label :secondary_skills, class: 'col-sm-4 control-label' %>
                 <div class="col-sm-8">
-                  <%= f.text_area :secondary_skills, class: 'form-control' %>
+                  <%= f.text_area :secondary_skills, class: 'form-control', required: true %>
                 </div>
               </div>
-            <% else %>
               <div class="form-group">
                 <%= f.label :title, class: 'col-sm-4 control-label' %>
                 <div class="col-sm-8">
-                  <%= f.text_field :title, class: 'form-control' %>
+                  <%= f.text_field :title, class: 'form-control', required: true %>
                 </div>
               </div>
-            <% end %>
           </div>
           <div class="col-md-4">
             <%= image_tag @profile.display_picture, class: 'thumbnail' ,width: '50%' %>

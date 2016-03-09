@@ -18,18 +18,20 @@
 //= require templates
 //= require jquery.datetimepicker.full.min
 //= require submissions
+//= require ckeditor-jquery
+//= require_self
 
 
 $(document).ready(function(){
 
-  $('.loc_auto_comp').click(function (e) {
+  $('.loc_auto_comp, .location_auto_comp').click(function (e) {
     var id = $(this).attr('id');
-    var inputxx = document.getElementById(id);
-    var optionsxx = {
+    var input = document.getElementById(id);
+    var options = {
       types: ['geocode']
     };
 
-    var autocomplete = new google.maps.places.Autocomplete(inputxx, optionsxx);
+    var autocomplete = new google.maps.places.Autocomplete(input, options);
     google.maps.event.addListener(autocomplete, 'place_changed', function () {
       var place = autocomplete.getPlace();
     });

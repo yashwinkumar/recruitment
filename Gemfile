@@ -25,6 +25,7 @@ gem 'twilio-ruby'
 gem 'fog', '~> 1.37'
 gem "fog-aws"
 gem "active_decorator"
+gem 'ckeditor_rails'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

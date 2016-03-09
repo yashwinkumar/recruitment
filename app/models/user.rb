@@ -16,6 +16,10 @@ class User < ActiveRecord::Base
   # after_initialize :check_role, if: Proc.new {|u| u.role.nil?}
   has_one :profile, :dependent => :destroy
 
+  def to_s
+    "#{profile.first_name} #{profile.last_name}"
+  end
+
   def my_jobs
     if hm?
       hm_jobs
