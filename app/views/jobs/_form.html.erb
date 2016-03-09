@@ -1,5 +1,6 @@
 <div class="row">
-  <%= simple_form_for(@job, html: {class: 'form-horizontal', autocomplete: 'off'}, wrapper: :horizontal_form) do |f| %>
+  <div class="col-md-11">
+    <%= simple_form_for(@job, html: {class: 'form-horizontal', autocomplete: 'off'}, wrapper: :horizontal_form) do |f| %>
     <%= f.error_notification %>
 
     <% if f.object.new_record? %>
@@ -47,8 +48,8 @@
       </div>
     </div>
     <%= f.input :title %>
-    <%= f.input :description, as: :text %>
-    <%= f.input :location, input_html: {class: 'loc_auto_comp'} %>
+    <%= f.input :description, input_html: {:class => 'ckeditor'} %>
+    <%= f.input :location, input_html: {class: 'location_auto_comp'} %>
 
     <div class="form-group">
       <div class="col-md-offset-3 col-md-9">
@@ -56,6 +57,7 @@
       </div>
     </div>
   <% end %>
+  </div>
 </div>
 
 <script>

@@ -2,7 +2,7 @@
   <thead>
   <tr>
     <th>Title</th>
-    <th>Description</th>
+    <th>Posted</th>
     <th>Location</th>
     <th>Actions</th>
   </tr>
@@ -18,7 +18,7 @@
           <label class="label-danger label">New(<%= job.new_submission_size %>)</label>
         <% end %>
       </td>
-      <td><%= truncate(job.description, length: 20) %></td>
+      <td><%= job.created_at.strftime("%b %d, %Y %H %p") %></td>
       <td><%= job.location %></td>
       <td>
         <% if policy(job).edit? %>

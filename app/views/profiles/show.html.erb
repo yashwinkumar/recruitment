@@ -4,7 +4,7 @@
       <div class="panel-heading">
         <h3 class="panel-title">
           Basic Info
-          <%= link_to edit_profile_path(@profile), class: 'pull-right' do%>
+          <%= link_to edit_profile_path(@profile), class: 'pull-right' do %>
             <i class="glyphicon glyphicon-pencil"></i>
           <% end %>
         </h3>
@@ -18,6 +18,9 @@
             <dt>Last Name:</dt>
             <dd><%= @profile.last_name %></dd>
             <br>
+            <dt>Email:</dt>
+            <dd><%= current_user.email %></dd>
+            <br>
             <dt>Phone:</dt>
             <dd><%= @profile.phone %></dd>
             <br>
@@ -27,37 +30,36 @@
             <dt>Current Employer</dt>
             <dd><%= @profile.current_employer %></dd>
             <br>
-            <dt>DOB</dt>
-            <dd><%= @profile.dob %></dd>
-            <br>
             <% if current_user.candidate? %>
-              <dt>Experience:</dt>
-              <dd><%= @profile.experience %></dd>
+              <dt>DOB</dt>
+              <dd><%= @profile.dob.to_date.strftime("%d ") %></dd>
               <br>
-              <dt>Compensation:</dt>
-              <dd><%= @profile.compensation %></dd>
-              <br>
-              <dt>Primary Skills:</dt>
-              <dd>
-                <% @profile.primary_skills.split(',').each do|skill| %>
-                  <span class="label label-primary"><%= skill %></span>
-                <% end if @profile.primary_skills %>
-              </dd>
-              <br>
-              <dt>Secondary Skills:</dt>
-              <dd>
-                <% @profile.secondary_skills.split(',').each do|skill| %>
-                  <span class="label label-info"><%= skill %></span>
-                <% end if @profile.secondary_skills %>
-              </dd>
-            <% else %>
-              <dt>Title:</dt>
-              <dd><%= @profile.title %></dd>
             <% end %>
+            <dt>Experience:</dt>
+            <dd><%= @profile.experience %></dd>
+            <br>
+            <dt>Compensation:</dt>
+            <dd><%= @profile.compensation %></dd>
+            <br>
+            <dt>Primary Skills:</dt>
+            <dd>
+              <% @profile.primary_skills.split(',').each do |skill| %>
+                <span class="label label-primary"><%= skill %></span>
+              <% end if @profile.primary_skills %>
+            </dd>
+            <br>
+            <dt>Secondary Skills:</dt>
+            <dd>
+              <% @profile.secondary_skills.split(',').each do |skill| %>
+                <span class="label label-info"><%= skill %></span>
+              <% end if @profile.secondary_skills %>
+            </dd>
+            <dt>Title:</dt>
+            <dd><%= @profile.title %></dd>
           </dl>
         </div>
         <div class="col-md-3">
-          <%= image_tag @profile.display_picture, class:'img-thumbnail' %>
+          <%= image_tag @profile.display_picture, class: 'img-thumbnail' %>
         </div>
       </div>
     </div>

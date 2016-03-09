@@ -6,15 +6,15 @@ table.table.table-bordered.table-responsive
   thead
     tr
       th Title
-      th Description
       th Location
+      th Posted
       th
   tbody
     - @jobs.each do |job|
       tr
         td= link_to job.title, job_path(job)
-        td= truncate(job.description, length: 20)
         td= job.location
+        td= job.created_at.strftime("%b %d, %Y %H %p")
         td
           - if job.submissions.find_by_user_id current_user.id
             a.btn.btn-default.btn-sm.disabled href="#" role="button"  Submitted

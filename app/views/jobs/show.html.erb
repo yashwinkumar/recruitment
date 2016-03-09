@@ -6,19 +6,21 @@
   </div>
   <div class="col-md-2">
     <% if policy(@job).edit? %>
-      <%= link_to 'Edit', edit_job_path(@job) , class: 'btn btn-primary btn-sm'%>
-      <%= link_to 'Delete', @job, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %>
+      <%= link_to 'Edit', edit_job_path(@job), class: 'btn btn-primary btn-sm' %>
+      <%= link_to 'Delete', @job, method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger btn-sm' %>
     <% end %>
   </div>
   <div class="col-md-12">
     <i class="glyphicon glyphicon-map-marker"></i>&nbsp;<%= @job.location %>
     |
       <span>
-        <i class="glyphicon glyphicon-calendar"></i>&nbsp;<i>posted <%=time_ago_in_words @job.created_at %> ago</i>
+        <i class="glyphicon glyphicon-calendar"></i>&nbsp;<i>posted <%= time_ago_in_words @job.created_at %> ago</i>
       </span>
     <br/>
-    <strong>Template:</strong>
-    <%= @job.template.name %>
+    <% unless current_user.candidate? %>
+      <strong>Template:</strong>
+      <%= @job.template.name %>
+    <% end %>
   </div>
 </div>
 
@@ -28,7 +30,7 @@
 <div class="row">
   <div class="col-md-9">
     <p class="lead">
-      <%= @job.description %>
+      <%= raw @job.description %>
     </p>
   </div>
   <div class="col-md-3">
