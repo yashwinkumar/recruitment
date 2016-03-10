@@ -53,7 +53,7 @@ module UserOnBoard
     self.phone_verified = false
     self.on_board = false
     if user.candidate?
-      send_pin
+      # send_pin
     end
   end
 

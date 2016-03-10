@@ -32,7 +32,7 @@
             <br>
             <% if current_user.candidate? %>
               <dt>DOB</dt>
-              <dd><%= @profile.dob.to_date.strftime("%d ") %></dd>
+              <dd><%= @profile.dob.to_date.strftime("%b %d, %Y") if @profile.dob %></dd>
               <br>
             <% end %>
             <dt>Experience:</dt>
