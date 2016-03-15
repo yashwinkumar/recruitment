@@ -81,9 +81,12 @@ class SubmissionsController < ApplicationController
       flash[:success] = "Successfully submitted resume to hiring manager."
     elsif params[:status] == 'hire'
       @submission.hire
-      flash[:success] = "Candidate Hiring successful."
+      flash[:success] = "Candidate Hired successfully."
+    elsif params[:status] == 'park'
+      @submission.park
+      flash[:success] = "Candidate Hired successfully."
     end
-    redirect_to job_submissions_path(@job)
+    redirect_to job_submission_resume_path(@job, @submission, @submission.resume)
   end
 
   def save_comment
