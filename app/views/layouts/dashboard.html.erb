@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Video Resume</title>
+  <title>Video Resume <%= current_user ? "- #{current_user.role.label rescue ''}" : '' %></title>
   <%= stylesheet_link_tag    'dashboard', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'dashboard', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'dashboard', '/assets/ckeditor/ckeditor.js', 'data-turbolinks-track' => true %>
   <!--locations auto completer-->
   <link href='https://fonts.googleapis.com/css?family=Monda' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
