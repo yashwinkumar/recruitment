@@ -8,41 +8,106 @@
       </div>
       <div class="panel-collapse" role="tabpanel" aria-labelledby="headingOne">
         <div class="panel-body">
-          <h5>Sections</h5>
-          <% @resume_sections.each do |resume_section| %>
-            <% link_to 'javascript:void(0)', class: 'btn' do %>
-              <span class="label label-default"><%= resume_section.section %></span>
+          <div class="row">
+            <% @resume_sections.each do |resume_section| %>
+              <button class="btn btn-info section" data-id="<%= resume_section.id %>" type="button">
+                <%= resume_section.section %>
+              </button>
             <% end %>
-            <button class="btn btn-info section" data-id="<%= resume_section.id %>" type="button" style="margin-bottom: 1%;">
-              <%= resume_section.section %>
-            </button>
-          <% end %>
+          </div>
+
           <div class="row">
             <div class="col-md-3">
-              <h5>Attachments</h5>
-              <% @submission.attachments.each do |attachment| %>
-                <p>
-                  <%= link_to attachment.name, attachment.file.url, target: '_blank', class: 'btn btn-link' %>
-                </p>
-              <% end %>
-
-              <hr>
-
-              <h5>Decision</h5>
-              <%= render partial: 'hm_decision' %>
+              <h4 class="text-center"><strong>Attachments</strong></h4>
+              <ul class="nav nav-stacked">
+                <% attachments = @submission.attachments %>
+                <% attachments.each do |attachment| %>
+                  <li> <%= link_to attachment.name, attachment.file.url, target: '_blank' %></li>
+                <% end %>
+              </ul>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-5">
               <% @resume_sections.each_with_index do |resume_section, i=0| %>
                 <div class="sections <%= "hide" if i > 0 %>" id="section_<%= resume_section.id %>">
-                  <p>
+                  <div>
                     <%= video_tag resume_section.video, preload: 'metadata', :size => "400x240", :controls => true, class: 'section_player section_video' %>
-                  </p>
+                  </div>
                   <%= render partial: 'resume_sections/ratings', locals: {resume_sec: resume_section} %>
+                  <div>
+                    <p><strong>Comments:</strong></p>
+                    <% @comments = @submission.comments.where(user_id: current_user.id) %>
+                    <ul class="bg-warning">
+                      <% @comments.each do |comment| %>
+                        <li><%= comment.description %></li>
+                      <% end %>
+                    </ul>
+                  </div>
                 </div>
               <% end %>
             </div>
-            <div class="col-md-3"></div>
+            <div class="col-md-4">
+              <% @resume = @submission.resume %>
+              <% if @job.consultant == current_user && @resume_sections.collect(&:consultant_rating).include?(nil) %>
+                <div class="row">
+                  <p class="text-center"><strong>Ratings</strong></p>
+                  <%= form_for([@job, @submission, @resume]) do |f| %>
+                    <%= f.fields_for :resume_sections do|ff| %>
+                      <div class="form-group">
+                        <%= ff.label :consultant_rating, ff.object.section, class: 'col-sm-3 col-md-3 control-label', style: 'padding-top: 5px' %>
+                        <div class="col-sm-9">
+                          <%= ff.collection_radio_buttons :consultant_rating,  (1..5).map { |n| [n, n] }, :first, :last,{}, {class: 'radio-inline', required: true, style: 'margin: 10px 5px 10px 10px'} %>
+                        </div>
+                      </div>
+                    <% end %>
+                    <div class="col-md-10">
+                      <%= f.submit "Submit Rating", class: 'btn btn-small btn-block btn-primary' %>
+                    </div>
+                  <% end %>
+                </div>
+                <br>
+              <% elsif @job.hm == current_user &&  @resume_sections.collect(&:hiring_manager_rating).include?(nil) %>
+                <div class="row">
+                  <p class="text-center"><strong>Ratings</strong></p>
+                  <%= form_for([@job, @submission, @resume]) do |f| %>
+                    <%= f.fields_for :resume_sections do|ff| %>
+                      <div class="form-group">
+                        <%= ff.label :hiring_manager_rating, ff.object.section, class: 'col-sm-3 col-md-3 control-label', style: 'padding-top: 5px' %>
+                        <div class="col-sm-9">
+                          <%= ff.collection_radio_buttons :hiring_manager_rating,  (1..5).map { |n| [n, n] }, :first, :last,{}, {class: 'radio-inline', required: true, style: 'margin: 10px 5px 10px 10px'} %>
+                        </div>
+                      </div>
+                    <% end %>
+                    <div class="col-md-10">
+                      <%= f.submit "Submit Rating", class: 'btn btn-small btn-block btn-primary' %>
+                    </div>
+                  <% end %>
+                </div>
+                <br>
+              <% end %>
+              <div class="row" style="margin-right: 0">
+                <p class="text-center"><strong>Decisions</strong></p>
+                <%= render partial: 'resumes/hm_decision' %>
+              </div>
+            </div>
           </div>
+
+          <script type="text/javascript">
+
+            $('.section_video').click(function () {
+              this.paused ? this.play() : this.pause();
+            });
+            $(".section").on('click', function () {
+              var id = $(this).data('id');
+              var section_id = "#section_" + id;
+              $('.sections').addClass('hide');
+              $('.section_player').each(function () {
+                $(this).get(0).pause(); // pause all videos
+              });
+              $(section_id).removeClass('hide');
+              $('button.section').removeClass('btn-success').addClass('btn-info');
+              $(this).removeClass('btn-info').addClass('btn-success')
+            });
+          </script>
         </div>
       </div>
     </div>

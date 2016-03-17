@@ -86,7 +86,7 @@ class SubmissionsController < ApplicationController
       @submission.park
       flash[:success] = "Candidate Hired successfully."
     end
-    redirect_to job_submissions_path(@job)
+    redirect_to :back
   end
 
   def save_comment
