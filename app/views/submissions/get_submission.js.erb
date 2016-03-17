@@ -1,0 +1,3 @@
+html = "<%= escape_javascript(render :partial => 'submissions/resume', locals: {submission: @submission, resume_sections: @resume_sections}) %>"
+
+$(".<%=@tab%>_resume_view").html(html);

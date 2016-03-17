@@ -3,6 +3,6 @@ class Section < ActiveRecord::Base
   has_many :resume_sections
 
   def to_s
-    name
+    name.titleize
   end
 end

@@ -1,0 +1,82 @@
+<div class="row">
+  <% resume_sections.each do |resume_section| %>
+    <button class="btn btn-info section" data-id="<%= resume_section.id %>" type="button">
+      <%= resume_section.section %>
+    </button>
+  <% end %>
+</div>
+<% attachments = submission.attachments %>
+<% if attachments %>
+  <hr style="margin: 5px">
+  <div class="row">
+    <span><strong>Attachments:</strong></span>
+    <% attachments.each do |attachment| %>
+      <span>
+        <%= link_to attachment.name, attachment.file.url, target: '_blank' %>
+        <% unless attachment == attachments.last  %>,<% end %>
+      </span>
+    <% end %>
+  </div>
+<% end %>
+<div class="row">
+  <div class="col-md-6">
+    <% resume_sections.each_with_index do |resume_section, i=0| %>
+      <div class="sections <%= "hide" if i > 0 %>" id="section_<%= resume_section.id %>">
+        <div>
+          <%= video_tag resume_section.video, preload: 'metadata', :size => "350x240", :controls => true, class: 'section_player section_video' %>
+        </div>
+        <%= render partial: 'resume_sections/ratings', locals: {resume_sec: resume_section} %>
+        <div>
+          <p><strong>Comments:</strong></p>
+          <% @comments = submission.comments.where(user_id: current_user.id) %>
+          <ul class="bg-warning">
+            <% @comments.each do |comment| %>
+              <li><%= comment.description %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-md-6">
+    <div class="row">
+      <p class="text-center"><strong>Ratings</strong></p>
+      <%= form_for([@job, @submission, @submission.resume]) do |f| %>
+        <%= f.fields_for :resume_sections do|ff| %>
+          <div class="form-group">
+            <%= ff.label :consultant_rating, ff.object.section, class: 'col-sm-3 col-md-3 control-label', style: 'padding-top: 5px' %>
+            <div class="col-sm-9">
+              <%= ff.collection_radio_buttons :consultant_rating,  (1..5).map { |n| [n, n] }, :first, :last,{}, {class: 'radio-inline', required: true, style: 'margin: 10px 5px 10px 10px'} %>
+            </div>
+          </div>
+        <% end %>
+        <div class="col-md-10">
+          <%= f.submit "Submit Rating", class: 'btn btn-small btn-block btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+    <br>
+    <div class="row" style="margin-right: 0">
+      <p class="text-center"><strong>Decisions</strong></p>
+      <%= render partial: 'resumes/hm_decision' %>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+
+  $('.section_video').click(function () {
+    this.paused ? this.play() : this.pause();
+  });
+  $(".section").on('click', function () {
+    var id = $(this).data('id');
+    var section_id = "#section_" + id;
+    $('.sections').addClass('hide');
+    $('.section_player').each(function () {
+      $(this).get(0).pause(); // pause all videos
+    });
+    $(section_id).removeClass('hide');
+    $('button.section').removeClass('btn-success').addClass('btn-info');
+    $(this).removeClass('btn-info').addClass('btn-success')
+  });
+</script>

@@ -1,0 +1,57 @@
+<% if current_user.hm? %>
+  <% if @submission.processing? %>
+    <%= link_to 'Interview', new_job_submission_interview_path(@job, @submission), class: 'btn btn-primary' %>
+    <%= link_to 'Park', '#', class: 'btn btn-info comment-btn', data: {status: 'park'} %>
+  <% elsif @submission.parked? %>
+    <%= link_to 'Interview', new_job_submission_interview_path(@job, @submission), class: 'btn btn-primary' %>
+  <% elsif @submission.interview_scheduled? %>
+    <%= link_to 'Edit Interview', edit_job_submission_interview_path(@job, @submission, @submission.interview), class: 'btn btn-success' %>
+    <%= link_to 'Hire', change_status_job_submission_path(@job, @submission, status: 'hire'), class: 'btn btn-info comment-btn', data: {status: 'hire'}, confirm: "Are you sure you want to hire the candidate?" %>
+  <% elsif @submission.hired? %>
+    <h3><span class="label label-success">Hired</span></h3>
+    <% unless @submission.discarded? || @submission.hired? %>
+      <%= link_to 'Reject', '#', class: 'btn btn-danger comment-btn', data: {status: 'discard'} %>
+    <% end %>
+  <% end %>
+<% elsif current_user.consultant? %>
+  <% if @submission.processing? %>
+    <%= link_to 'Submitted to HM', '#', class: 'btn btn-primary disabled' %>
+  <% end %>
+  <% if @submission.submitted? %>
+    <%= link_to 'Submit to HM', change_status_job_submission_path(@job, @submission, status: 'process'), class: 'btn btn-primary' %>
+    <%= link_to 'Park', '#', class: 'btn btn-info comment-btn', data: {status: 'park'} %>
+    <%= link_to 'Reject', '#', class: 'btn btn-danger comment-btn', data: {status: 'discard'} %>
+  <% elsif @submission.parked? %>
+    <%= link_to 'Submit to HM', change_status_job_submission_path(@job, @submission, status: 'process'), class: 'btn btn-primary' %>
+    <%= link_to 'Reject', '#', class: 'btn btn-danger comment-btn', data: {status: 'discard'} %>
+  <% elsif @submission.discarded? %>
+    <%= link_to 'Submit to HM', change_status_job_submission_path(@job, @submission, status: 'process'), class: 'btn btn-primary' %>
+    <%= link_to 'Park', '#', class: 'btn btn-info comment-btn', data: {status: 'park'} %>
+  <% end %>
+<% end %>
+  <br>
+<div class="row" style="margin-right: 0">
+  <div class="comment-section">
+    <%= form_tag save_comment_job_submission_path(@job, @submission), class: 'form-horizontal commetn_form' do %>
+      <%= hidden_field_tag :status %>
+      <div class="form-group">
+        <%= label_tag :comment, 'Comment', class: 'col-sm-2 control-label' %>
+        <div class="col-sm-8">
+          <%= text_area_tag :comment, '', class: 'form-control', rows: 4, placeholder: 'Leave your comment here...' %>
+        </div>
+      </div>
+      <div class="col-sm-6 col-sm-offset-3">
+        <%= submit_tag :Submit, class: 'btn btn-success btn-block' %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('.comment-section').hide();
+  $('.comment-btn').on('click', function (e) {
+    e.preventDefault();
+    $('.comment-section').show(500);
+    $('#status').val($(this).data('status'));
+  });
+</script>

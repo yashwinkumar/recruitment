@@ -7,7 +7,20 @@ class ResumesController < ApplicationController
     @comments = @submission.comments.where(user_id: current_user.id)
   end
 
+  def update
+    # @resume.update_attributes!(resume_params)
+    resume_params[:resume_sections_attributes].each do|k,v|
+      resume_section = ResumeSection.find v["id"]
+      resume_section.update_attributes(v)
+    end
+    redirect_to job_submissions_path(@job)
+  end
+
   private
+
+  def resume_params
+    params.require(:resume).permit({:resume_sections_attributes => [:id, :consultant_rating, :hiring_manager_rating]})
+  end
 
   def set_resume
     @resume = Resume.find(params[:id])

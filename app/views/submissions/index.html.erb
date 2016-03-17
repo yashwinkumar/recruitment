@@ -29,26 +29,26 @@
 <div id="myTabContent" class="tab-content">
   <% if current_user.hm? %>
     <div role="tabpanel" class="tab-pane fade active in" id="new" aria-labelledby="new-tab">
-      <%= render partial: 'submissions', locals: {job: @job, submissions: @processing_submissions} %>
+      <%= render partial: 'submissions', locals: {job: @job, submissions: @processing_submissions, tab: 'new'} %>
     </div>
   <% else %>
     <div role="tabpanel" class="tab-pane fade active in" id="new" aria-labelledby="new-tab">
-      <%= render partial: 'submissions', locals: {job: @job, submissions: @new_submissions} %>
+      <%= render partial: 'submissions', locals: {job: @job, submissions: @new_submissions, tab: 'new'} %>
     </div>
     <div role="tabpanel" class="tab-pane fade" id="processing" aria-labelledby="processing-tab">
-      <%= render partial: 'submissions', locals: {job: @job, submissions: @processing_submissions} %>
+      <%= render partial: 'submissions', locals: {job: @job, submissions: @processing_submissions, tab: 'processing'} %>
     </div>
   <% end %>
   <div role="tabpanel" class="tab-pane fade" id="park" aria-labelledby="park-tab">
-    <%= render partial: 'submissions', locals: {job: @job, submissions: @parked_submissions} %>
+    <%= render partial: 'submissions', locals: {job: @job, submissions: @parked_submissions, tab: 'park'} %>
   </div>
   <div role="tabpanel" class="tab-pane fade" id="interview" aria-labelledby="interview-tab">
-    <%= render partial: 'submissions', locals: {job: @job, submissions: @interview_submissions} %>
+    <%= render partial: 'submissions', locals: {job: @job, submissions: @interview_submissions, tab: 'interview'} %>
   </div>
   <div role="tabpanel" class="tab-pane fade" id="hire" aria-labelledby="hire-tab">
-    <%= render partial: 'submissions', locals: {job: @job, submissions: @hired_submissions} %>
+    <%= render partial: 'submissions', locals: {job: @job, submissions: @hired_submissions, tab: 'hire'} %>
   </div>
   <div role="tabpanel" class="tab-pane fade" id="reject" aria-labelledby="reject-tab">
-    <%= render partial: 'submissions', locals: {job: @job, submissions: @rejected_submissions} %>
+    <%= render partial: 'submissions', locals: {job: @job, submissions: @rejected_submissions, tab: 'reject'} %>
   </div>
 </div>

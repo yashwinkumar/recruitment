@@ -86,7 +86,7 @@ class SubmissionsController < ApplicationController
       @submission.park
       flash[:success] = "Candidate Hired successfully."
     end
-    redirect_to job_submission_resume_path(@job, @submission, @submission.resume)
+    redirect_to job_submissions_path(@job)
   end
 
   def save_comment
@@ -117,6 +117,11 @@ class SubmissionsController < ApplicationController
   end
 
   def add_attachments
+  end
+
+  def get_submission
+    @resume_sections ||= @submission.resume.resume_sections.order('id asc')
+    @tab = params[:tab]
   end
 
   private

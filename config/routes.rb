@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       get :change_status, on: :member
       post :save_comment, on: :member
       get :add_attachments, on: :collection
+      get :get_submission, on: :member
       resources :resumes
       resources :resume_sections
       resources :interviews
