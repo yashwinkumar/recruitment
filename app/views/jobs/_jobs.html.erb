@@ -1,10 +1,10 @@
 <table class="table table-bordered table-responsive">
   <thead>
   <tr>
-    <th>Title</th>
-    <th>Posted</th>
-    <th>Location</th>
-    <th>Actions</th>
+    <th class="col-md-3">Title</th>
+    <th class="col-md-3">Posted</th>
+    <th class="col-md-3">Location</th>
+    <th class="col-md-3">Actions</th>
   </tr>
   </thead>
 
@@ -12,15 +12,15 @@
   <% if jobs.any? %>
     <% jobs.each do |job| %>
     <tr>
-      <td>
+      <td class="col-md-3">
         <%= link_to job.title, job_path(job) %>
         <% if job.new_submission_display? %>
           <label class="label-danger label">New(<%= job.new_submission_size %>)</label>
         <% end %>
       </td>
-      <td><%= job.created_at.strftime("%b %d, %Y %H %p") %></td>
-      <td><%= job.location %></td>
-      <td>
+      <td class="col-md-3"><%= job.created_at.strftime("%b %d, %Y %H %p") %></td>
+      <td class="col-md-3"><%= job.location %></td>
+      <td class="col-md-3">
         <% if policy(job).edit? %>
           <%= link_to 'Edit', edit_job_path(job) %>&nbsp;&nbsp;
           <% if job.active? %>
@@ -41,7 +41,6 @@
         <% end %>
 
         <% if policy(job).update? %>
-          <br/>
           <%= link_to 'View Submissions', job_submissions_path(job) %>
         <% end %>
         </tr>

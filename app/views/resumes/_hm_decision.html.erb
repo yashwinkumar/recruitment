@@ -1,3 +1,4 @@
+<div class="row">
 <% if current_user.hm? %>
   <% if @submission.processing? %>
     <%= link_to 'Interview', new_job_submission_interview_path(@job, @submission), class: 'btn btn-primary' %>
@@ -29,6 +30,7 @@
     <%= link_to 'Park', '#', class: 'btn btn-info comment-btn', data: {status: 'park'} %>
   <% end %>
 <% end %>
+</div>
   <br>
 <div class="row" style="margin-right: 0">
   <div class="comment-section">

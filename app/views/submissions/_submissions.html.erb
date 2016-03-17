@@ -2,7 +2,7 @@
   <% if submissions.any? %>
     <div class="col-md-3">
       <div class="applicants_list">
-      <ul class="nav nav-stacked">
+      <ul class="nav nav-stacked" style="max-height: 400px;overflow-y: scroll">
         <% submissions.each_with_index do |submission, i| %>
           <%= content_tag :li, data: {path: get_submission_job_submission_path(job,submission)} do%>
             <%= link_to submission.user.full_name, get_submission_job_submission_path(job,submission, tab: tab), class: i == 0 ? 'active' : '', remote: true %>

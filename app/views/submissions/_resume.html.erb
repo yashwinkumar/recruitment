@@ -39,23 +39,44 @@
     <% end %>
   </div>
   <div class="col-md-6">
-    <div class="row">
-      <p class="text-center"><strong>Ratings</strong></p>
-      <%= form_for([@job, @submission, @submission.resume]) do |f| %>
-        <%= f.fields_for :resume_sections do|ff| %>
-          <div class="form-group">
-            <%= ff.label :consultant_rating, ff.object.section, class: 'col-sm-3 col-md-3 control-label', style: 'padding-top: 5px' %>
-            <div class="col-sm-9">
-              <%= ff.collection_radio_buttons :consultant_rating,  (1..5).map { |n| [n, n] }, :first, :last,{}, {class: 'radio-inline', required: true, style: 'margin: 10px 5px 10px 10px'} %>
+    <% @resume = @submission.resume %>
+    <% if @job.consultant == current_user && @resume.resume_sections.collect(&:consultant_rating).include?(nil) %>
+      <div class="row">
+        <p class="text-center"><strong>Ratings</strong></p>
+        <%= form_for([@job, @submission, @resume]) do |f| %>
+          <%= f.fields_for :resume_sections do|ff| %>
+            <div class="form-group">
+              <%= ff.label :consultant_rating, ff.object.section, class: 'col-sm-3 col-md-3 control-label', style: 'padding-top: 5px' %>
+              <div class="col-sm-9">
+                <%= ff.collection_radio_buttons :consultant_rating,  (1..5).map { |n| [n, n] }, :first, :last,{}, {class: 'radio-inline', required: true, style: 'margin: 10px 5px 10px 10px'} %>
+              </div>
             </div>
+          <% end %>
+          <div class="col-md-10">
+            <%= f.submit "Submit Rating", class: 'btn btn-small btn-block btn-primary' %>
           </div>
         <% end %>
-        <div class="col-md-10">
-          <%= f.submit "Submit Rating", class: 'btn btn-small btn-block btn-primary' %>
-        </div>
-      <% end %>
-    </div>
-    <br>
+      </div>
+      <br>
+    <% elsif @job.hm == current_user &&  @resume.resume_sections.collect(&:hiring_manager_rating).include?(nil) %>
+      <div class="row">
+        <p class="text-center"><strong>Ratings</strong></p>
+        <%= form_for([@job, @submission, @resume]) do |f| %>
+          <%= f.fields_for :resume_sections do|ff| %>
+            <div class="form-group">
+              <%= ff.label :hiring_manager_rating, ff.object.section, class: 'col-sm-3 col-md-3 control-label', style: 'padding-top: 5px' %>
+              <div class="col-sm-9">
+                <%= ff.collection_radio_buttons :hiring_manager_rating,  (1..5).map { |n| [n, n] }, :first, :last,{}, {class: 'radio-inline', required: true, style: 'margin: 10px 5px 10px 10px'} %>
+              </div>
+            </div>
+          <% end %>
+          <div class="col-md-10">
+            <%= f.submit "Submit Rating", class: 'btn btn-small btn-block btn-primary' %>
+          </div>
+        <% end %>
+      </div>
+      <br>
+    <% end %>
     <div class="row" style="margin-right: 0">
       <p class="text-center"><strong>Decisions</strong></p>
       <%= render partial: 'resumes/hm_decision' %>
