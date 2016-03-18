@@ -18,6 +18,7 @@
 //= require templates
 //= require jquery.datetimepicker.full.min
 //= require submissions
+//= require jquery.raty
 //= require_self
 
 

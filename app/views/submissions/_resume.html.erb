@@ -25,7 +25,7 @@
         <div>
           <%= video_tag resume_section.video, preload: 'metadata', :size => "350x240", :controls => true, class: 'section_player section_video' %>
         </div>
-        <%= render partial: 'resume_sections/ratings', locals: {resume_sec: resume_section} %>
+        <%= render partial: 'resume_sections/ratings', locals: {resume_section: resume_section} %>
         <div>
           <p><strong>Comments:</strong></p>
           <% @comments = submission.comments.where(user_id: current_user.id) %>
@@ -45,11 +45,11 @@
         <p class="text-center"><strong>Ratings</strong></p>
         <%= form_for([@job, @submission, @resume]) do |f| %>
           <%= f.fields_for :resume_sections do|ff| %>
-            <div class="form-group">
-              <%= ff.label :consultant_rating, ff.object.section, class: 'col-sm-3 col-md-3 control-label', style: 'padding-top: 5px' %>
-              <div class="col-sm-9">
-                <%= ff.collection_radio_buttons :consultant_rating,  (1..5).map { |n| [n, n] }, :first, :last,{}, {class: 'radio-inline', required: true, style: 'margin: 10px 5px 10px 10px'} %>
-              </div>
+            <div class="form-group" style="margin-bottom: 0">
+              <%= ff.label :consultant_rating, ff.object.section %>
+              <%#= ff.collection_radio_buttons :consultant_rating,  (1..5).map { |n| [n, n] }, :first, :last,{}, {class: 'radio-inline form-control', style: 'margin: 10px 5px 10px 10px'} %>
+              <%= ff.hidden_field :consultant_rating, class: 'form-control' %>
+              <p class="star_rating"></p>
             </div>
           <% end %>
           <div class="col-md-10">
@@ -63,13 +63,14 @@
         <p class="text-center"><strong>Ratings</strong></p>
         <%= form_for([@job, @submission, @resume]) do |f| %>
           <%= f.fields_for :resume_sections do|ff| %>
-            <div class="form-group">
-              <%= ff.label :hiring_manager_rating, ff.object.section, class: 'col-sm-3 col-md-3 control-label', style: 'padding-top: 5px' %>
-              <div class="col-sm-9">
-                <%= ff.collection_radio_buttons :hiring_manager_rating,  (1..5).map { |n| [n, n] }, :first, :last,{}, {class: 'radio-inline', required: true, style: 'margin: 10px 5px 10px 10px'} %>
-              </div>
+            <div class="form-group" style="margin-bottom: 0">
+              <%= ff.label :hiring_manager_rating, ff.object.section %>
+              <%#= ff.collection_radio_buttons :hiring_manager_rating,  (1..5).map { |n| [n, n] }, :first, :last,{}, {class: 'radio-inline form-control', style: 'margin: 10px 5px 10px 10px'} %>
+              <%= ff.hidden_field :hiring_manager_rating, class: 'form-control' %>
+              <p class="star_rating"></p>
             </div>
           <% end %>
+
           <div class="col-md-10">
             <%= f.submit "Submit Rating", class: 'btn btn-small btn-block btn-primary' %>
           </div>
@@ -83,6 +84,7 @@
     </div>
   </div>
 </div>
+
 
 <script type="text/javascript">
 
@@ -99,5 +101,15 @@
     $(section_id).removeClass('hide');
     $('button.section').removeClass('btn-success').addClass('btn-info');
     $(this).removeClass('btn-info').addClass('btn-success')
+  });
+
+  $('.star_rating').raty({
+    path: '/assets/',
+    size: 24,
+    starOff: 'star-off-big.png',
+    starOn: 'star-on-big.png',
+    click: function(score, evt) {
+      $(this).prev('input').val(score);
+    }
   });
 </script>

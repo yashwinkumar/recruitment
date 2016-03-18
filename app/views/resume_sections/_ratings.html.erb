@@ -1,13 +1,36 @@
-<%= resume_sec.candidate_rating %>
+<p>
+  <strong>Candidate Rating:</strong>
 
-<% if (resume_sec.consultant_rating && @job.consultant == current_user) || @job.hm == current_user %>
-  <p><strong>Consulting Company Rating:</strong>
-    <%= resume_sec.consultant_rating ? "#{resume_sec.consultant_rating} out of 5" : 'NA' %>
+  <% (1..resume_section.rating.to_i).each do|i| %>
+    <%= image_tag 'star-on.png' %>
+  <% end %>
+  <% (resume_section.rating.to_i...5).each do|i| %>
+    <%= image_tag 'star-off.png' %>
+  <% end %>
+</p>
+
+<% if (resume_section.consultant_rating && @job.consultant == current_user) || @job.hm == current_user %>
+  <p>
+    <strong>Consulting Company Rating:</strong>
+    <% (1..resume_section.consultant_rating.to_i).each do|i| %>
+      <%= image_tag 'star-on.png' %>
+    <% end %>
+    <% (resume_section.consultant_rating.to_i...5).each do|i| %>
+      <%= image_tag 'star-off.png' %>
+    <% end %>
   </p>
 <% end %>
 
-<% if resume_sec.hiring_manager_rating && @job.hm == current_user %>
-  <%= raw "<p><strong>Hiring Manager Rating:</strong> #{resume_sec.hiring_manager_rating} out of 5</p>" if resume_sec.hiring_manager_rating && @job.hm == current_user %>
+<% if resume_section.hiring_manager_rating && @job.hm == current_user %>
+  <p>
+    <strong>Hiring Manager  Rating:</strong>
+    <% (1..resume_section.hiring_manager_rating.to_i).each do|i| %>
+      <%= image_tag 'star-on.png' %>
+    <% end %>
+    <% (resume_section.hiring_manager_rating.to_i...5).each do|i| %>
+      <%= image_tag 'star-off.png' %>
+    <% end %>
+  </p>
 <% end %>
 
 <% if false %>

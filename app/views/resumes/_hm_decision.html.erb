@@ -29,6 +29,8 @@
     <%= link_to 'Submit to HM', change_status_job_submission_path(@job, @submission, status: 'process'), class: 'btn btn-primary' %>
     <%= link_to 'Park', '#', class: 'btn btn-info comment-btn', data: {status: 'park'} %>
   <% end %>
+<% elsif current_user.candidate? %>
+    <button class="btn btn-block btn-lg"><%= @submission.status %></button>
 <% end %>
 </div>
   <br>
@@ -37,8 +39,7 @@
     <%= form_tag save_comment_job_submission_path(@job, @submission), class: 'form-horizontal commetn_form' do %>
       <%= hidden_field_tag :status %>
       <div class="form-group">
-        <%= label_tag :comment, 'Comment', class: 'col-sm-2 control-label' %>
-        <div class="col-sm-8">
+        <div class="col-sm-10">
           <%= text_area_tag :comment, '', class: 'form-control', rows: 4, placeholder: 'Leave your comment here...' %>
         </div>
       </div>
