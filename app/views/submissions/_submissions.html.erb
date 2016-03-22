@@ -1,46 +1,35 @@
 <div class="row" style="padding-top: 5px">
   <% if submissions.any? %>
     <div class="col-md-3">
-      <div class="applicants_list">
-      <ul class="nav nav-stacked" style="max-height: 400px;overflow-y: scroll">
-        <% submissions.each_with_index do |submission, i| %>
-          <%= content_tag :li, data: {path: get_submission_job_submission_path(job,submission)} do%>
-            <%= link_to submission.user.full_name, get_submission_job_submission_path(job,submission, tab: tab), class: i == 0 ? 'active' : '', remote: true %>
+      <div class="applicants_list slim-scroll">
+        <ul class="nav nav-stacked">
+          <% submissions.each_with_index do |submission, i| %>
+            <%= content_tag :li, data: {path: get_submission_job_submission_path(job, submission)} do %>
+              <%= link_to submission.user.full_name, get_submission_job_submission_path(job, submission, tab: tab), class: i == 0 ? 'active' : '', remote: true %>
+            <% end %>
           <% end %>
-        <% end %>
-      </ul>
+        </ul>
       </div>
     </div>
     <div class="col-md-9">
       <% @submission = submissions.first %>
       <% @resume_sections ||= @submission.resume.resume_sections.order('id asc') %>
-      <div class="<%=tab%>_resume_view">
+      <div class="<%= tab %>_resume_view">
         <%= render partial: 'resume', locals: {submission: @submission, resume_sections: @resume_sections} %>
       </div>
     </div>
   <% else %>
     <div class="col-md-12">
       <div class="well-sm text-info">
-      No submissions
+        No submissions
       </div>
     </div>
   <% end %>
 </div>
 
-<style>
-  .applicants_list li{
-    border-right: 1px solid #cccccc;
-    border-bottom: 1px solid #cccccc;
-  }
-  .applicants_list li a.active , .applicants_list li:hover, .applicants_list li a:hover {
-    background: #D9EDF7;
-    font-weight: bold;
-    cursor: pointer;
-  }
-</style>
-
 <script>
-  $('.applicants_list ul li a').on('click', function(e){
+  $('.slim-scroll').slimScroll({height: 400});
+  $('.applicants_list ul li a').on('click', function (e) {
     $('.applicants_list ul li a').removeClass('active');
     $(this).addClass('active');
     var path = $(this).data("path");

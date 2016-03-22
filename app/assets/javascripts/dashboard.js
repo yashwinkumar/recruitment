@@ -19,6 +19,7 @@
 //= require jquery.datetimepicker.full.min
 //= require submissions
 //= require jquery.raty
+//= require jquery.slimscroll
 //= require_self
 
 
@@ -36,4 +37,5 @@ $(document).ready(function(){
       var place = autocomplete.getPlace();
     });
   });
+  $('.slim-scroll').slimScroll();
 });

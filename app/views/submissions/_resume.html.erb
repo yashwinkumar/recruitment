@@ -5,6 +5,7 @@
     </button>
   <% end %>
 </div>
+<br>
 <% attachments = submission.attachments %>
 <% if attachments.any? %>
   <hr style="margin: 5px">
@@ -17,6 +18,7 @@
       </span>
     <% end %>
   </div>
+  <br>
 <% end %>
 <div class="row">
   <div class="col-md-6">
@@ -42,7 +44,6 @@
     <% @resume = @submission.resume %>
     <% if @job.consultant == current_user && @resume.resume_sections.collect(&:consultant_rating).include?(nil) %>
       <div class="row">
-        <p class="text-center"><strong>Ratings</strong></p>
         <%= form_for([@job, @submission, @resume]) do |f| %>
           <%= f.fields_for :resume_sections do|ff| %>
             <div class="form-group" style="margin-bottom: 0">
@@ -60,7 +61,6 @@
       <br>
     <% elsif @job.hm == current_user &&  @resume.resume_sections.collect(&:hiring_manager_rating).include?(nil) %>
       <div class="row">
-        <p class="text-center"><strong>Ratings</strong></p>
         <%= form_for([@job, @submission, @resume]) do |f| %>
           <%= f.fields_for :resume_sections do|ff| %>
             <div class="form-group" style="margin-bottom: 0">
@@ -79,7 +79,6 @@
       <br>
     <% end %>
     <div class="row" style="margin-right: 0">
-      <p class="text-center"><strong>Decisions</strong></p>
       <%= render partial: 'resumes/hm_decision' %>
     </div>
   </div>

@@ -10,9 +10,9 @@
     <%= link_to 'Hire', change_status_job_submission_path(@job, @submission, status: 'hire'), class: 'btn btn-info comment-btn', data: {status: 'hire'}, confirm: "Are you sure you want to hire the candidate?" %>
   <% elsif @submission.hired? %>
     <h3><span class="label label-success">Hired</span></h3>
-    <% unless @submission.discarded? || @submission.hired? %>
-      <%= link_to 'Reject', '#', class: 'btn btn-danger comment-btn', data: {status: 'discard'} %>
-    <% end %>
+  <% end %>
+  <% unless @submission.discarded? || @submission.hired? %>
+    <%= link_to 'Reject', '#', class: 'btn btn-danger comment-btn', data: {status: 'discard'} %>
   <% end %>
 <% elsif current_user.consultant? %>
   <% if @submission.processing? %>
