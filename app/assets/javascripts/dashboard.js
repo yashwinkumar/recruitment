@@ -24,8 +24,13 @@
 
 
 $(document).ready(function(){
+    $(".has_datepicker").datetimepicker({
+      timepicker: false,
+      format: 'Y/m/d'
+    });
 
-  $('.loc_auto_comp, .location_auto_comp').click(function (e) {
+
+  $('.loc_auto_comp').click(function (e) {
     var id = $(this).attr('id');
     var input = document.getElementById(id);
     var options = {

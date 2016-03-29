@@ -12,6 +12,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'slim'
 gem 'simple_form'
+gem 'simple-form-datepicker'
 gem "figaro"
 gem 'sendgrid'
 gem 'devise'

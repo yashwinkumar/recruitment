@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160329101035) do
+ActiveRecord::Schema.define(version: 20160329105722) do
 
   create_table "attachments", force: :cascade do |t|
     t.integer  "submission_id", limit: 4
@@ -61,6 +61,11 @@ ActiveRecord::Schema.define(version: 20160329101035) do
     t.integer  "hiring_user_id",     limit: 4
     t.integer  "consultant_user_id", limit: 4
     t.string   "status",             limit: 255
+    t.string   "job_type",           limit: 255
+    t.string   "compensation",       limit: 255
+    t.string   "experience",         limit: 255
+    t.string   "duration",           limit: 255
+    t.date     "start_date"
   end
 
   create_table "profiles", force: :cascade do |t|

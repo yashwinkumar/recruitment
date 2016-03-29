@@ -2,13 +2,16 @@ class Job < ActiveRecord::Base
   belongs_to :template
   has_many :submissions, dependent: :destroy
   has_many :interviews, dependent: :destroy
+  has_many :job_skills
+  has_many :skills, through: :job_skills
   belongs_to :user
 
   scope :active, -> {where(status: 'active')}
   scope :hold, -> {where(status: 'hold')}
   scope :closed, -> {where(status: 'closed')}
 
-  validates :template_id, :title, :description, :hiring_user_id, :consultant_user_id, presence: true
+
+  validates :template_id, :title, :description, :location, :compensation, :hiring_user_id, :consultant_user_id, presence: true
 
   state_machine :status, :initial => :active do
     event :active do

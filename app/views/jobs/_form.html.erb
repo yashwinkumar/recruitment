@@ -47,9 +47,36 @@
         <%= f.select :hiring_user_id, Role.where(name: "hm").first.users.map { |l| [l.email, l.id] }, {}, class: 'form-control' %>
       </div>
     </div>
-    <%= f.input :title %>
-    <%= f.input :description, input_html: {:class => 'ckeditor'} %>
-    <%= f.input :location, input_html: {class: 'location_auto_comp'} %>
+      <%= f.input :title %>
+      <%= f.input :location, input_html: {class: 'loc_auto_comp'} %>
+      <div class="form-group">
+        <%= f.label :job_type, class: "col-sm-3 control-label" do %>
+          Position Type
+        <% end %>
+        <div class="col-sm-9">
+          <%= label_tag :inline_radio_2, class: "radio-inline" do %>
+            <%= f.radio_button :job_type, 'permanent', checked: ((f.object.job_type == 'permanent' || f.object.new_record?) ? true : false), class: 'job_type', style: 'margin-top: 4px' %>
+            Permanent
+          <% end %>
+          <%= label_tag :inline_radio_1, class: "radio-inline" do %>
+            <%= f.radio_button :job_type, 'contract', checked: (f.object.job_type == 'contract' ? true : false), class: 'job_type', style: 'margin-top: 4px' %>
+            Contract
+          <% end %>
+        </div>
+      </div>
+      <%= content_tag :div, class: 'permanent_fields ' + ((f.object.job_type == 'permanent' || f.object.new_record?) ? '' : 'hide') do%>
+        <%= f.input :start_date,as: :datepicker, input_html: {class: 'has_datepicker form-control'} %>
+      <% end %>
+      <%= content_tag :div, class: 'contract_fields ' + (f.object.job_type == 'contract' ? '' : 'hide') do%>
+        <%= f.input :duration, hint: "Duration in months" %>
+      <% end %>
+
+      <%= f.input :description, input_html: {:class => 'ckeditor'} %>
+      <%#= f.simple_fields_for :skills do|s|%>
+        <%#= s.input :name %>
+      <%# end %>
+
+      <%= f.input :compensation %>
 
     <div class="form-group">
       <div class="col-md-offset-3 col-md-9">
@@ -62,4 +89,28 @@
 
 <script>
   $(".job_template_id").removeClass("form-group");
+  // location auto completer
+  $('.loc_auto_comp').click(function (e) {
+    var id = $(this).attr('id');
+    var inputxx = document.getElementById(id);
+    var optionsxx = {
+      types: ['geocode']
+    };
+
+    var autocomplete = new google.maps.places.Autocomplete(inputxx, optionsxx);
+    google.maps.event.addListener(autocomplete, 'place_changed', function () {
+      var place = autocomplete.getPlace();
+    });
+  });
+
+  $('.job_type').on('change', function(e){
+    var checked = $('.job_type:checked').val();
+    if(checked=='permanent'){
+      $('.permanent_fields').removeClass('hide');
+      $('.contract_fields').addClass('hide');
+    }else{
+      $('.permanent_fields').addClass('hide');
+      $('.contract_fields').removeClass('hide');
+    }
+  })
 </script>

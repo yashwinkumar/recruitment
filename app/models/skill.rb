@@ -1,3 +1,3 @@
 class Skill < ActiveRecord::Base
-  belongs_to :job_skill
+  has_many :job_skills
 end
