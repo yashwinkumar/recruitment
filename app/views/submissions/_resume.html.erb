@@ -5,7 +5,6 @@
     </button>
   <% end %>
 </div>
-<br>
 <% attachments = submission.attachments %>
 <% if attachments.any? %>
   <hr style="margin: 5px">
@@ -58,7 +57,6 @@
           </div>
         <% end %>
       </div>
-      <br>
     <% elsif @job.hm == current_user &&  @resume.resume_sections.collect(&:hiring_manager_rating).include?(nil) %>
       <div class="row">
         <%= form_for([@job, @submission, @resume]) do |f| %>
@@ -76,11 +74,12 @@
           </div>
         <% end %>
       </div>
+    <% else %>
       <br>
+      <div class="row" style="margin-right: 0">
+        <%= render partial: 'resumes/hm_decision' %>
+      </div>
     <% end %>
-    <div class="row" style="margin-right: 0">
-      <%= render partial: 'resumes/hm_decision' %>
-    </div>
   </div>
 </div>
 
