@@ -66,6 +66,18 @@ class User < ActiveRecord::Base
     role_name == "consultant"
   end
 
+  def new_token!
+    SecureRandom.hex(16).tap do |random_token|
+      update_attributes token: random_token
+      Rails.logger.info("Set new token for user #{ id }")
+    end
+  end
+
+  def remove_token!
+    update_attributes token: nil
+    Rails.logger.info("Remove token for user #{ id }")
+  end
+
   private
 
   def check_role

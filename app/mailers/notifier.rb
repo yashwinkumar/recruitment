@@ -36,6 +36,7 @@ class Notifier < ApplicationMailer
     @job = submission.job
     @applicant  = submission.user
     @hm  = @job.hm
+    @token = @hm.token ? @hm.token : @hm.new_token!
     mail(to: @hm.email, subject: "You got new application for #{@job.title}")
   end
 

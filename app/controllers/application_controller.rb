@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   include Pundit
   protect_from_forgery with: :exception
+  before_filter :login_from_token
   before_action :authenticate_user!, :require_on_board
   rescue_from Pundit::NotAuthorizedError, with: :handle_not_authorized_error
 
@@ -20,5 +21,16 @@ class ApplicationController < ActionController::Base
       flash[:alert] = "Please verify your phone number."
       redirect_to phones_path
     end
+  end
+
+  def login_from_token
+    return if (token = params[:token]).blank?
+
+    if (user = User.find_by_token(token))
+      sign_in(user)
+    end
+
+    # strip token regardless of success
+    redirect_to request.path, params.except(:token, :action, :controller)
   end
 end

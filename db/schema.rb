@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160329092536) do
+ActiveRecord::Schema.define(version: 20160329101035) do
 
   create_table "attachments", force: :cascade do |t|
     t.integer  "submission_id", limit: 4
@@ -169,6 +169,7 @@ ActiveRecord::Schema.define(version: 20160329092536) do
     t.string   "unconfirmed_email",      limit: 255
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
+    t.string   "token",                  limit: 255
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
