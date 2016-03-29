@@ -27,35 +27,42 @@
             <dt>Location:</dt>
             <dd><%= @profile.location %></dd>
             <br>
-            <dt>Current Employer</dt>
-            <dd><%= @profile.current_employer %></dd>
-            <br>
             <% if current_user.candidate? %>
-              <dt>DOB</dt>
-              <dd><%= @profile.dob.to_date.strftime("%b %d, %Y") if @profile.dob %></dd>
+              <dt>Current Job Title:</dt>
+              <dd><%= @profile.title %></dd>
               <br>
+              <dt>Current Employer</dt>
+              <dd><%= @profile.current_employer %></dd>
+              <br>
+              <dt>Experience:</dt>
+              <dd><%= @profile.experience %></dd>
+              <br>
+              <dt>Compensation:</dt>
+              <dd><%= @profile.compensation %></dd>
+              <br>
+              <dt>Primary Skills:</dt>
+              <dd>
+                <% @profile.primary_skills.split(',').each do |skill| %>
+                  <span class="label label-primary"><%= skill %></span>
+                <% end if @profile.primary_skills %>
+              </dd>
+              <br>
+              <dt>Secondary Skills:</dt>
+              <dd>
+                <% @profile.secondary_skills.split(',').each do |skill| %>
+                  <span class="label label-info"><%= skill %></span>
+                <% end if @profile.secondary_skills %>
+              </dd>
+              <br>
+              <dt>Willing to Relocate</dt>
+              <dd><%= @profile.relocate ? 'Yes' : 'No' %></dd>
+              <br>
+              <dt>Job Type Interest:</dt>
+              <dd><%= @profile.jobs_interested %></dd>
+              <br>
+              <dt>Citizen:</dt>
+              <dd><%= @profile.citizen ? 'Yes' : 'No' %></dd>
             <% end %>
-            <dt>Experience:</dt>
-            <dd><%= @profile.experience %></dd>
-            <br>
-            <dt>Compensation:</dt>
-            <dd><%= @profile.compensation %></dd>
-            <br>
-            <dt>Primary Skills:</dt>
-            <dd>
-              <% @profile.primary_skills.split(',').each do |skill| %>
-                <span class="label label-primary"><%= skill %></span>
-              <% end if @profile.primary_skills %>
-            </dd>
-            <br>
-            <dt>Secondary Skills:</dt>
-            <dd>
-              <% @profile.secondary_skills.split(',').each do |skill| %>
-                <span class="label label-info"><%= skill %></span>
-              <% end if @profile.secondary_skills %>
-            </dd>
-            <dt>Title:</dt>
-            <dd><%= @profile.title %></dd>
           </dl>
         </div>
         <div class="col-md-3">

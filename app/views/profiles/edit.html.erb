@@ -25,13 +25,18 @@
                 <%= f.text_field :first_name, class: 'form-control', required: true %>
               </div>
             </div>
-
             <div class="form-group">
-            <%= f.label :last_name, class: 'col-sm-4 control-label required' %>
-            <div class="col-sm-8">
-              <%= f.text_field :last_name, class: 'form-control', required: true %>
+              <%= f.label :middle_name, class: 'col-sm-4 control-label required' %>
+              <div class="col-sm-8">
+                <%= f.text_field :middle_name, class: 'form-control', required: true %>
+              </div>
             </div>
-          </div>
+            <div class="form-group">
+              <%= f.label :last_name, class: 'col-sm-4 control-label required' %>
+              <div class="col-sm-8">
+                <%= f.text_field :last_name, class: 'form-control', required: true %>
+              </div>
+            </div>
             <div class="form-group">
               <%= f.label :phone, class: 'col-sm-4 control-label required' %>
               <div class="col-sm-8">
@@ -44,53 +49,96 @@
                 <%= f.text_field :location, class: 'form-control loc_auto_comp', required: true %>
               </div>
             </div>
+            <% if current_user.candidate? %>
             <div class="form-group">
-              <%= f.label :current_employer, class: 'col-sm-4 control-label' %>
+              <%= f.label :title, 'Current Job Title', class: 'col-sm-4 control-label required' %>
               <div class="col-sm-8">
-                <%= f.text_field :current_employer, class: 'form-control'%>
+                <%= f.text_field :title, class: 'form-control', required: true %>
               </div>
             </div>
-            <% if current_user.candidate? %>
-              <div class="form-group">
-                <%= f.label :dob, 'DOB', class: 'col-sm-4 control-label' %>
-                <div class="col-sm-8">
-                  <%= f.text_field :dob, class: 'form-control has_datepicker' %>
-                </div>
+            <div class="form-group">
+              <%= f.label :current_employer, class: 'col-sm-4 control-label required' %>
+              <div class="col-sm-8">
+                <%= f.text_field :current_employer, class: 'form-control', required: true %>
               </div>
+            </div>
+            <div class="form-group">
+              <%= f.label :experience, class: 'col-sm-4 control-label required' %>
+              <div class="col-sm-8">
+                <%= f.text_field :experience, class: 'form-control', required: true %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label :compensation, class: 'col-sm-4 control-label required' %>
+              <div class="col-sm-8">
+                <%= f.text_field :compensation, class: 'form-control', required: true %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label :primary_skills, class: 'col-sm-4 control-label required' %>
+              <div class="col-sm-8">
+                <%= f.text_area :primary_skills, class: 'form-control', required: true %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label :secondary_skills, class: 'col-sm-4 control-label' %>
+              <div class="col-sm-8">
+                <%= f.text_area :secondary_skills, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label :relocate, class: "col-sm-4 control-label required" do %>
+                Willing to Relocate
+              <% end %>
+              <div class="col-sm-8">
+                <%= label_tag :inline_radio_1, class: "radio-inline" do %>
+                  <%= f.radio_button :relocate, true, checked: f.object.relocate, style: 'margin-top: 4px' %>
+                  Yes
+                <% end %>
+                <%= label_tag :inline_radio_2, class: "radio-inline" do %>
+                  <%= f.radio_button :relocate, false, checked: f.object.relocate, style: 'margin-top: 4px' %>
+                  No
+                <% end %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label :jobs_interested, class: "col-sm-4 control-label required" do %>
+                Job Type Interest
+              <% end %>
+              <div class="col-sm-8">
+                <%= label_tag :inline_radio_1, class: "radio-inline" do %>
+                  <%= f.radio_button :jobs_interested, "contract", checked: (f.object.jobs_interested == "contract" ? true : false), style: 'margin-top: 4px' %>
+                  Contract
+                <% end %>
+                <%= label_tag :inline_radio_2, class: "radio-inline" do %>
+                  <%= f.radio_button :jobs_interested, "permanent", checked: (f.object.jobs_interested == "permanent" ? true : false), style: 'margin-top: 4px' %>
+                  Permanent
+                <% end %>
+                <%= label_tag :inline_radio_3, class: "radio-inline" do %>
+                  <%= f.radio_button :jobs_interested, "any", checked: (f.object.jobs_interested == "any" ? true : false), style: 'margin-top: 4px' %>
+                  Any
+                <% end %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label :citizen, class: "col-sm-4 control-label required" do %>
+                Citizen
+              <% end %>
+              <div class="col-sm-8">
+                <%= label_tag :inline_radio_1, class: "radio-inline" do %>
+                  <%= f.radio_button :citizen, true, checked: f.object.citizen, style: 'margin-top: 4px' %>
+                  Yes
+                <% end %>
+                <%= label_tag :inline_radio_2, class: "radio-inline" do %>
+                  <%= f.radio_button :citizen, false, checked: f.object.citizen, style: 'margin-top: 4px' %>
+                  No
+                <% end %>
+              </div>
+            </div>
             <% end %>
-              <div class="form-group">
-                <%= f.label :experience, class: 'col-sm-4 control-label' %>
-                <div class="col-sm-8">
-                  <%= f.text_field :experience, class: 'form-control'%>
-                </div>
-              </div>
-              <div class="form-group">
-                <%= f.label :compensation, class: 'col-sm-4 control-label' %>
-                <div class="col-sm-8">
-                  <%= f.text_field :compensation, class: 'form-control' %>
-                </div>
-              </div>
-              <div class="form-group">
-                <%= f.label :primary_skills, class: 'col-sm-4 control-label' %>
-                <div class="col-sm-8">
-                  <%= f.text_area :primary_skills, class: 'form-control' %>
-                </div>
-              </div>
-              <div class="form-group">
-                <%= f.label :secondary_skills, class: 'col-sm-4 control-label' %>
-                <div class="col-sm-8">
-                  <%= f.text_area :secondary_skills, class: 'form-control' %>
-                </div>
-              </div>
-              <div class="form-group">
-                <%= f.label :title, class: 'col-sm-4 control-label' %>
-                <div class="col-sm-8">
-                  <%= f.text_field :title, class: 'form-control' %>
-                </div>
-              </div>
           </div>
           <div class="col-md-4">
-            <%= image_tag @profile.display_picture, class: 'thumbnail' ,width: '50%' %>
+            <%= image_tag @profile.display_picture, class: 'thumbnail', width: '50%' %>
 
             <div class="form-group">
               <div class="col-sm-12 ">
@@ -100,7 +148,7 @@
           </div>
           <div class="col-md-12">
             <div class="form-group">
-              <div class="col-sm-offset-3 col-sm-6">
+              <div class="col-sm-offset-2 col-sm-6">
                 <%= f.submit :save, class: 'btn btn-success btn-block' %>
               </div>
             </div>
@@ -112,9 +160,9 @@
 </div>
 
 <script>
-  $(function() {
-    $(".has_datepicker" ).datetimepicker({
-      timepicker:false,
+  $(function () {
+    $(".has_datepicker").datetimepicker({
+      timepicker: false,
       format: 'Y/m/d'
     });
   });
