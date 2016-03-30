@@ -17,18 +17,29 @@ class JobsController < ApplicationController
 
   def new
     @job = Job.new
+    @job_skills = ''
     authorize @job
   end
 
   def edit
+    @job_skills = @job.job_skills.any? ? @job.skills.collect(&:name).join(',') : ''
     authorize @job
   end
 
   def create
+    # raise params.inspect
     @job = current_user.consultant_jobs.new(job_params)
     authorize @job
     respond_to do |format|
       if @job.save
+        skills = params[:job][:job_skills][:name]
+        skills = skills.present? ? skills.split(',') : []
+        if skills.any?
+          skills.each do|s|
+            skill = Skill.find_or_create_by name: s.downcase
+            JobSkill.find_or_create(job_id: @job.id, skill_id: skill.id)
+          end
+        end
         format.html { redirect_to @job, notice: 'Job was successfully posted.' }
         format.json { render :show, status: :created, location: @job }
       else
@@ -46,6 +57,14 @@ class JobsController < ApplicationController
     respond_to do |format|
       authorize @job
       if @job.update(job_params)
+        skills = params[:job][:job_skills][:name]
+        skills = skills.present? ? skills.split(',') : []
+        if skills.any?
+          skills.each do|s|
+            skill = Skill.find_or_create_by name: s.downcase
+            JobSkill.find_or_create_by job_id: @job.id, skill_id: skill.id
+          end
+        end
         format.html { redirect_to @job, notice: 'Job was successfully updated.' }
         format.json { render :show, status: :ok, location: @job }
       else
@@ -81,6 +100,6 @@ class JobsController < ApplicationController
     end
 
     def job_params
-      params.require(:job).permit(:title, :description, :location, :template_id, :consultant_user_id, :hiring_user_id)
+      params.require(:job).permit(:title, :description, :location, :template_id, :consultant_user_id, :hiring_user_id, :job_type, :start_date, :duration, :compensation)
     end
 end

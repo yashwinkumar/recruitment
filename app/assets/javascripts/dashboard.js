@@ -20,6 +20,7 @@
 //= require submissions
 //= require jquery.raty
 //= require jquery.slimscroll
+//= require bootstrap-tagsinput
 //= require_self
 
 

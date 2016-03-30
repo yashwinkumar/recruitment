@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-11">
-    <%= simple_form_for(@job, html: {class: 'form-horizontal', autocomplete: 'off'}, wrapper: :horizontal_form) do |f| %>
+    <%= simple_form_for(@job, html: {class: 'form-horizontal', autocomplete: 'off',onkeypress: "return event.keyCode != 13;"}, wrapper: :horizontal_form) do |f| %>
     <%= f.error_notification %>
 
     <% if f.object.new_record? %>
@@ -65,18 +65,18 @@
         </div>
       </div>
       <%= content_tag :div, class: 'permanent_fields ' + ((f.object.job_type == 'permanent' || f.object.new_record?) ? '' : 'hide') do%>
-        <%= f.input :start_date,as: :datepicker, input_html: {class: 'has_datepicker form-control'} %>
+        <%= f.input :start_date,as: :string, input_html: {class: 'has_datepicker form-control'} %>
       <% end %>
       <%= content_tag :div, class: 'contract_fields ' + (f.object.job_type == 'contract' ? '' : 'hide') do%>
-        <%= f.input :duration, hint: "Duration in months" %>
+        <%= f.input :duration, as: :float, hint: "Duration in months" %>
       <% end %>
 
       <%= f.input :description, input_html: {:class => 'ckeditor'} %>
-      <%#= f.simple_fields_for :skills do|s|%>
-        <%#= s.input :name %>
-      <%# end %>
+      <%= f.simple_fields_for :job_skills do|s|%>
+        <%= s.input :name,label: "Skills", input_html: {value: @job_skills,placeholder: 'Enter comma separate ', data: {role: "tagsinput"}} %>
+      <% end %>
 
-      <%= f.input :compensation %>
+      <%= f.input :compensation, hint: "Salary P/A" %>
 
     <div class="form-group">
       <div class="col-md-offset-3 col-md-9">
@@ -86,6 +86,12 @@
   <% end %>
   </div>
 </div>
+
+<style>
+  .bootstrap-tagsinput{
+    width: 100%;
+  }
+</style>
 
 <script>
   $(".job_template_id").removeClass("form-group");
