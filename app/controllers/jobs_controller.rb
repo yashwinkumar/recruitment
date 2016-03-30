@@ -61,6 +61,7 @@ class JobsController < ApplicationController
     respond_to do |format|
       authorize @job
       if @job.update(job_params)
+        @job.job_skills.destroy_all
         skills = params[:job][:job_skills][:name]
         skills = skills.present? ? skills.split(',') : []
         if skills.any?

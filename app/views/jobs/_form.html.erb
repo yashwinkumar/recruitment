@@ -73,7 +73,7 @@
 
       <%= f.input :description, input_html: {:class => 'ckeditor'} %>
       <%= f.simple_fields_for :job_skills do|s|%>
-        <%= s.input :name,label: "Skills", input_html: {value: @job_skills,placeholder: 'Enter comma separate ', data: {role: "tagsinput"}} %>
+      <%= s.input :name,label: "Skills", input_html: {value: @job_skills,placeholder: 'Enter comma separate ',data: {role: "tagsinput"}} %>
       <% end %>
 
       <%= f.input :compensation, hint: "Salary P/A" %>
@@ -118,5 +118,6 @@
       $('.permanent_fields').addClass('hide');
       $('.contract_fields').removeClass('hide');
     }
-  })
+  });
+
 </script>
