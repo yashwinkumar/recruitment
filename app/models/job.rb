@@ -27,6 +27,16 @@ class Job < ActiveRecord::Base
     end
   end
 
+  searchable do
+    text :title, :location
+    string :skills, :multiple => true do
+      skills.map(&:name)
+    end
+    text :skills do
+      skills.map(&:name)
+    end
+  end
+
   def consultant
     User.find_by id: consultant_user_id
   end

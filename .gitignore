@@ -15,6 +15,8 @@
 /public/assets
 /public/assets/*
 /public/uploads/*
+solr
+solr/data/*
 
 # Ignore application configuration
 /config/application.yml

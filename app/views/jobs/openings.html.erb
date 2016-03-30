@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="well">
+      <%= form_tag openings_jobs_path, method: :get, :class => 'form-inline' do %>
+        <div class="form-group">
+          <%= text_field_tag :what, params[:what], :class => 'form-control input-lg', :placeholder => 'What...' %>
+        </div>
+        <div class="form-group">
+          <%= text_field_tag :where, params[:where], :class => 'form-control input-lg loc_auto_comp', :placeholder => 'Where...' %>
+        </div>
+        <%= submit_tag :Search, :class => 'btn btn-success btn-lg' %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<% @jobs.each do |job| %>
+  <div class="row">
+    <div class="col-md-10">
+      <h4><%= link_to job.title, job_path(job) %></h4>
+
+      <p>
+        <span class="label label-primary"><%= job.job_type %></span>
+        <% if job.job_type == 'permanent' %>
+          | <span>RS: <%= job.compensation %> P/A.</span>
+        <% elsif job.job_type == 'contract' %>
+          | <span>Duration <%= job.duration %> months.</span>
+        <% end %>
+      </p>
+
+      <p>
+        <%= raw HTML_Truncator.truncate(job.description, 50) %>
+      </p>
+    </div>
+    <div class="col-md-2">
+      <% if job.submissions.find_by_user_id current_user.id %>
+        <%= link_to "Submitted", '#', class: 'btn btn-default btn-sm disabled' %>
+      <% elsif current_user.candidate? %>
+        <%= link_to "Apply", new_job_submission_path(job), class: 'btn btn-sm btn-info' %>
+      <% end %>
+    </div>
+  </div>
+  <hr style="margin: 5px">
+<% end %>
+<div class="row text-center">
+  <%= will_paginate @jobs, renderer: BootstrapPagination::Rails %>
+</div>
+
+<style>
+  .form-inline .form-group input {
+    width:350px;
+  }
+</style>

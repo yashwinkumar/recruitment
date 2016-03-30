@@ -50,7 +50,11 @@ class JobsController < ApplicationController
   end
 
   def openings
-    @jobs = Job.all
+    @search = Job.search do
+      fulltext (params['what'].present? ? params['what'] : "") + ' ' + (params['where'].present? ? params['where'] : "")
+      paginate :page => params[:page], :per_page => 10
+    end
+    @jobs = @search.results
   end
 
   def update

@@ -26,6 +26,11 @@ gem 'fog', '~> 1.37'
 gem "fog-aws"
 gem "active_decorator"
 gem 'ckeditor_rails'
+gem 'sunspot_rails'
+gem 'sunspot_solr'
+gem 'will_paginate-bootstrap'
+gem "html_truncator"
+
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
