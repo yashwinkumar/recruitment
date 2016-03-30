@@ -37,7 +37,7 @@ class JobsController < ApplicationController
         if skills.any?
           skills.each do|s|
             skill = Skill.find_or_create_by name: s.downcase
-            JobSkill.find_or_create(job_id: @job.id, skill_id: skill.id)
+            JobSkill.where(job_id: @job.id, skill_id: skill.id).first_or_create
           end
         end
         format.html { redirect_to @job, notice: 'Job was successfully posted.' }
