@@ -27,6 +27,9 @@
         <% elsif job.job_type == 'contract' %>
           <span>Duration <%= job.duration %> months.</span>&nbsp;|&nbsp;
         <% end %>
+        <% if job.experience.present? %>
+          <span>Exp: <%= job.experience %> Years</span>&nbsp;|&nbsp;
+        <% end %>
         <span><i class="glyphicon glyphicon-map-marker"></i>&nbsp;<%= job.location %></span>&nbsp;|&nbsp;
       <span>
         <i class="glyphicon glyphicon-calendar"></i>&nbsp;<i>posted <%= time_ago_in_words job.created_at %> ago</i>
