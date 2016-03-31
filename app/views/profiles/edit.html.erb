@@ -7,7 +7,7 @@
         </h3>
       </div>
       <div class="panel-body">
-        <%= form_for(@profile, html: {class: 'form-horizontal validate'}) do |f| %>
+        <%= form_for(@profile, html: {class: 'form-horizontal validate',onkeypress: "return event.keyCode != 13;"}) do |f| %>
           <% if @profile.errors.any? %>
             <div class="well well-sm text-danger">
               <ul>
@@ -77,13 +77,13 @@
             <div class="form-group">
               <%= f.label :primary_skills, class: 'col-sm-4 control-label required' %>
               <div class="col-sm-8">
-                <%= f.text_area :primary_skills, class: 'form-control', required: true %>
+                <%= f.text_field :primary_skills, class: 'form-control', required: true, placeholder: 'Enter comma separate ',data: {role: "tagsinput"} %>
               </div>
             </div>
             <div class="form-group">
               <%= f.label :secondary_skills, class: 'col-sm-4 control-label' %>
               <div class="col-sm-8">
-                <%= f.text_area :secondary_skills, class: 'form-control' %>
+                <%= f.text_field :secondary_skills, class: 'form-control',placeholder: 'Enter comma separate ',data: {role: "tagsinput"} %>
               </div>
             </div>
             <div class="form-group">
@@ -158,6 +158,13 @@
     </div>
   </div>
 </div>
+
+<style>
+  .bootstrap-tagsinput{
+    width: 100%;
+  }
+</style>
+
 
 <script>
   $(function () {

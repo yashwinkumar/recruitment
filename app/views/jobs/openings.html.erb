@@ -19,24 +19,42 @@
       <h4><%= link_to job.title, job_path(job) %></h4>
 
       <p>
-        <span class="label label-primary"><%= job.job_type %></span>
-        <% if job.job_type == 'permanent' %>
-          | <span>RS: <%= job.compensation %> P/A.</span>
-        <% elsif job.job_type == 'contract' %>
-          | <span>Duration <%= job.duration %> months.</span>
+        <% if job.job_type.present? %>
+          <span class="label label-primary"><%= job.job_type %></span>&nbsp;|&nbsp;
         <% end %>
-      </p>
-
-      <p>
-        <%= raw HTML_Truncator.truncate(job.description, 50) %>
+        <% if job.job_type == 'permanent' %>
+          <span><%= number_to_currency(job.compensation, unit: "R$ ") %>.</span>&nbsp;|&nbsp;
+        <% elsif job.job_type == 'contract' %>
+          <span>Duration <%= job.duration %> months.</span>&nbsp;|&nbsp;
+        <% end %>
+        <span><i class="glyphicon glyphicon-map-marker"></i>&nbsp;<%= job.location %></span>&nbsp;|&nbsp;
+      <span>
+        <i class="glyphicon glyphicon-calendar"></i>&nbsp;<i>posted <%= time_ago_in_words job.created_at %> ago</i>
+      </span>
       </p>
     </div>
     <div class="col-md-2">
       <% if job.submissions.find_by_user_id current_user.id %>
-        <%= link_to "Submitted", '#', class: 'btn btn-default btn-sm disabled' %>
+        <%= link_to "Submitted", '#', class: 'btn btn-success btn-sm disabled' %>
       <% elsif current_user.candidate? %>
         <%= link_to "Apply", new_job_submission_path(job), class: 'btn btn-sm btn-info' %>
       <% end %>
+    </div>
+  </div>
+  <% if job.skills.any? %>
+    <div class="row">
+      <div class="col-md-12">
+        <% job.skills.each do |skill| %>
+          <span class="label label-default"><%= skill.name %></span>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+  <div class="row">
+    <div class="col-md-12">
+      <p>
+        <%= raw HTML_Truncator.truncate(job.description, 50) %>
+      </p>
     </div>
   </div>
   <hr style="margin: 5px">

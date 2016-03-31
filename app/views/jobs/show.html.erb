@@ -3,44 +3,54 @@
     <h2>
       <strong><%= @job.title %></strong>
     </h2>
+
+    <p>
+      <% if @job.job_type.present? %>
+        <span class="label label-primary"><%= @job.job_type %></span>&nbsp;|&nbsp;
+      <% end %>
+      <% if @job.job_type == 'permanent' %>
+        <span><%= number_to_currency(@job.compensation, unit: "R$ ") %>.</span>&nbsp;|&nbsp;
+      <% elsif @job.job_type == 'contract' %>
+        <span>Duration <%= @job.duration %> months.</span>&nbsp;|&nbsp;
+      <% end %>
+      <span><i class="glyphicon glyphicon-map-marker"></i>&nbsp;<%= @job.location %></span>&nbsp;|&nbsp;
+      <span>
+        <i class="glyphicon glyphicon-calendar"></i>&nbsp;<i>posted <%= time_ago_in_words @job.created_at %> ago</i>
+      </span>
+    </p>
   </div>
   <div class="col-md-2">
     <% if policy(@job).edit? %>
       <%= link_to 'Edit', edit_job_path(@job), class: 'btn btn-primary btn-sm' %>
       <%= link_to 'Delete', @job, method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger btn-sm' %>
     <% end %>
-  </div>
-  <div class="col-md-12">
-    <i class="glyphicon glyphicon-map-marker"></i>&nbsp;<%= @job.location %>
-    |
-      <span>
-        <i class="glyphicon glyphicon-calendar"></i>&nbsp;<i>posted <%= time_ago_in_words @job.created_at %> ago</i>
-      </span>
-    <br/>
-    <% unless current_user.candidate? %>
-      <strong>Template:</strong>
-      <%= @job.template.name %>
-    <% end %>
-  </div>
-</div>
-
-<hr>
-<h4>Description:</h4>
-
-<div class="row">
-  <div class="col-md-9">
-    <p class="lead">
-      <%= raw @job.description %>
-    </p>
-  </div>
-  <div class="col-md-3">
     <% unless policy(@job).update? || policy(@job).destroy? %>
       <% if @submission_record %>
-        <a href="#" class="btn btn-default btn-sm disabled btn-block" role="button">Submitted</a>
+        <a href="#" class="btn btn-success btn-sm disabled btn-block" role="button">Submitted</a>
       <% else %>
         <%= link_to "Apply", new_job_submission_path(@job), class: 'btn btn-info btn-sm btn-block' %>
       <% end %>
     <% end %>
+  </div>
+</div>
+<% if @job.skills.any? %>
+  <div class="row">
+    <div class="col-md-12">
+      <% @job.skills.each do |skill| %>
+        <span class="label label-default"><%= skill.name %></span>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<hr style="margin: 5px">
+<h4>Description:</h4>
+
+<div class="row">
+  <div class="col-md-12">
+    <P>
+      <%= raw HTML_Truncator.truncate(@job.description, 50) %>
+    </P>
   </div>
 </div>
 
