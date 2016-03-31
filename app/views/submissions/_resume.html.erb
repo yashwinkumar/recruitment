@@ -32,7 +32,12 @@
           <% @comments = submission.comments.where(user_id: current_user.id) %>
           <ul class="bg-warning">
             <% @comments.each do |comment| %>
-              <li><%= comment.description %></li>
+              <li>
+                <% if comment.label.present? %>
+                  <span class="label label-default"><%= comment.label %></span>
+                <% end %>
+                <%= comment.description %>
+              </li>
             <% end %>
           </ul>
         </div>

@@ -93,6 +93,7 @@ class SubmissionsController < ApplicationController
     comment = @submission.comments.new
     comment.description = params[:comment]
     comment.user_id = current_user.id
+    comment.label = (params[:status] == 'discard' ? 'reject' : params[:status])
     if comment.save
       if params[:status] == 'park'
         @submission.park

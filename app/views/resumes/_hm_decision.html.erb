@@ -37,7 +37,7 @@
 <div class="row" style="margin-right: 0">
   <div class="comment-section">
     <%= form_tag save_comment_job_submission_path(@job, @submission), class: 'form-horizontal commetn_form' do %>
-      <%= hidden_field_tag :status %>
+      <%= hidden_field_tag :status,'', class: 'submission_comment_status' %>
       <div class="form-group">
         <div class="col-sm-10">
           <%= text_area_tag :comment, '', class: 'form-control', rows: 4, placeholder: 'Leave your comment here...' %>
@@ -53,8 +53,9 @@
 <script type="text/javascript">
   $('.comment-section').hide();
   $('.comment-btn').on('click', function (e) {
+    console.log($(this).data('status'));
     e.preventDefault();
     $('.comment-section').show(500);
-    $('#status').val($(this).data('status'));
+    $('.submission_comment_status').val($(this).data('status'));
   });
 </script>

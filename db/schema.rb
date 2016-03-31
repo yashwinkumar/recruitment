@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160329105722) do
+ActiveRecord::Schema.define(version: 20160331190252) do
 
   create_table "attachments", force: :cascade do |t|
     t.integer  "submission_id", limit: 4
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20160329105722) do
     t.text     "description",      limit: 65535
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
+    t.string   "label",            limit: 255
   end
 
   create_table "interviews", force: :cascade do |t|
