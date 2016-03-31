@@ -5,6 +5,7 @@ class SubmissionsController < ApplicationController
 
   def index
     @new_submissions = @job.submissions.includes(:user,:job).active
+    @un_decided_submissions = @job.submissions.includes(:user,:job).un_decided
     @processing_submissions = @job.submissions.includes(:user,:job).process
     @parked_submissions = @job.submissions.includes(:user,:job).parked(current_user.id)
     @rejected_submissions = @job.submissions.includes(:user,:job).discarded(current_user.id)
@@ -85,6 +86,9 @@ class SubmissionsController < ApplicationController
     elsif params[:status] == 'park'
       @submission.park
       flash[:success] = "Candidate Hired successfully."
+    elsif params[:status] == 'un_decided'
+      @submission.un_decide
+      flash[:success] = "Successfully moved to Un Decided state."
     end
     redirect_to :back
   end

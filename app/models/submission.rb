@@ -8,6 +8,7 @@ class Submission < ActiveRecord::Base
   accepts_nested_attributes_for :attachments, :reject_if => lambda { |a| a[:file].blank? }, allow_destroy: true
 
   scope :active, -> {where status: 'submitted'}
+  scope :un_decided, -> {where status: 'un_decided'}
   scope :process, -> {where status: 'processing'}
   scope :discarded, -> (activity_user_id) { where(status: 'discarded', activity_user_id: activity_user_id) }
   scope :parked, -> (activity_user_id) { where(status: 'parked', activity_user_id: activity_user_id) }
@@ -24,19 +25,24 @@ class Submission < ActiveRecord::Base
     after_transition :on => :refer, :do => :submission_email
 
     event :discard do
-      transition :submitted => :discarded, :parked => :discarded
+      transition :submitted => :discarded, :un_decided => :discarded, :parked => :discarded
     end
     after_transition :on => :discard, :do => :discard_email
 
-    event :process do
-      transition :submitted => :processing, :parked => :processing, :discarded => :processing
-    end
-    after_transition :on => :processing, :do => :processing_email
-
     event :park do
-      transition :submitted => :parked, :discarded => :parked
+      transition :submitted => :parked, :un_decided => :parked, :discarded => :parked
     end
     after_transition :on => :parking, :do => :parked_email
+
+    event :un_decide do
+      transition :submitted => :un_decided
+    end
+    # after_transition :on => :un_decided, :do => :un_decided_email
+
+    event :process do
+      transition :submitted => :processing, :un_decided => :processing, :parked => :processing, :discarded => :processing
+    end
+    after_transition :on => :processing, :do => :processing_email
 
     event :schedule_interview do
       transition :submitted => :interview_scheduled, :processing => :interview_scheduled
@@ -79,6 +85,10 @@ class Submission < ActiveRecord::Base
 
   def submitted?
     status == 'submitted'
+  end
+
+  def un_decided?
+    status == 'un_decided'
   end
 
   def processing?
