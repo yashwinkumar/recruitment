@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160331190252) do
+ActiveRecord::Schema.define(version: 20160401090114) do
 
   create_table "attachments", force: :cascade do |t|
     t.integer  "submission_id", limit: 4
@@ -89,10 +89,10 @@ ActiveRecord::Schema.define(version: 20160331190252) do
     t.boolean  "phone_verified",                        default: false
     t.string   "phone_verification_code", limit: 255
     t.string   "middle_name",             limit: 255
-    t.boolean  "relocate"
     t.string   "jobs_interested",         limit: 255
-    t.string   "expecting_job_rate",      limit: 255
-    t.boolean  "citizen"
+    t.string   "citizen",                 limit: 255
+    t.text     "preferred_locations",     limit: 65535
+    t.string   "expected_salary",         limit: 255
   end
 
   create_table "resume_sections", force: :cascade do |t|

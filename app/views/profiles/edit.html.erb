@@ -7,7 +7,7 @@
         </h3>
       </div>
       <div class="panel-body">
-        <%= form_for(@profile, html: {class: 'form-horizontal validate',onkeypress: "return event.keyCode != 13;"}) do |f| %>
+        <%= form_for(@profile, html: {class: 'form-horizontal validate', onkeypress: "return event.keyCode != 13;"}) do |f| %>
           <% if @profile.errors.any? %>
             <div class="well well-sm text-danger">
               <ul>
@@ -25,12 +25,14 @@
                 <%= f.text_field :first_name, class: 'form-control', required: true %>
               </div>
             </div>
-            <div class="form-group">
-              <%= f.label :middle_name, class: 'col-sm-4 control-label required' %>
-              <div class="col-sm-8">
-                <%= f.text_field :middle_name, class: 'form-control', required: true %>
+            <% if current_user.candidate? %>
+              <div class="form-group">
+                <%= f.label :middle_name, class: 'col-sm-4 control-label required' %>
+                <div class="col-sm-8">
+                  <%= f.text_field :middle_name, class: 'form-control', required: true %>
+                </div>
               </div>
-            </div>
+            <% end %>
             <div class="form-group">
               <%= f.label :last_name, class: 'col-sm-4 control-label required' %>
               <div class="col-sm-8">
@@ -40,7 +42,7 @@
             <div class="form-group">
               <%= f.label :phone, class: 'col-sm-4 control-label required' %>
               <div class="col-sm-8">
-                <%= f.text_field :phone, class: 'form-control', placeholder: '+919988123123', required: true %>
+                <%= f.number_field :phone, class: 'form-control', placeholder: '+919988123123', required: (current_user.candidate? ? true : false) %>
               </div>
             </div>
             <div class="form-group">
@@ -49,92 +51,80 @@
                 <%= f.text_field :location, class: 'form-control loc_auto_comp', required: true %>
               </div>
             </div>
-            <% if current_user.candidate? %>
             <div class="form-group">
               <%= f.label :title, 'Current Job Title', class: 'col-sm-4 control-label required' %>
               <div class="col-sm-8">
-                <%= f.text_field :title, class: 'form-control', required: true %>
+                <%= f.text_field :title, class: 'form-control', required: true, placeholder: 'Sr Rails Developer' %>
               </div>
             </div>
             <div class="form-group">
               <%= f.label :current_employer, class: 'col-sm-4 control-label required' %>
               <div class="col-sm-8">
-                <%= f.text_field :current_employer, class: 'form-control', required: true %>
+                <%= f.text_field :current_employer, class: 'form-control', required: true, placeholder: 'Google' %>
               </div>
             </div>
-            <div class="form-group">
-              <%= f.label :experience, class: 'col-sm-4 control-label required' %>
-              <div class="col-sm-8">
-                <%= f.text_field :experience, class: 'form-control', required: true %>
+            <% if current_user.candidate? %>
+              <div class="form-group">
+                <%= f.label :experience, class: 'col-sm-4 control-label required' %>
+                <div class="col-sm-8">
+                  <%= f.number_field :experience, class: 'form-control', required: true, placeholder: 'E.g: 2.6' %>
+                </div>
               </div>
-            </div>
-            <div class="form-group">
-              <%= f.label :compensation, class: 'col-sm-4 control-label required' %>
-              <div class="col-sm-8">
-                <%= f.text_field :compensation, class: 'form-control', required: true %>
+              <div class="form-group">
+                <%= f.label :compensation,'Current Salary', class: 'col-sm-4 control-label required' %>
+                <div class="col-sm-8">
+                  <%= f.number_field :compensation, class: 'form-control', required: true, placeholder: 'E.g: 500000' %>
+                </div>
               </div>
-            </div>
-            <div class="form-group">
-              <%= f.label :primary_skills, class: 'col-sm-4 control-label required' %>
-              <div class="col-sm-8">
-                <%= f.text_field :primary_skills, class: 'form-control', required: true, placeholder: 'Enter comma separate ',data: {role: "tagsinput"} %>
+              <div class="form-group">
+                <%= f.label :expected_salary, class: 'col-sm-4 control-label required' %>
+                <div class="col-sm-8">
+                  <%= f.number_field :expected_salary, class: 'form-control', required: true, placeholder: 'E.g: 500000' %>
+                </div>
               </div>
-            </div>
-            <div class="form-group">
-              <%= f.label :secondary_skills, class: 'col-sm-4 control-label' %>
-              <div class="col-sm-8">
-                <%= f.text_field :secondary_skills, class: 'form-control',placeholder: 'Enter comma separate ',data: {role: "tagsinput"} %>
+              <div class="form-group">
+                <%= f.label :primary_skills, class: 'col-sm-4 control-label required' %>
+                <div class="col-sm-8">
+                  <%= f.text_field :primary_skills, class: 'form-control', required: true, placeholder: 'Enter comma separate ', data: {role: "tagsinput"} %>
+                </div>
               </div>
-            </div>
-            <div class="form-group">
-              <%= f.label :relocate, class: "col-sm-4 control-label required" do %>
-                Willing to Relocate
-              <% end %>
-              <div class="col-sm-8">
-                <%= label_tag :inline_radio_1, class: "radio-inline" do %>
-                  <%= f.radio_button :relocate,true, checked: f.object.relocate ? true : false, style: 'margin-top: 4px' %>
-                  Yes
+              <div class="form-group">
+                <%= f.label :secondary_skills, class: 'col-sm-4 control-label' %>
+                <div class="col-sm-8">
+                  <%= f.text_field :secondary_skills, class: 'form-control', placeholder: 'Enter comma separate ', data: {role: "tagsinput"} %>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= f.label :preferred_locations, class: "col-sm-4 control-label required" %>
+                <div class="col-sm-8">
+                  <%= f.text_field :preferred_locations, class: 'form-control loc_auto_comp', required: true, placeholder: 'Enter comma separate', data: {role: "tagsinput"} %>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= f.label :citizen, class: "col-sm-4 control-label required"%>
+                <div class="col-sm-8">
+                  <%= f.text_field :citizen, class: 'form-control', required: true, placeholder: 'E.g: Indian' %>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= f.label :jobs_interested, class: "col-sm-4 control-label required" do %>
+                  Job Type Interest
                 <% end %>
-                <%= label_tag :inline_radio_2, class: "radio-inline" do %>
-                  <%= f.radio_button :relocate,false, checked: f.object.relocate ? false : true, style: 'margin-top: 4px' %>
-                  No
-                <% end %>
+                <div class="col-sm-8">
+                  <%= label_tag :inline_radio_1, class: "radio-inline" do %>
+                    <%= f.radio_button :jobs_interested, "contract", checked: (f.object.jobs_interested == "contract" ? true : false), style: 'margin-top: 4px' %>
+                    Contract
+                  <% end %>
+                  <%= label_tag :inline_radio_2, class: "radio-inline" do %>
+                    <%= f.radio_button :jobs_interested, "permanent", checked: (f.object.jobs_interested == "permanent" ? true : false), style: 'margin-top: 4px' %>
+                    Permanent
+                  <% end %>
+                  <%= label_tag :inline_radio_3, class: "radio-inline" do %>
+                    <%= f.radio_button :jobs_interested, "any", checked: (f.object.jobs_interested == "any" ? true : false), style: 'margin-top: 4px' %>
+                    Any
+                  <% end %>
+                </div>
               </div>
-            </div>
-            <div class="form-group">
-              <%= f.label :jobs_interested, class: "col-sm-4 control-label required" do %>
-                Job Type Interest
-              <% end %>
-              <div class="col-sm-8">
-                <%= label_tag :inline_radio_1, class: "radio-inline" do %>
-                  <%= f.radio_button :jobs_interested, "contract", checked: (f.object.jobs_interested == "contract" ? true : false), style: 'margin-top: 4px' %>
-                  Contract
-                <% end %>
-                <%= label_tag :inline_radio_2, class: "radio-inline" do %>
-                  <%= f.radio_button :jobs_interested, "permanent", checked: (f.object.jobs_interested == "permanent" ? true : false), style: 'margin-top: 4px' %>
-                  Permanent
-                <% end %>
-                <%= label_tag :inline_radio_3, class: "radio-inline" do %>
-                  <%= f.radio_button :jobs_interested, "any", checked: (f.object.jobs_interested == "any" ? true : false), style: 'margin-top: 4px' %>
-                  Any
-                <% end %>
-              </div>
-            </div>
-            <div class="form-group">
-              <%= f.label :citizen, class: "col-sm-4 control-label required" do %>
-                Citizen
-              <% end %>
-              <div class="col-sm-8">
-                <%= label_tag :inline_radio_1, class: "radio-inline" do %>
-                  <%= f.radio_button :citizen, true, checked: f.object.citizen ? true : false, style: 'margin-top: 4px' %>
-                  Yes
-                <% end %>
-                <%= label_tag :inline_radio_2, class: "radio-inline" do %>
-                  <%= f.radio_button :citizen, false, checked: f.object.citizen ? false : true, style: 'margin-top: 4px' %>
-                  No
-                <% end %>
-              </div>
-            </div>
             <% end %>
           </div>
           <div class="col-md-4">
@@ -160,7 +150,7 @@
 </div>
 
 <style>
-  .bootstrap-tagsinput{
+  .bootstrap-tagsinput {
     width: 100%;
   }
 </style>

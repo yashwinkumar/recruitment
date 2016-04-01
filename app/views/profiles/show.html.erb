@@ -15,6 +15,11 @@
             <dt>First Name:</dt>
             <dd><%= @profile.first_name %></dd>
             <br>
+            <% if current_user.candidate? %>
+              <dt>Middle Name:</dt>
+              <dd><%= @profile.middle_name %></dd>
+              <br>
+            <% end %>
             <dt>Last Name:</dt>
             <dd><%= @profile.last_name %></dd>
             <br>
@@ -27,18 +32,21 @@
             <dt>Location:</dt>
             <dd><%= @profile.location %></dd>
             <br>
+            <dt>Current Job Title:</dt>
+            <dd><%= @profile.title %></dd>
+            <br>
+            <dt>Current Employer</dt>
+            <dd><%= @profile.current_employer %></dd>
+            <br>
             <% if current_user.candidate? %>
-              <dt>Current Job Title:</dt>
-              <dd><%= @profile.title %></dd>
-              <br>
-              <dt>Current Employer</dt>
-              <dd><%= @profile.current_employer %></dd>
-              <br>
               <dt>Experience:</dt>
               <dd><%= @profile.experience %></dd>
               <br>
-              <dt>Compensation:</dt>
+              <dt>Current Salary:</dt>
               <dd><%= @profile.compensation %></dd>
+              <br>
+              <dt>Expected Salary:</dt>
+              <dd><%= @profile.expected_salary %></dd>
               <br>
               <dt>Primary Skills:</dt>
               <dd>
@@ -54,14 +62,18 @@
                 <% end if @profile.secondary_skills %>
               </dd>
               <br>
-              <dt>Willing to Relocate</dt>
-              <dd><%= @profile.relocate ? 'Yes' : 'No' %></dd>
+              <dt>Preferred Locations</dt>
+              <dd>
+                <% @profile.preferred_locations.split(',').each do |loc| %>
+                  <span><%= loc %></span>
+                <% end if @profile.preferred_locations %>
+              </dd>
               <br>
               <dt>Job Type Interest:</dt>
               <dd><%= @profile.jobs_interested %></dd>
               <br>
               <dt>Citizen:</dt>
-              <dd><%= @profile.citizen ? 'Yes' : 'No' %></dd>
+              <dd><%= @profile.citizen %></dd>
             <% end %>
           </dl>
         </div>

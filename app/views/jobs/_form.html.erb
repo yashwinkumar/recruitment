@@ -64,12 +64,11 @@
           <% end %>
         </div>
       </div>
-      <%= content_tag :div, class: 'permanent_fields ' + ((f.object.job_type == 'permanent' || f.object.new_record?) ? '' : 'hide') do%>
-        <%= f.input :start_date,as: :string, input_html: {class: 'has_datepicker form-control'} %>
-      <% end %>
+
       <%= content_tag :div, class: 'contract_fields ' + (f.object.job_type == 'contract' ? '' : 'hide') do%>
         <%= f.input :duration, as: :float, hint: "Duration in months" %>
       <% end %>
+      <%= f.input :start_date,as: :string, input_html: {class: 'has_datepicker form-control'} %>
 
       <%= f.input :description, input_html: {:class => 'ckeditor'} %>
       <%= f.simple_fields_for :job_skills do|s|%>
@@ -77,7 +76,7 @@
       <% end %>
 
       <%= f.input :compensation, placeholder: "Eg: 500000" ,hint: "Salary per annum. Eg: 500000 " %>
-      <%= f.input :experience, as: :float, hint: "Experience in Years." %>
+      <%= f.input :experience, as: :float, hint: "Experience in Years.", placeholder: 'E.g: 2.6' %>
     <div class="form-group">
       <div class="col-md-offset-3 col-md-9">
         <%= f.button :submit, class: 'btn-primary' %>
@@ -111,12 +110,10 @@
 
   $('.job_type').on('change', function(e){
     var checked = $('.job_type:checked').val();
-    if(checked=='permanent'){
-      $('.permanent_fields').removeClass('hide');
-      $('.contract_fields').addClass('hide');
-    }else{
-      $('.permanent_fields').addClass('hide');
+    if(checked=='contract'){
       $('.contract_fields').removeClass('hide');
+    }else{
+      $('.contract_fields').addClass('hide');
     }
   });
 
