@@ -20,6 +20,7 @@
 //= require jquery.raty
 //= require jquery.slimscroll
 //= require bootstrap-tagsinput
+//= require jquery.timepicker
 //= require_self
 
 

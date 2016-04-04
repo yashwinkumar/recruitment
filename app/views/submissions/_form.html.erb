@@ -30,32 +30,25 @@
       <hr>
     <% end %>
   <% end %>
-
   <h4>Interview Availability</h4>
-
-  <div class="form-group">
-    <%= f.label :availability_1, class: 'col-sm-2 control-label' %>
-    <div class="col-sm-4">
-      <%= f.text_field :availability_1, class: 'form-control has_datetimepicker_7', required: true, autocomplete: :off %>
-      <span class="help-block">Pick time slots for interview in next 7 days</span>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :availability_2, class: 'col-sm-2 control-label' %>
-    <div class="col-sm-4">
-      <%= f.text_field :availability_2, class: 'form-control has_datetimepicker_7_14', required: true, autocomplete: :off %>
-      <span class="help-block">Pick time slots for interview in next 7-14 days</span>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :availability_3, class: 'col-sm-2 control-label' %>
-    <div class="col-sm-4">
-      <%= f.text_field :availability_3, class: 'form-control has_datetimepicker_14_21', required: true, autocomplete: :off %>
-      <span class="help-block">Pick time slots for interview in next 14-21 days</span>
-    </div>
-  </div>
+  <% hint_text = {'0': '7', '1': '7-14', '2': '14-21'} %>
+  <% f.object.available_times.each_with_index do|availability, index| %>
+    <%= f.fields_for :available_times, availability do|ff| %>
+      <div class="form-group">
+        <%= ff.label :date, class: 'col-sm-2 control-label' %>
+        <div class="col-sm-4">
+          <%= ff.text_field :date, class: "form-control has_datetimepicker_#{index}", required: true, autocomplete: :off, placeholder: 'Select Date' %>
+          <span class="help-block">Pick time slots for interview in next <%= hint_text[:"#{index}"] %> days</span>
+        </div>
+        <div class="col-sm-2">
+          <%= ff.text_field :time_from, class: "form-control has_datetimepicker_#{index}_from", required: true, autocomplete: :off, placeholder: 'Time From' %>
+        </div>
+        <div class="col-sm-2">
+          <%= ff.text_field :time_to, class: "form-control has_datetimepicker_#{index}_to", required: true, autocomplete: :off, placeholder: 'Time To' %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
 
   <hr>
   <h4>Attachments</h4>
@@ -78,42 +71,55 @@
 <% end %>
 
 
-
 <script>
 
   $(function() {
-    $(".has_datetimepicker_7").datetimepicker({
+    $(".has_datetimepicker_0").datetimepicker({
       minDate:'+1970/01/03',//next 2nd day is minimum date(for today use 0 or -1970/01/01)
       maxDate:'+1970/01/11',//next 7th day is maximum date calendar
       scrollMonth: false,
-      allowTimes:['08:00', '09:00', '10:00', '11:00','12:00', '13:00', '14:00', '15:00','16:00', '17:00', '18:00', '19:00', '20:00'],
-      onGenerate:function( ct ){
-        jQuery(this).find('.xdsoft_date.xdsoft_weekend')
-          .addClass('xdsoft_disabled');
-      }
-    });
-    $(".has_datetimepicker_7_14").datetimepicker({
-      minDate:'+1970/01/12',//next 7th day is minimum date(for today use 0 or -1970/01/01)
-      maxDate:'+1970/01/20',//next 14th day is maximum date calendar
-      scrollMonth: false,
-      allowTimes:['08:00', '09:00', '10:00', '11:00','12:00', '13:00', '14:00', '15:00','16:00', '17:00', '18:00', '19:00', '20:00'],
+      timepicker: false,
+      format:'Y/m/d',
       onGenerate:function( ct ){
         jQuery(this).find('.xdsoft_date.xdsoft_weekend')
           .addClass('xdsoft_disabled');
       }
     });
 
-    $(".has_datetimepicker_14_21").datetimepicker({
+    $(".has_datetimepicker_1").datetimepicker({
+      minDate:'+1970/01/12',//next 7th day is minimum date(for today use 0 or -1970/01/01)
+      maxDate:'+1970/01/20',//next 14th day is maximum date calendar
+      scrollMonth: false,
+      timepicker: false,
+      format:'Y/m/d',
+      onGenerate:function( ct ){
+        jQuery(this).find('.xdsoft_date.xdsoft_weekend')
+          .addClass('xdsoft_disabled');
+      }
+    });
+
+    $(".has_datetimepicker_2").datetimepicker({
       minDate:'+1970/01/21',//next 14th day is minimum date(for today use 0 or -1970/01/01)
       maxDate:'+1970/01/29',//next 21th day is maximum date calendar
       scrollMonth: false,
-      allowTimes:['08:00', '09:00', '10:00', '11:00','12:00', '13:00', '14:00', '15:00','16:00', '17:00', '18:00', '19:00', '20:00'],
+      timepicker: false,
+      format:'Y/m/d',
       onGenerate:function( ct ){
         jQuery(this).find('.xdsoft_date.xdsoft_weekend')
           .addClass('xdsoft_disabled');
       }
     });
   });
+
+  $(".has_datetimepicker_0_from, .has_datetimepicker_1_from, .has_datetimepicker_2_from").timepicker({
+    minTime: '8:00am',
+    maxTime: '7:00pm'
+  });
+  $(".has_datetimepicker_0_to, .has_datetimepicker_1_to, .has_datetimepicker_2_to").timepicker({
+    minTime: '9:00am',
+    maxTime: '8:00pm'
+  });
+
 
   $("#last_attachment, #last_attachment_name").on('click', function(e){
     e.preventDefault()
@@ -124,5 +130,4 @@
         $('.attachment_field').last().focus();
       });
   });
-
 </script>

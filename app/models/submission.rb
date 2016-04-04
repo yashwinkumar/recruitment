@@ -5,7 +5,10 @@ class Submission < ActiveRecord::Base
   belongs_to :user
   belongs_to :job
   has_many :attachments, dependent: :destroy
+  has_many :available_times, dependent: :destroy
+
   accepts_nested_attributes_for :attachments, :reject_if => lambda { |a| a[:file].blank? }, allow_destroy: true
+  accepts_nested_attributes_for :available_times, :reject_if => lambda { |a| (a[:date].blank? or a[:time].blank) }, allow_destroy: true
 
   scope :active, -> {where status: 'submitted'}
   scope :un_decided, -> {where status: 'un_decided'}
