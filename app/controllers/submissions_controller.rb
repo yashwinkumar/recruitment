@@ -117,7 +117,7 @@ class SubmissionsController < ApplicationController
       end 
       redirect_to job_submissions_path(@job)
     else
-      flash[:danger] = 'Something went wrong.'
+      flash[:warning] = 'You should give a comment'
       redirect_to :back
     end
   end

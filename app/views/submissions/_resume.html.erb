@@ -28,18 +28,21 @@
         </div>
         <%= render partial: 'resume_sections/ratings', locals: {resume_section: resume_section} %>
         <div>
-          <p><strong>Comments:</strong></p>
+          
           <% @comments = submission.comments.where(user_id: current_user.id) %>
-          <ul class="bg-warning">
-            <% @comments.each do |comment| %>
-              <li>
-                <% if comment.label.present? %>
-                  <span class="label label-default"><%= comment.label %></span>
-                <% end %>
-                <%= comment.description %>
-              </li>
+          <% if @comments.any? %> 
+              <p><strong>Comments:</strong></p>
+               <ul class="bg-warning">
+                <% @comments.each do |comment| %>
+               <li>
+                  <% if comment.label.present? %>
+                    <span class="label label-default"><%= comment.label %></span>
+                  <% end %>
+                 <%= comment.description %>
+                </li>
+               <% end %>
+              </ul>
             <% end %>
-          </ul>
         </div>
       </div>
     <% end %>

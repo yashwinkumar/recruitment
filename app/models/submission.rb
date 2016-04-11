@@ -19,6 +19,7 @@ class Submission < ActiveRecord::Base
   scope :hired, -> {where status: 'hired'}
 
   validates_presence_of :user_id, :job_id
+
   validates_uniqueness_of :user_id, scope: :job_id, message: 'Already submitted for this position.'
 
   state_machine :status, :initial => :submitted do
@@ -33,12 +34,12 @@ class Submission < ActiveRecord::Base
     after_transition :on => :discard, :do => :discard_email
 
     event :park do
-      transition :submitted => :parked, :un_decided => :parked, :discarded => :parked
+      transition :submitted => :parked, :un_decided => :parked, :discarded => :parked, :processing => :parked
     end
     after_transition :on => :parking, :do => :parked_email
 
     event :un_decide do
-      transition :submitted => :un_decided
+      transition :submitted => :un_decided, :processing => :un_decided
     end
     # after_transition :on => :un_decided, :do => :un_decided_email
 

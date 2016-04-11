@@ -3,12 +3,12 @@
     <% if @submission.processing? %>
       <%= link_to 'Interview', new_job_submission_interview_path(@job, @submission), class: 'btn btn-primary' %>
       <%= link_to 'Park', '#', class: 'btn btn-info comment-btn', data: {status: 'park'} %>
-      <%= link_to 'Un Decided', change_status_job_submission_path(@job, @submission, status: 'un_decided'), class: 'btn btn-warning' %>
+      <%= link_to 'Undecided', change_status_job_submission_path(@job, @submission, status: 'un_decided'), class: 'btn btn-warning' %>
     <% elsif @submission.un_decided? %>
       <%= link_to 'Interview', new_job_submission_interview_path(@job, @submission), class: 'btn btn-primary' %>
       <%= link_to 'Park', '#', class: 'btn btn-info comment-btn', data: {status: 'park'} %>
-    <% elsif @submission.parked? %>
-      <%= link_to 'Interview', new_job_submission_interview_path(@job, @submission), class: 'btn btn-primary' %>
+    <% elsif @submission.parked? %> 
+     <%= link_to 'Interview', new_job_submission_interview_path(@job, @submission), class: 'btn btn-primary' %>
     <% elsif @submission.interview_scheduled? %>
       <%= link_to 'Edit Interview', edit_job_submission_interview_path(@job, @submission, @submission.interview), class: 'btn btn-success' %>
       <%= link_to 'Hire', change_status_job_submission_path(@job, @submission, status: 'hire'), class: 'btn btn-info comment-btn', data: {status: 'hire'}, confirm: "Are you sure you want to hire the candidate?" %>
@@ -18,7 +18,7 @@
     <% unless @submission.discarded? || @submission.hired? %>
       <%= link_to 'Reject', '#', class: 'btn btn-danger comment-btn', data: {status: 'discard'} %>
     <% end %>
-  <% elsif current_user.consultant? %>
+    <% elsif current_user.consultant? %>
     <% if @submission.processing? %>
       <%= link_to 'Submitted to HM', '#', class: 'btn btn-primary disabled' %>
     <% end %>
@@ -26,7 +26,7 @@
       <%= link_to 'Submit to HM', change_status_job_submission_path(@job, @submission, status: 'process'), class: 'btn btn-primary' %>
       <%= link_to 'Park', '#', class: 'btn btn-info comment-btn', data: {status: 'park'} %>
       <%= link_to 'Reject', '#', class: 'btn btn-danger comment-btn', data: {status: 'discard'} %>
-      <%= link_to 'Un Decided', change_status_job_submission_path(@job, @submission, status: 'un_decided'), class: 'btn btn-warning' %>
+      <%= link_to 'Undecided', change_status_job_submission_path(@job, @submission, status: 'un_decided'), class: 'btn btn-warning' %>
     <% elsif @submission.un_decided? %>
       <%= link_to 'Submit to HM', change_status_job_submission_path(@job, @submission, status: 'process'), class: 'btn btn-primary' %>
       <%= link_to 'Park', '#', class: 'btn btn-info comment-btn', data: {status: 'park'} %>
@@ -49,11 +49,11 @@
       <%= hidden_field_tag :status, '', class: 'submission_comment_status' %>
       <div class="form-group">
         <div class="col-sm-10">
-          <%= text_area_tag :comment, '', class: 'form-control', rows: 4, placeholder: 'Leave your comment here...' %>
+          <%= text_area_tag :comment, '', class: 'form-control', rows: 1, placeholder: 'Leave your comment here...' %>
         </div>
       </div>
-      <div class="col-sm-6 col-sm-offset-3">
-        <%= submit_tag :Submit, class: 'btn btn-success btn-block' %>
+      <div class="col-sm-6 col-sm-offset-4">
+        <%= submit_tag :Submit,class: 'btn btn-success btn-block' %>
       </div>
     <% end %>
   </div>
