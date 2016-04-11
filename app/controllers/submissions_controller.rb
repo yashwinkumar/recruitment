@@ -93,7 +93,7 @@ class SubmissionsController < ApplicationController
       flash[:success] = "Candidate Hired successfully."
     elsif params[:status] == 'un_decided'
       @submission.un_decide
-      flash[:success] = "Successfully moved to Un Decided state."
+      flash[:success] = "Successfully moved to Undecided state."
     end
     redirect_to :back
   end
@@ -114,7 +114,7 @@ class SubmissionsController < ApplicationController
         flash[:success] = "Successfully Discarded resume."
         @submission.update_attribute(:activity_user_id, current_user.id)
         Notifier.discard_email_to_consultant(@submission).deliver_now if current_user.hm?
-      end
+      end 
       redirect_to job_submissions_path(@job)
     else
       flash[:danger] = 'Something went wrong.'

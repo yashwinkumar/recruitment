@@ -3,30 +3,30 @@
 <ul id="myTabs" class="nav nav-tabs" role="tablist">
   <% if current_user.hm? %>
     <li role="presentation" class="active">
-      <a href="#new" id="new-tab" role="tab" data-toggle="tab" aria-controls="new" aria-expanded="true">New</a>
+      <a href="#new" id="new-tab" role="tab" data-toggle="tab" aria-controls="new" aria-expanded="true">New(<%= @processing_submissions.count%>)</a>
     </li>
   <% else %>
     <li role="presentation" class="active">
-      <a href="#new" id="new-tab" role="tab" data-toggle="tab" aria-controls="new" aria-expanded="true">New</a>
+      <a href="#new" id="new-tab" role="tab" data-toggle="tab" aria-controls="new" aria-expanded="true">New(<%=@new_submissions.count%>)</a>
     </li>
     <li role="presentation">
-      <a href="#processing" id="new-tab" role="tab" data-toggle="tab" aria-controls="processing" aria-expanded="true">Submitted to HM</a>
+      <a href="#processing" id="new-tab" role="tab" data-toggle="tab" aria-controls="processing" aria-expanded="true">Submitted to HM(<%= @processing_submissions.count%>)</a>
     </li>
   <% end %>
   <li role="presentation" class="">
-    <a href="#un_decided" id="un_decided-tab" role="tab" data-toggle="tab" aria-controls="un_decided" aria-expanded="true">Un Decided</a>
+    <a href="#un_decided" id="un_decided-tab" role="tab" data-toggle="tab" aria-controls="un_decided" aria-expanded="true">Undecided(<%= @un_decided_submissions.count%>)</a>
   </li>
   <li role="presentation" class="">
-    <a href="#park" role="tab" id="park-tab" data-toggle="tab" aria-controls="park" aria-expanded="false">Parked</a>
+    <a href="#park" role="tab" id="park-tab" data-toggle="tab" aria-controls="park" aria-expanded="false">Parked(<%= @parked_submissions.count%>)</a>
   </li>
   <li role="presentation" class="">
-    <a href="#interview" role="tab" id="close-tab" data-toggle="tab" aria-controls="interview" aria-expanded="false">Interview in Process</a>
+    <a href="#interview" role="tab" id="close-tab" data-toggle="tab" aria-controls="interview" aria-expanded="false">Interview in Process(<%= @interview_submissions.count%>)</a>
   </li>
   <li role="presentation" class="">
-    <a href="#hire" role="tab" id="close-tab" data-toggle="tab" aria-controls="hire" aria-expanded="false">Hired</a>
+    <a href="#hire" role="tab" id="close-tab" data-toggle="tab" aria-controls="hire" aria-expanded="false">Hired(<%= @hired_submissions.count%>)</a>
   </li>
   <li role="presentation" class="">
-    <a href="#reject" role="tab" id="close-tab" data-toggle="tab" aria-controls="reject" aria-expanded="false">Rejected</a>
+    <a href="#reject" role="tab" id="close-tab" data-toggle="tab" aria-controls="reject" aria-expanded="false">Rejected(<%= @rejected_submissions.count%>)</a>
   </li>
 </ul>
 <div id="myTabContent" class="tab-content">
