@@ -3,10 +3,10 @@
     <div class="well">
       <%= form_tag openings_jobs_path, method: :get, :class => 'form-inline' do %>
         <div class="form-group">
-          <%= text_field_tag :what, params[:what], :class => 'form-control input-lg', :placeholder => 'What...' %>
+          <%= text_field_tag :what, params[:what], :class => 'form-control input-lg', :placeholder => 'Skill' %>
         </div>
         <div class="form-group">
-          <%= text_field_tag :where, params[:where], :class => 'form-control input-lg loc_auto_comp', :placeholder => 'Where...' %>
+          <%= text_field_tag :where, params[:where], :class => 'form-control input-lg loc_auto_comp', :placeholder => 'Location' %>
         </div>
         <%= submit_tag :Search, :class => 'btn btn-success btn-lg' %>
       <% end %>
@@ -23,7 +23,7 @@
           <span class="label label-primary"><%= job.job_type %></span>&nbsp;|&nbsp;
         <% end %>
         <% if job.job_type == 'permanent' %>
-          <span><%= number_to_currency(job.compensation, unit: "R$ ") %>.</span>&nbsp;|&nbsp;
+          <span><%= number_to_currency(job.compensation, unit: "$ ") %>.</span>&nbsp;|&nbsp;
         <% elsif job.job_type == 'contract' %>
           <span>Duration <%= job.duration %> months.</span>&nbsp;|&nbsp;
         <% end %>

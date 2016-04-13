@@ -9,7 +9,7 @@
         <span class="label label-primary"><%= @job.job_type %></span>&nbsp;|&nbsp;
       <% end %>
       <% if @job.job_type == 'permanent' %>
-        <span><%= number_to_currency(@job.compensation, unit: "R$ ") %>.</span>&nbsp;|&nbsp;
+        <span><%= number_to_currency(@job.compensation, unit: "$ ") %>.</span>&nbsp;|&nbsp;
       <% elsif @job.job_type == 'contract' %>
         <span>Duration <%= @job.duration %> months.</span>&nbsp;|&nbsp;
       <% end %>
