@@ -17,7 +17,6 @@
       </span>
     <% end %>
   </div>
-  <br>
 <% end %>
 <div class="row">
   <div class="col-md-6">
@@ -109,7 +108,8 @@
     $('.section_player').each(function () {
       $(this).get(0).pause(); // pause all videos
     });
-    $(section_video,section_rating).removeClass('hide');
+    $(section_video).removeClass('hide');
+    $(section_rating).removeClass('hide');
     $('button.section').removeClass('btn-success').addClass('btn-info');
     $(this).removeClass('btn-info').addClass('btn-success')
   });

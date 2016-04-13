@@ -1,13 +1,9 @@
 module SubmissionDecorator
-
   def interview_availabilities
-    [[availability_1, availability_1_str] ,[availability_2, availability_2_str], [availability_3, availability_3_str]]
-  end
-
-  [*1..3].each do |i|
-    define_method("availability_#{i}_str") do
-      send("availability_#{i}") ? send("availability_#{i}").strftime('%B %d, %Y %I:%M %P') : 'NA'
+    available = []
+    self.available_times.each do|at|
+      available << [at.id,(at.date && at.from && at.to) ? (at.date.strftime('%B %d, %Y').to_s + ' ' + at.from.to_s + ' - ' + at.to.to_s) : "N/A"]
     end
+    available
   end
-
 end

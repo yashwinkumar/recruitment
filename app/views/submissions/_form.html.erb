@@ -41,10 +41,10 @@
           <span class="help-block">Pick time slots for interview in next <%= hint_text[:"#{index}"] %> days</span>
         </div>
         <div class="col-sm-2">
-          <%= ff.text_field :time_from, class: "form-control has_datetimepicker_#{index}_from", required: true, autocomplete: :off, placeholder: 'Time From' %>
+          <%= ff.text_field :from, class: "form-control has_datetimepicker_#{index}_from", required: true, autocomplete: :off, placeholder: 'Time From' %>
         </div>
         <div class="col-sm-2">
-          <%= ff.text_field :time_to, class: "form-control has_datetimepicker_#{index}_to", required: true, autocomplete: :off, placeholder: 'Time To' %>
+          <%= ff.text_field :to, class: "form-control has_datetimepicker_#{index}_to", required: true, autocomplete: :off, placeholder: 'Time To' %>
         </div>
       </div>
     <% end %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160401094200) do
+ActiveRecord::Schema.define(version: 20160413135020) do
 
   create_table "attachments", force: :cascade do |t|
     t.integer  "submission_id", limit: 4
@@ -24,10 +24,11 @@ ActiveRecord::Schema.define(version: 20160401094200) do
   create_table "available_times", force: :cascade do |t|
     t.integer  "submission_id", limit: 4
     t.date     "date"
-    t.time     "time_from"
-    t.time     "time_to"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.string   "from",          limit: 255
+    t.string   "to",            limit: 255
+    t.string   "zone",          limit: 255
   end
 
   create_table "comments", force: :cascade do |t|
@@ -41,14 +42,15 @@ ActiveRecord::Schema.define(version: 20160401094200) do
   end
 
   create_table "interviews", force: :cascade do |t|
-    t.integer  "user_id",       limit: 4
-    t.integer  "job_id",        limit: 4
-    t.integer  "submission_id", limit: 4
+    t.integer  "user_id",           limit: 4
+    t.integer  "job_id",            limit: 4
+    t.integer  "submission_id",     limit: 4
     t.datetime "date"
-    t.string   "description",   limit: 255
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.string   "mode",          limit: 255
+    t.string   "description",       limit: 255
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.string   "mode",              limit: 255
+    t.integer  "available_time_id", limit: 4
   end
 
   create_table "job_skills", force: :cascade do |t|
@@ -154,9 +156,6 @@ ActiveRecord::Schema.define(version: 20160401094200) do
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
     t.string   "status",           limit: 255
-    t.datetime "availability_1"
-    t.datetime "availability_2"
-    t.datetime "availability_3"
     t.integer  "activity_user_id", limit: 4
   end
 

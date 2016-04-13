@@ -5,7 +5,7 @@
 
       <%= f.input :user_id, input_html: {value: current_user.id}, as: :hidden %>
       <%= f.input :job_id, input_html: {value: @job.id}, as: :hidden %>
-      <%= f.collection_radio_buttons :date, @submission.interview_availabilities, :first, :last, item_label_class: "radio-inline", item_wrapper_tag: false %><br>
+      <%= f.collection_radio_buttons :available_time_id, @submission.interview_availabilities, :first, :last, item_label_class: "radio-inline", item_wrapper_tag: false %><br>
       <%= f.collection_radio_buttons :mode, @interview.interview_modes, :first, :last, item_label_class: "radio-inline", item_wrapper_tag: false %>
       <%= f.input :description, as: :text %>
       <%= f.submit class: 'btn btn-success' %>

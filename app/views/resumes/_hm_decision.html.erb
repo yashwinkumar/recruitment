@@ -11,17 +11,12 @@
       <%= link_to 'Interview', new_job_submission_interview_path(@job, @submission), class: 'btn btn-primary' %>
     <% elsif @submission.interview_scheduled? %>
       <%= link_to 'Edit Interview', edit_job_submission_interview_path(@job, @submission, @submission.interview), class: 'btn btn-success' %>
-      <%= link_to 'Hire', change_status_job_submission_path(@job, @submission, status: 'hire'), class: 'btn btn-info comment-btn', data: {status: 'hire'}, confirm: "Are you sure you want to hire the candidate?" %>
-    <% elsif @submission.hired? %>
-      <h3><span class="label label-success">Hired</span></h3>
+      <%= link_to 'Hire', change_status_job_submission_path(@job, @submission, status: 'hire'), class: 'btn btn-info', data: {status: 'hire'}, confirm: "Are you sure you want to hire the candidate?" %>
     <% end %>
     <% unless @submission.discarded? || @submission.hired? %>
       <%= link_to 'Reject', '#', class: 'btn btn-danger comment-btn', data: {status: 'discard'} %>
     <% end %>
   <% elsif current_user.consultant? %>
-    <% if @submission.processing? %>
-      <%= link_to 'Submitted to HM', '#', class: 'btn btn-primary disabled' %>
-    <% end %>
     <% if @submission.submitted? %>
       <%= link_to 'Submit to HM', change_status_job_submission_path(@job, @submission, status: 'process'), class: 'btn btn-primary' %>
       <%= link_to 'Park', '#', class: 'btn btn-info comment-btn', data: {status: 'park'} %>

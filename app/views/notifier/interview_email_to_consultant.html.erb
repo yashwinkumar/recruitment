@@ -1,6 +1,6 @@
 Hi <%= @consultant.full_name %>
 
-<p> Hiring Manager Scheduled interview for Your applicant <%= @user.full_name%> for <%= @job.title %> position on <%= @interview.date.strftime('%Y %b %d') %>
-  at <%= @interview.date.strftime('%I:%M %P') %>.</p>
+<p> Hiring Manager Scheduled interview for Your applicant <%= @user.full_name%> for <%= @job.title %> position on <%= @available_time ? @available_time.date.strftime('%B %d, %Y') : 'N/A' %>
+  at <%= (@available_time.from ? @available_time.from.to_s : 'N/A') + ' - ' + (@available_time.to ? @available_time.to.to_s : 'N/A') %>.</p>
 <p><strong>Mode of Interview:</strong> <%= @interview.mode.titlecase %></p>
 <p><strong>Additional info:</strong> <%= @interview.description %></p>

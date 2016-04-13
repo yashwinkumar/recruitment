@@ -59,6 +59,7 @@ class Notifier < ApplicationMailer
     @job = submission.job
     @user  = submission.user
     @interview  = submission.interview
+    @available_time = @interview.available_time
     mail(to: @user.email, subject: "Interview Scheduled for #{@job.title}")
   end
 
@@ -67,6 +68,7 @@ class Notifier < ApplicationMailer
     @user  = submission.user
     @consultant  = @job.consultant
     @interview  = submission.interview
+    @available_time = @interview.available_time
     mail(to: @consultant.email, subject: "Hiring Manager Scheduled Interview for your applicant #{@user.full_name} for #{@job.title}")
   end
 

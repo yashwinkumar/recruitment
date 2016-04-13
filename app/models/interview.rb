@@ -2,7 +2,7 @@ class Interview < ActiveRecord::Base
   belongs_to :submission
   belongs_to :job
   belongs_to :user
-
+  belongs_to :available_time
   after_create :notify_interview
 
   def notify_interview
@@ -17,4 +17,5 @@ class Interview < ActiveRecord::Base
       self.errors.add(:user_id, "Phone number is not valid")
     end
   end
+
 end

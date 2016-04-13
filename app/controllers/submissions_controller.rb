@@ -30,9 +30,6 @@ class SubmissionsController < ApplicationController
   def create
     @submission = current_user.submissions.new
     @submission.job_id = @job.id
-    # @submission.availability_1 = params[:submission][:availability_1]
-    # @submission.availability_2 = params[:submission][:availability_2]
-    # @submission.availability_3 = params[:submission][:availability_3]
     ActiveRecord::Base.transaction do
       @submission.save
       @resume = @submission.build_resume
@@ -144,6 +141,6 @@ class SubmissionsController < ApplicationController
     end
 
     def submission_params
-      params.require(:submission).permit({:resume_sections_attributes => [:video, :rating, :section_id], attachments_attributes: [:name, :file], available_times_attributes: [:date, :time_from, :time_to]})
+      params.require(:submission).permit({:resume_sections_attributes => [:video, :rating, :section_id], attachments_attributes: [:name, :file], available_times_attributes: [:date, :from, :to]})
     end
 end
