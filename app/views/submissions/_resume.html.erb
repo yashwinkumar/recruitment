@@ -22,7 +22,7 @@
 <div class="row">
   <div class="col-md-6">
     <% resume_sections.each_with_index do |resume_section, i=0| %>
-      <div class="sections <%= "hide" if i > 0 %> section_<%= resume_section.id %>">
+      <div class="sections <%= "hide" if i > 0 %>" id="section_video_<%= resume_section.id %>">
         <div>
           <%= video_tag resume_section.video, preload: 'metadata', :size => "350x240", :controls => true, class: 'section_player section_video' %>
         </div>
@@ -71,7 +71,7 @@
     <br>
     <div class="row">
       <% resume_sections.each_with_index do |resume_section, i=0| %>
-        <div class="sections <%= "hide" if i > 0 %> section_<%= resume_section.id %>">
+        <div class="sections <%= "hide" if i > 0 %>" id="section_rating_<%= resume_section.id %>">
           <%= render partial: 'resume_sections/ratings', locals: {resume_section: resume_section} %>
           <% @comments = submission.comments.where(user_id: current_user.id) %>
           <% if @comments.any? %>
@@ -103,12 +103,13 @@
   });
   $(".section").on('click', function () {
     var id = $(this).data('id');
-    var section_id = ".section_" + id;
+    var section_video = "#section_video_" + id;
+    var section_rating = "#section_rating_" + id;
     $('.sections').addClass('hide');
     $('.section_player').each(function () {
       $(this).get(0).pause(); // pause all videos
     });
-    $(section_id).removeClass('hide');
+    $(section_video,section_rating).removeClass('hide');
     $('button.section').removeClass('btn-success').addClass('btn-info');
     $(this).removeClass('btn-info').addClass('btn-success')
   });

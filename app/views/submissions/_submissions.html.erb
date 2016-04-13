@@ -13,7 +13,7 @@
     </div>
     <div class="col-md-9">
       <% @submission = submissions.first %>
-      <% @resume_sections ||= @submission.resume.resume_sections.order('id asc') %>
+      <% @resume_sections = @submission.resume.resume_sections.order('id asc') %>
       <div class="<%= tab %>_resume_view">
         <%= render partial: 'resume', locals: {submission: @submission, resume_sections: @resume_sections} %>
       </div>
