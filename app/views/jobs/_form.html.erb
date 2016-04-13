@@ -48,7 +48,7 @@
       </div>
     </div>
       <%= f.input :title %>
-      <%= f.input :location, input_html: {class: 'loc_auto_comp'} %>
+      <%= f.input :location, input_html: {class: 'us_loc_auto_comp'} %>
       <div class="form-group">
         <%= f.label :job_type, class: "col-sm-3 control-label" do %>
           Position Type
@@ -95,11 +95,13 @@
 <script>
   $(".job_template_id").removeClass("form-group");
   // location auto completer
-  $('.loc_auto_comp').click(function (e) {
+  $('.us_loc_auto_comp').click(function (e) {
     var id = $(this).attr('id');
     var inputxx = document.getElementById(id);
+    var countryRestrict = {'country': 'us'};
     var optionsxx = {
-      types: ['geocode']
+      types: ['geocode'],
+      componentRestrictions: countryRestrict
     };
 
     var autocomplete = new google.maps.places.Autocomplete(inputxx, optionsxx);

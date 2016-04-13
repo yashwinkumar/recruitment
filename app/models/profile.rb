@@ -3,6 +3,7 @@ class Profile < ActiveRecord::Base
   belongs_to :user
 
   mount_uploader :picture, ProfileUploader
+  validates_presence_of :first_name, :last_name, :location, :title ,:current_employer
 
   def full_name
     first_name.to_s + " " + last_name.to_s
