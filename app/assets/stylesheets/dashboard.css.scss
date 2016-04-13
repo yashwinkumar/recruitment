@@ -19,6 +19,10 @@
  *= require_self
  */
 
+.row{
+  margin-left: 0;
+  margin-right: 0;
+}
 .applicants_list{
   li {
     border-right: 1px solid #cccccc;

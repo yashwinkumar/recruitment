@@ -1,5 +1,5 @@
 <p>
-  <strong>Candidate Rating:</strong>
+  <strong><%= current_user.candidate? ? 'Self' :'Candidate' %> Rating:</strong>
 
   <% (1..resume_section.rating.to_i).each do|i| %>
     <%= image_tag 'star-on.png' %>
@@ -32,6 +32,7 @@
     <% end %>
   </p>
 <% end %>
+<p><strong>Application Status:</strong> <%= @submission.status.titlecase %></p>
 
 <% if false %>
   <% if @job.consultant == current_user && resume_sec.consultant_rating.nil? %>

@@ -38,8 +38,6 @@
       <%= link_to 'Submit to HM', change_status_job_submission_path(@job, @submission, status: 'process'), class: 'btn btn-primary' %>
       <%= link_to 'Park', '#', class: 'btn btn-info comment-btn', data: {status: 'park'} %>
     <% end %>
-  <% elsif current_user.candidate? %>
-    <button class="btn btn-block btn-lg"><%= @submission.status %></button>
   <% end %>
 </div>
 <br>

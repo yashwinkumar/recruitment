@@ -1,120 +1,102 @@
 <div class="row">
-  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-    <div class="panel panel-default">
-      <div class="panel-heading" role="tab" id="headingOne">
-        <h4 class="panel-title">
-          <%= @submission.user.to_s %>
-        </h4>
+  <div class="panel panel-default">
+    <div class="panel-heading"><%= @submission.user.to_s %></div>
+    <div class="panel-body">
+      <div class="row">
+        <% @resume_sections.each_with_index do |resume_section,i| %>
+          <button class="btn section <%= i > 0 ? 'btn-info' : 'btn-success' %>" data-id="<%= resume_section.id %>" type="button">
+            <%= resume_section.section %>
+          </button>
+        <% end %>
       </div>
-      <div class="panel-collapse" role="tabpanel" aria-labelledby="headingOne">
-        <div class="panel-body">
+
+      <% attachments = @submission.attachments %>
+      <% if attachments.any? %>
+        <br>
+        <div class="row">
+          <span><strong>Attachments:</strong></span>
+          <% attachments.each do |attachment| %>
+                <span>
+                  <%= link_to attachment.name, attachment.file.url, target: '_blank' %>
+                  <% unless attachment == attachments.last %>,<% end %>
+                </span>
+          <% end %>
+        </div>
+        <br>
+      <% end %>
+      <br>
+      <div class="row">
+        <div class="col-md-7">
+          <% @resume_sections.each_with_index do |resume_section, i| %>
+            <div class="sections <%= "hide" if i > 0 %> section_<%= resume_section.id %>">
+              <div>
+                <%= video_tag resume_section.video, preload: 'metadata', :size => "500x240", :controls => true, class: 'section_player section_video' %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <div class="col-md-5">
+          <% @resume = @submission.resume %>
+          <% if @job.consultant == current_user && @resume_sections.collect(&:consultant_rating).include?(nil) %>
+            <div class="row">
+              <%= form_for([@job, @submission, @resume]) do |f| %>
+                <%= f.fields_for :resume_sections do|ff| %>
+                  <div class="form-group">
+                    <%= ff.label :consultant_rating, ff.object.section, class: 'col-sm-3 col-md-3 control-label', style: 'padding-top: 5px' %>
+                    <div class="col-sm-9">
+                      <%= ff.collection_radio_buttons :consultant_rating,  (1..5).map { |n| [n, n] }, :first, :last,{}, {class: 'radio-inline', required: true, style: 'margin: 10px 5px 10px 10px'} %>
+                    </div>
+                  </div>
+                <% end %>
+                <div class="col-md-10">
+                  <%= f.submit "Submit Rating", class: 'btn btn-small btn-block btn-primary' %>
+                </div>
+              <% end %>
+            </div>
+            <br>
+          <% elsif @job.hm == current_user &&  @resume_sections.collect(&:hiring_manager_rating).include?(nil) %>
+            <div class="row">
+              <%= form_for([@job, @submission, @resume]) do |f| %>
+                <%= f.fields_for :resume_sections do|ff| %>
+                  <div class="form-group">
+                    <%= ff.label :hiring_manager_rating, ff.object.section, class: 'col-sm-3 col-md-3 control-label', style: 'padding-top: 5px' %>
+                    <div class="col-sm-9">
+                      <%= ff.collection_radio_buttons :hiring_manager_rating,  (1..5).map { |n| [n, n] }, :first, :last,{}, {class: 'radio-inline', required: true, style: 'margin: 10px 5px 10px 10px'} %>
+                    </div>
+                  </div>
+                <% end %>
+                <div class="col-md-10">
+                  <%= f.submit "Submit Rating", class: 'btn btn-small btn-block btn-primary' %>
+                </div>
+              <% end %>
+            </div>
+            <br>
+          <% end %>
           <div class="row">
-            <% @resume_sections.each do |resume_section| %>
-              <button class="btn btn-info section" data-id="<%= resume_section.id %>" type="button">
-                <%= resume_section.section %>
-              </button>
+            <% @resume_sections.each_with_index do |resume_section, i=0| %>
+              <div class="sections <%= "hide" if i > 0 %> section_<%= resume_section.id %>">
+                <%= render partial: 'resume_sections/ratings', locals: {resume_section: resume_section} %>
+              </div>
             <% end %>
           </div>
-
-          <div class="row">
-            <div class="col-md-3">
-              <h4 class="text-center"><strong>Attachments</strong></h4>
-              <ul class="nav nav-stacked">
-                <% attachments = @submission.attachments %>
-                <% attachments.each do |attachment| %>
-                  <li> <%= link_to attachment.name, attachment.file.url, target: '_blank' %></li>
+          <% if @comments.any? %>
+            <div class="row">
+              <p><strong>Comments:</strong></p>
+              <ul class="bg-warning">
+                <% @comments.each do |comment| %>
+                  <li><%= comment.description %></li>
                 <% end %>
               </ul>
             </div>
-            <div class="col-md-5">
-              <% @resume_sections.each_with_index do |resume_section, i=0| %>
-                <div class="sections <%= "hide" if i > 0 %>" id="section_<%= resume_section.id %>">
-                  <div>
-                    <%= video_tag resume_section.video, preload: 'metadata', :size => "400x240", :controls => true, class: 'section_player section_video' %>
-                  </div>
-                  <%= render partial: 'resume_sections/ratings', locals: {resume_section: resume_section} %>
-                  <% if @comments.any? %>
-                  <div>
-                    <p><strong>Comments:</strong></p>
-                    <ul class="bg-warning">
-                      <% @comments.each do |comment| %>
-                        <li><%= comment.description %></li>
-                      <% end %>
-                    </ul>
-                  </div>
-                    <% end %>
-                </div>
-              <% end %>
-            </div>
-            <div class="col-md-4">
-              <% @resume = @submission.resume %>
-              <% if @job.consultant == current_user && @resume_sections.collect(&:consultant_rating).include?(nil) %>
-                <div class="row">
-                  <p class="text-center"><strong>Ratings</strong></p>
-                  <%= form_for([@job, @submission, @resume]) do |f| %>
-                    <%= f.fields_for :resume_sections do|ff| %>
-                      <div class="form-group">
-                        <%= ff.label :consultant_rating, ff.object.section, class: 'col-sm-3 col-md-3 control-label', style: 'padding-top: 5px' %>
-                        <div class="col-sm-9">
-                          <%= ff.collection_radio_buttons :consultant_rating,  (1..5).map { |n| [n, n] }, :first, :last,{}, {class: 'radio-inline', required: true, style: 'margin: 10px 5px 10px 10px'} %>
-                        </div>
-                      </div>
-                    <% end %>
-                    <div class="col-md-10">
-                      <%= f.submit "Submit Rating", class: 'btn btn-small btn-block btn-primary' %>
-                    </div>
-                  <% end %>
-                </div>
-                <br>
-              <% elsif @job.hm == current_user &&  @resume_sections.collect(&:hiring_manager_rating).include?(nil) %>
-                <div class="row">
-                  <p class="text-center"><strong>Ratings</strong></p>
-                  <%= form_for([@job, @submission, @resume]) do |f| %>
-                    <%= f.fields_for :resume_sections do|ff| %>
-                      <div class="form-group">
-                        <%= ff.label :hiring_manager_rating, ff.object.section, class: 'col-sm-3 col-md-3 control-label', style: 'padding-top: 5px' %>
-                        <div class="col-sm-9">
-                          <%= ff.collection_radio_buttons :hiring_manager_rating,  (1..5).map { |n| [n, n] }, :first, :last,{}, {class: 'radio-inline', required: true, style: 'margin: 10px 5px 10px 10px'} %>
-                        </div>
-                      </div>
-                    <% end %>
-                    <div class="col-md-10">
-                      <%= f.submit "Submit Rating", class: 'btn btn-small btn-block btn-primary' %>
-                    </div>
-                  <% end %>
-                </div>
-                <br>
-              <% end %>
-              <div class="row" style="margin-right: 0">
-                <p class="text-center"><strong>Decisions</strong></p>
-                <%= render partial: 'resumes/hm_decision' %>
-              </div>
-            </div>
+          <% end %>
+          <div class="row">
+            <%= render partial: 'resumes/hm_decision' %>
           </div>
-
-          <script type="text/javascript">
-
-            $('.section_video').click(function () {
-              this.paused ? this.play() : this.pause();
-            });
-            $(".section").on('click', function () {
-              var id = $(this).data('id');
-              var section_id = "#section_" + id;
-              $('.sections').addClass('hide');
-              $('.section_player').each(function () {
-                $(this).get(0).pause(); // pause all videos
-              });
-              $(section_id).removeClass('hide');
-              $('button.section').removeClass('btn-success').addClass('btn-info');
-              $(this).removeClass('btn-info').addClass('btn-success')
-            });
-          </script>
         </div>
       </div>
     </div>
   </div>
 </div>
-
 
 <script>
   $('.section_video').click(function () {
@@ -122,11 +104,13 @@
   });
   $(".section").on('click', function () {
     var id = $(this).data('id');
-    var section_id = "#section_" + id;
+    var section_id = ".section_" + id;
     $('.sections').addClass('hide');
     $('.section_player').each(function () {
       $(this).get(0).pause(); // pause all videos
     });
     $(section_id).removeClass('hide');
+    $('button.section').removeClass('btn-success').addClass('btn-info');
+    $(this).removeClass('btn-info').addClass('btn-success')
   });
 </script>
