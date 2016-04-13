@@ -36,7 +36,6 @@
                   <% if @comments.any? %>
                   <div>
                     <p><strong>Comments:</strong></p>
-                    <% @comments = @submission.comments.where(user_id: current_user.id) %>
                     <ul class="bg-warning">
                       <% @comments.each do |comment| %>
                         <li><%= comment.description %></li>

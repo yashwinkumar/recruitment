@@ -13,7 +13,7 @@
     <% attachments.each do |attachment| %>
       <span>
         <%= link_to attachment.name, attachment.file.url, target: '_blank' %>
-        <% unless attachment == attachments.last  %>,<% end %>
+        <% unless attachment == attachments.last %>,<% end %>
       </span>
     <% end %>
   </div>
@@ -27,22 +27,22 @@
           <%= video_tag resume_section.video, preload: 'metadata', :size => "350x240", :controls => true, class: 'section_player section_video' %>
         </div>
         <%= render partial: 'resume_sections/ratings', locals: {resume_section: resume_section} %>
+        <% @comments = submission.comments.where(user_id: current_user.id) %>
         <% if @comments.any? %>
-        <div>
-          <p><strong>Comments:</strong></p>
-          <% @comments = submission.comments.where(user_id: current_user.id) %>
-          <ul class="bg-warning">
-            <% @comments.each do |comment| %>
-              <li>
-                <% if comment.label.present? %>
-                  <span class="label label-default"><%= comment.label %></span>
-                <% end %>
-                <%= comment.description %>
-              </li>
-            <% end %>
-          </ul>
-        </div>
-          <% end %>
+          <div>
+            <p><strong>Comments:</strong></p>
+            <ul class="bg-warning">
+              <% @comments.each do |comment| %>
+                <li>
+                  <% if comment.label.present? %>
+                    <span class="label label-default"><%= comment.label %></span>
+                  <% end %>
+                  <%= comment.description %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
       </div>
     <% end %>
   </div>
@@ -51,7 +51,7 @@
     <% if @job.consultant == current_user && @resume.resume_sections.collect(&:consultant_rating).include?(nil) %>
       <div class="row">
         <%= form_for([@job, @submission, @resume]) do |f| %>
-          <%= f.fields_for :resume_sections do|ff| %>
+          <%= f.fields_for :resume_sections do |ff| %>
             <div class="form-group" style="margin-bottom: 0">
               <%= ff.label :consultant_rating, ff.object.section %>
               <%#= ff.collection_radio_buttons :consultant_rating,  (1..5).map { |n| [n, n] }, :first, :last,{}, {class: 'radio-inline form-control', style: 'margin: 10px 5px 10px 10px'} %>
@@ -64,10 +64,10 @@
           </div>
         <% end %>
       </div>
-    <% elsif @job.hm == current_user &&  @resume.resume_sections.collect(&:hiring_manager_rating).include?(nil) %>
+    <% elsif @job.hm == current_user && @resume.resume_sections.collect(&:hiring_manager_rating).include?(nil) %>
       <div class="row">
         <%= form_for([@job, @submission, @resume]) do |f| %>
-          <%= f.fields_for :resume_sections do|ff| %>
+          <%= f.fields_for :resume_sections do |ff| %>
             <div class="form-group" style="margin-bottom: 0">
               <%= ff.label :hiring_manager_rating, ff.object.section %>
               <%#= ff.collection_radio_buttons :hiring_manager_rating,  (1..5).map { |n| [n, n] }, :first, :last,{}, {class: 'radio-inline form-control', style: 'margin: 10px 5px 10px 10px'} %>
@@ -83,6 +83,7 @@
       </div>
     <% else %>
       <br>
+
       <div class="row" style="margin-right: 0">
         <%= render partial: 'resumes/hm_decision' %>
       </div>
@@ -113,7 +114,7 @@
     size: 24,
     starOff: 'star-off-big.png',
     starOn: 'star-on-big.png',
-    click: function(score, evt) {
+    click: function (score, evt) {
       $(this).prev('input').val(score);
     }
   });
