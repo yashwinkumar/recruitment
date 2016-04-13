@@ -33,6 +33,7 @@
                     <%= video_tag resume_section.video, preload: 'metadata', :size => "400x240", :controls => true, class: 'section_player section_video' %>
                   </div>
                   <%= render partial: 'resume_sections/ratings', locals: {resume_section: resume_section} %>
+                  <% if @comments.any? %>
                   <div>
                     <p><strong>Comments:</strong></p>
                     <% @comments = @submission.comments.where(user_id: current_user.id) %>
@@ -42,6 +43,7 @@
                       <% end %>
                     </ul>
                   </div>
+                    <% end %>
                 </div>
               <% end %>
             </div>

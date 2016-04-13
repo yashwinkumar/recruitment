@@ -1,9 +1,11 @@
 Hi <%= @user.full_name %>
 
 <p> Your application is Discarded for <%= @job.title %> position.</p>
+<% if @submission.comments.any? %>
 <p><strong>Comments:</strong></p>
 <ul>
   <% @submission.comments.each do|comment| %>
     <li><%= comment.description %></li>
   <% end %>
 </ul>
+<% end %>

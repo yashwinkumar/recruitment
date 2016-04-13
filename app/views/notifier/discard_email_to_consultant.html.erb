@@ -1,10 +1,12 @@
 Hi <%= @consultant.full_name %>
 
 <p> Your applicant <%= @user.full_name %> is Discarded for <%= @job.title %> position.</p>
+<% if @submission.comments.any? %>
 <p><strong>Comments:</strong></p>
 <ul>
   <% @submission.comments.each do|comment| %>
     <li><%= comment.description %></li>
   <% end %>
 </ul>
+<% end %>
 
