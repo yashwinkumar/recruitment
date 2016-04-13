@@ -1,6 +1,6 @@
 <div class="row">
-  <% resume_sections.each do |resume_section| %>
-    <button class="btn btn-info section" data-id="<%= resume_section.id %>" type="button">
+  <% resume_sections.each_with_index do |resume_section, i=0| %>
+    <button class="btn section <%= i > 0 ? 'btn-info' : 'btn-success' %>" data-id="<%= resume_section.id %>" type="button">
       <%= resume_section.section %>
     </button>
   <% end %>
@@ -22,27 +22,10 @@
 <div class="row">
   <div class="col-md-6">
     <% resume_sections.each_with_index do |resume_section, i=0| %>
-      <div class="sections <%= "hide" if i > 0 %>" id="section_<%= resume_section.id %>">
+      <div class="sections <%= "hide" if i > 0 %> section_<%= resume_section.id %>">
         <div>
           <%= video_tag resume_section.video, preload: 'metadata', :size => "350x240", :controls => true, class: 'section_player section_video' %>
         </div>
-        <%= render partial: 'resume_sections/ratings', locals: {resume_section: resume_section} %>
-        <% @comments = submission.comments.where(user_id: current_user.id) %>
-        <% if @comments.any? %>
-          <div>
-            <p><strong>Comments:</strong></p>
-            <ul class="bg-warning">
-              <% @comments.each do |comment| %>
-                <li>
-                  <% if comment.label.present? %>
-                    <span class="label label-default"><%= comment.label %></span>
-                  <% end %>
-                  <%= comment.description %>
-                </li>
-              <% end %>
-            </ul>
-          </div>
-        <% end %>
       </div>
     <% end %>
   </div>
@@ -83,11 +66,32 @@
       </div>
     <% else %>
       <br>
-
-      <div class="row" style="margin-right: 0">
         <%= render partial: 'resumes/hm_decision' %>
-      </div>
     <% end %>
+    <br>
+    <div class="row">
+      <% resume_sections.each_with_index do |resume_section, i=0| %>
+        <div class="sections <%= "hide" if i > 0 %> section_<%= resume_section.id %>">
+          <%= render partial: 'resume_sections/ratings', locals: {resume_section: resume_section} %>
+          <% @comments = submission.comments.where(user_id: current_user.id) %>
+          <% if @comments.any? %>
+            <div>
+              <p><strong>Comments:</strong></p>
+              <ul class="bg-warning">
+                <% @comments.each do |comment| %>
+                  <li>
+                    <% if comment.label.present? %>
+                      <span class="label label-default"><%= comment.label %></span>
+                    <% end %>
+                    <%= comment.description %>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>
 
@@ -99,7 +103,7 @@
   });
   $(".section").on('click', function () {
     var id = $(this).data('id');
-    var section_id = "#section_" + id;
+    var section_id = ".section_" + id;
     $('.sections').addClass('hide');
     $('.section_player').each(function () {
       $(this).get(0).pause(); // pause all videos

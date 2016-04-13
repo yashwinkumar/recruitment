@@ -93,7 +93,7 @@ class SubmissionsController < ApplicationController
       flash[:success] = "Candidate Hired successfully."
     elsif params[:status] == 'un_decided'
       @submission.un_decide
-      flash[:success] = "Successfully moved to Un Decided state."
+      flash[:success] = "Successfully moved to Undecided state."
     end
     redirect_to :back
   end

@@ -28,17 +28,17 @@ class Submission < ActiveRecord::Base
     after_transition :on => :refer, :do => :submission_email
 
     event :discard do
-      transition :submitted => :discarded, :un_decided => :discarded, :parked => :discarded
+      transition :submitted => :discarded, :processing => :discarded, :un_decided => :discarded, :parked => :discarded
     end
     after_transition :on => :discard, :do => :discard_email
 
     event :park do
-      transition :submitted => :parked, :un_decided => :parked, :discarded => :parked
+      transition :submitted => :parked, :processing => :parked, :un_decided => :parked, :discarded => :parked
     end
     after_transition :on => :parking, :do => :parked_email
 
     event :un_decide do
-      transition :submitted => :un_decided
+      transition :submitted => :un_decided, :processing => :un_decided, :parked => :un_decided
     end
     # after_transition :on => :un_decided, :do => :un_decided_email
 

@@ -3,7 +3,7 @@
     <% if @submission.processing? %>
       <%= link_to 'Interview', new_job_submission_interview_path(@job, @submission), class: 'btn btn-primary' %>
       <%= link_to 'Park', '#', class: 'btn btn-info comment-btn', data: {status: 'park'} %>
-      <%= link_to 'Un Decided', change_status_job_submission_path(@job, @submission, status: 'un_decided'), class: 'btn btn-warning' %>
+      <%= link_to 'Undecided', change_status_job_submission_path(@job, @submission, status: 'un_decided'), class: 'btn btn-warning' %>
     <% elsif @submission.un_decided? %>
       <%= link_to 'Interview', new_job_submission_interview_path(@job, @submission), class: 'btn btn-primary' %>
       <%= link_to 'Park', '#', class: 'btn btn-info comment-btn', data: {status: 'park'} %>
@@ -26,7 +26,7 @@
       <%= link_to 'Submit to HM', change_status_job_submission_path(@job, @submission, status: 'process'), class: 'btn btn-primary' %>
       <%= link_to 'Park', '#', class: 'btn btn-info comment-btn', data: {status: 'park'} %>
       <%= link_to 'Reject', '#', class: 'btn btn-danger comment-btn', data: {status: 'discard'} %>
-      <%= link_to 'Un Decided', change_status_job_submission_path(@job, @submission, status: 'un_decided'), class: 'btn btn-warning' %>
+      <%= link_to 'Undecided', change_status_job_submission_path(@job, @submission, status: 'un_decided'), class: 'btn btn-warning' %>
     <% elsif @submission.un_decided? %>
       <%= link_to 'Submit to HM', change_status_job_submission_path(@job, @submission, status: 'process'), class: 'btn btn-primary' %>
       <%= link_to 'Park', '#', class: 'btn btn-info comment-btn', data: {status: 'park'} %>
@@ -40,8 +40,8 @@
     <% end %>
   <% end %>
 </div>
-<br>
-<div class="row" style="margin-right: 0">
+
+<div class="row">
   <div class="comment-section">
     <%= form_tag save_comment_job_submission_path(@job, @submission), class: 'form-horizontal commetn_form' do %>
       <%= hidden_field_tag :status, '', class: 'submission_comment_status' %>
@@ -56,6 +56,12 @@
     <% end %>
   </div>
 </div>
+
+<style>
+  .comment-section{
+    margin-top: 10px;
+  }
+</style>
 
 <script type="text/javascript">
   $('.comment-section').hide();
