@@ -52,3 +52,4 @@ production:
   database: recruitment_production
   username: recruitment
   password: <%= ENV['RECRUITMENT_DATABASE_PASSWORD'] %>
+  socket: /var/lib/mysql/mysql.sock
