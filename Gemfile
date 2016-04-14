@@ -50,6 +50,12 @@ group :development, :test do
 end
 
 group :development do
+  gem "capistrano", "~> 3.4"
+  gem 'capistrano-rvm'
+  gem 'capistrano-bundler', '~> 1.1.2'
+  gem 'capistrano-rails', '~> 1.1'
+  gem 'capistrano-passenger', '~> 0.2.0'
+
   gem 'web-console', '~> 2.0'
   gem 'spring'
 end
