@@ -1,10 +1,10 @@
 <p>
-  <strong><%= current_user.candidate? ? 'Self' :'Candidate' %> Rating:</strong>
+  <strong><%= current_user.candidate? ? 'Self' : 'Candidate' %> Rating:</strong>
 
-  <% (1..resume_section.rating.to_i).each do|i| %>
+  <% (1..resume_section.rating.to_i).each do |i| %>
     <%= image_tag 'star-on.png' %>
   <% end %>
-  <% (resume_section.rating.to_i...5).each do|i| %>
+  <% (resume_section.rating.to_i...5).each do |i| %>
     <%= image_tag 'star-off.png' %>
   <% end %>
 </p>
@@ -12,10 +12,10 @@
 <% if (resume_section.consultant_rating && @job.consultant == current_user) || @job.hm == current_user %>
   <p>
     <strong>Consulting Company Rating:</strong>
-    <% (1..resume_section.consultant_rating.to_i).each do|i| %>
+    <% (1..resume_section.consultant_rating.to_i).each do |i| %>
       <%= image_tag 'star-on.png' %>
     <% end %>
-    <% (resume_section.consultant_rating.to_i...5).each do|i| %>
+    <% (resume_section.consultant_rating.to_i...5).each do |i| %>
       <%= image_tag 'star-off.png' %>
     <% end %>
   </p>
@@ -23,20 +23,29 @@
 
 <% if resume_section.hiring_manager_rating && @job.hm == current_user %>
   <p>
-    <strong>Hiring Manager  Rating:</strong>
-    <% (1..resume_section.hiring_manager_rating.to_i).each do|i| %>
+    <strong>Hiring Manager Rating:</strong>
+    <% (1..resume_section.hiring_manager_rating.to_i).each do |i| %>
       <%= image_tag 'star-on.png' %>
     <% end %>
-    <% (resume_section.hiring_manager_rating.to_i...5).each do|i| %>
+    <% (resume_section.hiring_manager_rating.to_i...5).each do |i| %>
       <%= image_tag 'star-off.png' %>
     <% end %>
   </p>
 <% end %>
 <p>
   <strong>Application Status:</strong>
-  <%= current_user.hm? ? Submission::HM_STATUSES["#{@submission.status}"] : Submission::CONSULTANT_STATUSES["#{@submission.status}"] %>
-  <% if @submission.parked? %>
-    <span class="label label-default"><%= @submission.activity_user_id == current_user.id ? 'by ME' : 'by HM' %></span>
+  <% if current_user.hm? %>
+    <%= Submission::HM_STATUSES["#{@submission.status}"] %>
+    <% if @submission.parked? %>
+      <span class="label label-default"><%= @submission.activity_user_id == current_user.id ? 'by ME' : 'by HM' %></span>
+    <% end %>
+  <% elsif current_user.consultant? %>
+    <%= Submission::HM_STATUSES["#{@submission.status}"] %>
+    <% if @submission.parked? %>
+      <span class="label label-default"><%= @submission.activity_user_id == current_user.id ? 'by ME' : 'by HM' %></span>
+    <% end %>
+  <% else %>
+    <%= @submission.status.titlecase %>
   <% end %>
 </p>
 
