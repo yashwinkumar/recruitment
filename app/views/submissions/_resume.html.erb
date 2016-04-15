@@ -1,6 +1,6 @@
 <div class="row">
   <% resume_sections.each_with_index do |resume_section, i=0| %>
-    <button class="btn section <%= i > 0 ? 'btn-default' : 'btn-success' %>" data-id="<%= resume_section.id %>" type="button">
+    <button class="btn section <%= i > 0 ? 'btn-default' : 'btn-success' %>" data-id="<%= resume_section.id %>" type="button" style='margin-bottom: 5px !important;'>
       <%= resume_section.section %>
     </button>
   <% end %>
@@ -21,17 +21,45 @@
 <% end %>
 <div class="row">
   <div class="col-md-7">
-    <% resume_sections.each_with_index do |resume_section, i=0| %>
-      <div class="video_section sections <%= "hide" if i > 0 %>" id="section_video_<%= resume_section.id %>">
-          <%= video_tag resume_section.video, preload: 'metadata', :size => "350x240", :controls => true, class: 'section_player section_video' %>
+    <div class="row">
+      <% resume_sections.each_with_index do |resume_section, i=0| %>
+        <div class="video_section sections <%= "hide" if i > 0 %>" id="section_video_<%= resume_section.id %>">
+            <%= video_tag resume_section.video, preload: 'metadata', :size => "350x240", :controls => true, class: 'section_player section_video' %>
+       </div>
+     <% end %>
+    </div>
+    <% if resume_sections.collect(&:consultant_rating).include?(nil) or resume_sections.collect(&:hiring_manager_rating).include?(nil) %>
+    <br>
+      <div class="row">
+        <% resume_sections.each_with_index do |resume_section, i=0| %>
+          <div class="comments_section sections <%= "hide" if i > 0 %>" id="section_rating_<%= resume_section.id %>">
+            <%= render partial: 'resume_sections/ratings', locals: {resume_section: resume_section} %>
+            <% @comments = submission.comments.where(user_id: current_user.id) %>
+            <% if @comments.any? %>
+              <div>
+                <p><strong>Comments:</strong></p>
+                <ul class="bg-warning">
+                  <% @comments.each do |comment| %>
+                    <li>
+                      <% if comment.label.present? %>
+                        <span class="label label-default"><%= comment.label %></span>
+                      <% end %>
+                      <%= comment.description %>
+                    </li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+          </div>
+        <% end %>      
       </div>
-    <% end %>
+    <% end %>  
   </div>
   <div class="col-md-5" style="padding: 0">
-    <% @resume = @submission.resume %>
-    <% if @job.consultant == current_user && @resume.resume_sections.collect(&:consultant_rating).include?(nil) %>
+   
+    <% if @job.consultant == current_user && resume_sections.collect(&:consultant_rating).include?(nil) %>
       <div class="row">
-        <%= form_for([@job, @submission, @resume], html:{id: 'consultant_rating_form'}) do |f| %>
+        <%= form_for([@job, @submission, @submission.resume], html:{id: 'consultant_rating_form'}) do |f| %>
           <%= f.fields_for :resume_sections do |ff| %>
             <div class="form-group" style="margin-bottom: 0">
               <%= ff.label :consultant_rating, ff.object.section %>
@@ -47,9 +75,9 @@
           </div>
         <% end %>
       </div>
-    <% elsif @job.hm == current_user && @resume.resume_sections.collect(&:hiring_manager_rating).include?(nil) %>
+    <% elsif @job.hm == current_user && resume_sections.collect(&:hiring_manager_rating).include?(nil) %>
       <div class="row">
-        <%= form_for([@job, @submission, @resume], html:{id: 'hm_rating_form'}) do |f| %>
+        <%= form_for([@job, @submission, @submission.resume], html:{id: 'hm_rating_form'}) do |f| %>
           <%= f.fields_for :resume_sections do |ff| %>
             <div class="form-group" style="margin-bottom: 0">
               <%= ff.label :hiring_manager_rating, ff.object.section %>
@@ -69,9 +97,10 @@
         <%= render partial: 'resumes/decisions' %>
       <br>
     <% end %>
+    <% unless resume_sections.collect(&:consultant_rating).include?(nil) or resume_sections.collect(&:hiring_manager_rating).include?(nil) %>
     <div class="row">
       <% resume_sections.each_with_index do |resume_section, i=0| %>
-        <div class="sections <%= "hide" if i > 0 %>" id="section_rating_<%= resume_section.id %>">
+        <div class="comments_section sections <%= "hide" if i > 0 %>" id="section_rating_<%= resume_section.id %>">
           <%= render partial: 'resume_sections/ratings', locals: {resume_section: resume_section} %>
           <% @comments = submission.comments.where(user_id: current_user.id) %>
           <% if @comments.any? %>
@@ -92,6 +121,7 @@
         </div>
       <% end %>
     </div>
+    <% end %>
   </div>
 </div>
 

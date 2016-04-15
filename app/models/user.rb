@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
   end
 
   def full_name
-    profile.first_name.to_s + " " + profile.last_name.to_s
+    (profile.first_name.to_s + " " + profile.last_name.to_s) rescue ''
   end
 
   def display_picture
