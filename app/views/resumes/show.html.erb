@@ -44,6 +44,7 @@
                     <%#= ff.collection_radio_buttons :consultant_rating,  (1..5).map { |n| [n, n] }, :first, :last,{}, {class: 'radio-inline form-control', style: 'margin: 10px 5px 10px 10px'} %>
                     <%= ff.hidden_field :consultant_rating, class: 'form-control' %>
                     <p class="star_rating"></p>
+                    <span class="help-block rating_hint hide" style="color: #a94442">Rating Required</span>
                   </div>
                 <% end %>
                 <%= render partial: 'resumes/decisions_radio' %>
@@ -61,6 +62,7 @@
                     <%#= ff.collection_radio_buttons :hiring_manager_rating,  (1..5).map { |n| [n, n] }, :first, :last,{}, {class: 'radio-inline form-control', style: 'margin: 10px 5px 10px 10px'} %>
                     <%= ff.hidden_field :hiring_manager_rating, class: 'form-control' %>
                     <p class="star_rating"></p>
+                    <span class="help-block rating_hint hide" style="color: #a94442">Rating Required</span>
                   </div>
                 <% end %>
                 <%= render partial: 'resumes/decisions_radio' %>
