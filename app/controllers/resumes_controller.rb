@@ -8,7 +8,6 @@ class ResumesController < ApplicationController
   end
 
   def update
-    raise params.inspect
     # @resume.update_attributes!(resume_params)
     resume_params[:resume_sections_attributes].each do |k, v|
       resume_section = ResumeSection.find v["id"]
@@ -26,10 +25,20 @@ class ResumesController < ApplicationController
         @submission.park
         @submission.update_attribute(:activity_user_id, current_user.id)
         Notifier.parked_email_to_consultant(@submission).deliver_now if current_user.hm?
+        comment = @submission.comments.new
+        comment.description = params[:comment]
+        comment.user_id = current_user.id
+        comment.label = (params[:status] == 'discard' ? 'reject' : params[:status])
+        comment.save
       when "reject"
         @submission.reject
         @submission.update_attribute(:activity_user_id, current_user.id)
         Notifier.discard_email_to_consultant(@submission).deliver_now if current_user.hm?
+        comment = @submission.comments.new
+        comment.description = params[:comment]
+        comment.user_id = current_user.id
+        comment.label = (params[:status] == 'discard' ? 'reject' : params[:status])
+        comment.save
       when "undecided"
         @submission.un_decide
       else
