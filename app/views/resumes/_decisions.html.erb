@@ -38,9 +38,9 @@
       <%= link_to 'Reject', '#', class: 'btn btn-default comment-btn', data: {status: 'discard'} %>
     <% elsif @submission.discarded? %>
       <%= link_to 'Submit to HM', change_status_job_submission_path(@job, @submission, status: 'process'), class: 'btn btn-default' %>
-      <%= link_to 'Undecided', change_status_job_submission_path(@job, @submission, status: 'un_decided'), class: 'btn btn-default' %>
       <%= link_to 'Park', '#', class: 'btn btn-default comment-btn', data: {status: 'park'} %>
-    <% end %>
+      <%= link_to 'Undecided', change_status_job_submission_path(@job, @submission, status: 'un_decided'), class: 'btn btn-default' %>
+<% end %>
   <% end %>
 </div>
 
