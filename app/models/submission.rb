@@ -25,35 +25,35 @@ class Submission < ActiveRecord::Base
     event :submit do
       transition any => :submitted
     end
-    after_transition :on => :refer, :do => :submission_email
+    after_transition :on => :submit, :do => :submission_email
 
     event :discard do
-      transition :submitted => :discarded, :processing => :discarded, :un_decided => :discarded, :parked => :discarded
+      transition any => :discarded
     end
     after_transition :on => :discard, :do => :discard_email
 
     event :park do
-      transition :submitted => :parked, :processing => :parked, :un_decided => :parked, :discarded => :parked
+      transition any => :parked
     end
     after_transition :on => :parking, :do => :parked_email
 
     event :un_decide do
-      transition :submitted => :un_decided, :processing => :un_decided, :parked => :un_decided
+      transition any => :un_decided
     end
     # after_transition :on => :un_decided, :do => :un_decided_email
 
     event :process do
-      transition :submitted => :processing, :un_decided => :processing, :parked => :processing, :discarded => :processing
+      transition any => :processing
     end
     after_transition :on => :processing, :do => :processing_email
 
     event :schedule_interview do
-      transition :submitted => :interview_scheduled, :processing => :interview_scheduled
+      transition any => :interview_scheduled
     end
     after_transition :on => :schedule_interview, :do => :interview_email
 
     event :hire do
-      transition :interview_scheduled => :hired, :processing => :hired
+      transition any => :hired
     end
     after_transition :on => :hire, :do => :hire_email
 

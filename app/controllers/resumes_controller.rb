@@ -8,10 +8,31 @@ class ResumesController < ApplicationController
   end
 
   def update
+    raise params.inspect
     # @resume.update_attributes!(resume_params)
-    resume_params[:resume_sections_attributes].each do|k,v|
+    resume_params[:resume_sections_attributes].each do |k, v|
       resume_section = ResumeSection.find v["id"]
       resume_section.update_attributes(v)
+    end
+    case params[:next_action]
+      when "hire"
+        @submission.hire
+      when "interview"
+        redirect_to new_job_submission_interview_path(@job, @submission)
+        return
+      when 'process'
+        @submission.process
+      when "park"
+        @submission.park
+        @submission.update_attribute(:activity_user_id, current_user.id)
+        Notifier.parked_email_to_consultant(@submission).deliver_now if current_user.hm?
+      when "reject"
+        @submission.reject
+        @submission.update_attribute(:activity_user_id, current_user.id)
+        Notifier.discard_email_to_consultant(@submission).deliver_now if current_user.hm?
+      when "undecided"
+        @submission.un_decide
+      else
     end
     redirect_to job_submissions_path(@job)
   end

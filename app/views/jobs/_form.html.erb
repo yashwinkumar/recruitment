@@ -95,7 +95,7 @@
 <script>
   $(".job_template_id").removeClass("form-group");
   // location auto completer
-  $('.us_loc_auto_comp').click(function (e) {
+  $('.us_loc_auto_comp').on('click',function (e) {
     var id = $(this).attr('id');
     var inputxx = document.getElementById(id);
     var countryRestrict = {'country': 'us'};
@@ -117,6 +117,12 @@
     }else{
       $('.contract_fields').addClass('hide');
     }
+  });
+
+  $(".has_datepicker").datetimepicker({
+    timepicker: false,
+    format: 'Y/m/d',
+    minDate:'+1970/01/02'
   });
 
 </script>

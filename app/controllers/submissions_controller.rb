@@ -87,7 +87,7 @@ class SubmissionsController < ApplicationController
       flash[:success] = "Candidate Hired successfully."
     elsif params[:status] == 'park'
       @submission.park
-      flash[:success] = "Candidate Hired successfully."
+      flash[:success] = "Candidate Parked successfully."
     elsif params[:status] == 'un_decided'
       @submission.un_decide
       flash[:success] = "Successfully moved to Undecided state."

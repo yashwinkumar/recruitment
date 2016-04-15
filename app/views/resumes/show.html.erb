@@ -4,7 +4,7 @@
     <div class="panel-body">
       <div class="row">
         <% @resume_sections.each_with_index do |resume_section,i| %>
-          <button class="btn section <%= i > 0 ? 'btn-info' : 'btn-success' %>" data-id="<%= resume_section.id %>" type="button">
+          <button class="btn section <%= i > 0 ? 'btn-default' : 'btn-success' %>" data-id="<%= resume_section.id %>" type="button">
             <%= resume_section.section %>
           </button>
         <% end %>
@@ -39,39 +39,40 @@
           <% @resume = @submission.resume %>
           <% if @job.consultant == current_user && @resume_sections.collect(&:consultant_rating).include?(nil) %>
             <div class="row">
-              <%= form_for([@job, @submission, @resume]) do |f| %>
-                <%= f.fields_for :resume_sections do|ff| %>
-                  <div class="form-group">
-                    <%= ff.label :consultant_rating, ff.object.section, class: 'col-sm-3 col-md-3 control-label', style: 'padding-top: 5px' %>
-                    <div class="col-sm-9">
-                      <%= ff.collection_radio_buttons :consultant_rating,  (1..5).map { |n| [n, n] }, :first, :last,{}, {class: 'radio-inline', required: true, style: 'margin: 10px 5px 10px 10px'} %>
-                    </div>
+              <%= form_for([@job, @submission, @resume], html:{id: 'consultant_rating_form'}) do |f| %>
+                <%= f.fields_for :resume_sections do |ff| %>
+                  <div class="form-group" style="margin-bottom: 0">
+                    <%= ff.label :consultant_rating, ff.object.section %>
+                    <%#= ff.collection_radio_buttons :consultant_rating,  (1..5).map { |n| [n, n] }, :first, :last,{}, {class: 'radio-inline form-control', style: 'margin: 10px 5px 10px 10px'} %>
+                    <%= ff.hidden_field :consultant_rating, class: 'form-control' %>
+                    <p class="star_rating"></p>
                   </div>
                 <% end %>
-                <div class="col-md-10">
+                <%= render partial: 'resumes/decisions_radio' %>
+                <div class="form-group">
                   <%= f.submit "Submit Rating", class: 'btn btn-small btn-block btn-primary' %>
                 </div>
               <% end %>
             </div>
-            <br>
           <% elsif @job.hm == current_user &&  @resume_sections.collect(&:hiring_manager_rating).include?(nil) %>
             <div class="row">
-              <%= form_for([@job, @submission, @resume]) do |f| %>
-                <%= f.fields_for :resume_sections do|ff| %>
-                  <div class="form-group">
-                    <%= ff.label :hiring_manager_rating, ff.object.section, class: 'col-sm-3 col-md-3 control-label', style: 'padding-top: 5px' %>
-                    <div class="col-sm-9">
-                      <%= ff.collection_radio_buttons :hiring_manager_rating,  (1..5).map { |n| [n, n] }, :first, :last,{}, {class: 'radio-inline', required: true, style: 'margin: 10px 5px 10px 10px'} %>
-                    </div>
+              <%= form_for([@job, @submission, @resume], html:{id: 'hm_rating_form'}) do |f| %>
+                <%= f.fields_for :resume_sections do |ff| %>
+                  <div class="form-group" style="margin-bottom: 0">
+                    <%= ff.label :hiring_manager_rating, ff.object.section %>
+                    <%#= ff.collection_radio_buttons :hiring_manager_rating,  (1..5).map { |n| [n, n] }, :first, :last,{}, {class: 'radio-inline form-control', style: 'margin: 10px 5px 10px 10px'} %>
+                    <%= ff.hidden_field :hiring_manager_rating, class: 'form-control' %>
+                    <p class="star_rating"></p>
                   </div>
                 <% end %>
-                <div class="col-md-10">
+                <%= render partial: 'resumes/decisions_radio' %>
+                <div class="form-group">
                   <%= f.submit "Submit Rating", class: 'btn btn-small btn-block btn-primary' %>
                 </div>
               <% end %>
             </div>
-            <br>
           <% end %>
+          <br>
           <div class="row">
             <% @resume_sections.each_with_index do |resume_section, i=0| %>
               <div class="sections <%= "hide" if i > 0 %> section_<%= resume_section.id %>">
@@ -89,9 +90,6 @@
               </ul>
             </div>
           <% end %>
-          <div class="row">
-            <%= render partial: 'resumes/hm_decision' %>
-          </div>
         </div>
       </div>
     </div>
@@ -110,7 +108,44 @@
       $(this).get(0).pause(); // pause all videos
     });
     $(section_id).removeClass('hide');
-    $('button.section').removeClass('btn-success').addClass('btn-info');
-    $(this).removeClass('btn-info').addClass('btn-success')
+    $('button.section').removeClass('btn-success').addClass('btn-default');
+    $(this).removeClass('btn-default').addClass('btn-success')
+  });
+  $('.star_rating').raty({
+    path: '/assets/',
+    size: 24,
+    starOff: 'star-off-big.png',
+    starOn: 'star-on-big.png',
+    noRatedMsg  : 'Not rated yet!',
+    click: function (score, evt) {
+      $(this).prev('input').val(score);
+      $(this).next('.rating_hint').remove();
+    }
+  });
+
+  $('form#consultant_rating_form, form#hm_rating_form').on('submit', function(){
+    var scores = $('.star_rating').raty('score');
+    var valid = true;
+    $.each(scores,function(index,value){
+      if(value == undefined){
+        valid = false;
+      }
+    });
+    if(valid){
+      return true
+    }else{
+      $('.rating_hint').removeClass('hide');
+      return false
+    }
+  });
+
+  $('.comment-block').hide();
+  $("input[name=next_action]").on('change',function(){
+    var val = $(this).val();
+    if(val == "park" || val == 'reject'){
+      $('.comment-block').show(500);
+    }else{
+      $('.comment-block').hide(500);
+    }
   });
 </script>
