@@ -17,18 +17,17 @@
       </span>
     <% end %>
   </div>
+  <hr style="margin: 5px">
 <% end %>
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-7">
     <% resume_sections.each_with_index do |resume_section, i=0| %>
-      <div class="sections <%= "hide" if i > 0 %>" id="section_video_<%= resume_section.id %>">
-        <div>
+      <div class="video_section sections <%= "hide" if i > 0 %>" id="section_video_<%= resume_section.id %>">
           <%= video_tag resume_section.video, preload: 'metadata', :size => "350x240", :controls => true, class: 'section_player section_video' %>
-        </div>
       </div>
     <% end %>
   </div>
-  <div class="col-md-6">
+  <div class="col-md-5">
     <% @resume = @submission.resume %>
     <% if @job.consultant == current_user && @resume.resume_sections.collect(&:consultant_rating).include?(nil) %>
       <div class="row">

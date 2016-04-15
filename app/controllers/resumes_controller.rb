@@ -25,20 +25,20 @@ class ResumesController < ApplicationController
         @submission.park
         @submission.update_attribute(:activity_user_id, current_user.id)
         Notifier.parked_email_to_consultant(@submission).deliver_now if current_user.hm?
-        comment = @submission.comments.new
-        comment.description = params[:comment]
-        comment.user_id = current_user.id
-        comment.label = (params[:status] == 'discard' ? 'reject' : params[:status])
-        comment.save
+        comment = @submission.comments.create({
+                                                description: params[:comment],
+                                                user_id: current_user.id,
+                                                label: params[:next_action]
+                                              })
       when "reject"
         @submission.reject
         @submission.update_attribute(:activity_user_id, current_user.id)
         Notifier.discard_email_to_consultant(@submission).deliver_now if current_user.hm?
-        comment = @submission.comments.new
-        comment.description = params[:comment]
-        comment.user_id = current_user.id
-        comment.label = (params[:status] == 'discard' ? 'reject' : params[:status])
-        comment.save
+        comment = @submission.comments.create({
+                                                description: params[:comment],
+                                                user_id: current_user.id,
+                                                label: params[:next_action]
+                                              })
       when "undecided"
         @submission.un_decide
       else

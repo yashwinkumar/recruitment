@@ -28,10 +28,8 @@
       <div class="row">
         <div class="col-md-7">
           <% @resume_sections.each_with_index do |resume_section, i| %>
-            <div class="sections <%= "hide" if i > 0 %> section_<%= resume_section.id %>">
-              <div>
+            <div class="video_section sections <%= "hide" if i > 0 %> section_<%= resume_section.id %>">
                 <%= video_tag resume_section.video, preload: 'metadata', :size => "500x240", :controls => true, class: 'section_player section_video' %>
-              </div>
             </div>
           <% end %>
         </div>
