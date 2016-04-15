@@ -49,6 +49,7 @@ group :development, :test do
   gem 'letter_opener'
 end
 
+gem 'capistrano-rails-console'
 group :development do
   gem "capistrano", "~> 3.4"
   gem 'capistrano-rvm'
