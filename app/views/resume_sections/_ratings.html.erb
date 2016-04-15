@@ -32,7 +32,13 @@
     <% end %>
   </p>
 <% end %>
-<p><strong>Application Status:</strong> <%= @submission.status.titlecase %></p>
+<p>
+  <strong>Application Status:</strong>
+  <%= current_user.hm? ? Submission::HM_STATUSES["#{@submission.status}"] : Submission::CONSULTANT_STATUSES["#{@submission.status}"] %>
+  <% if @submission.parked? %>
+    <span class="label label-default"><%= @submission.activity_user_id == current_user.id ? 'by ME' : 'by HM' %></span>
+  <% end %>
+</p>
 
 <% if false %>
   <% if @job.consultant == current_user && resume_sec.consultant_rating.nil? %>

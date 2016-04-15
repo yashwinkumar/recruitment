@@ -13,13 +13,16 @@ class Submission < ActiveRecord::Base
   scope :active, -> {where status: 'submitted'}
   scope :un_decided, -> {where status: 'un_decided'}
   scope :process, -> {where status: 'processing'}
-  scope :discarded, -> (activity_user_id) { where(status: 'discarded', activity_user_id: activity_user_id) }
-  scope :parked, -> (activity_user_id) { where(status: 'parked', activity_user_id: activity_user_id) }
+  scope :discarded, -> { where status: 'discarded' }
+  scope :parked, -> { where status: 'parked' }
   scope :interview, -> {where status: 'interview_scheduled'}
   scope :hired, -> {where status: 'hired'}
 
   validates_presence_of :user_id, :job_id
   validates_uniqueness_of :user_id, scope: :job_id, message: 'Already submitted for this position.'
+
+  CONSULTANT_STATUSES = {"submitted" => 'New', "processing" => 'Submitted to HM', "un_decided" => 'Undecided', "parked" => 'Parked', "discarded" => 'Rejected', "interview_scheduled" => 'Interview Scheduled', "hired" => 'Hired'}
+  HM_STATUSES = {"processing" => 'Submitted to HM', "un_decided" => 'Undecided', "parked" => 'Parked', "discarded" => 'Rejected', "interview_scheduled" => 'Interview Scheduled', "hired" => 'Hired'}
 
   state_machine :status, :initial => :submitted do
     event :submit do
