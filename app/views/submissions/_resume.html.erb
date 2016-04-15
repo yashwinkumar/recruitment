@@ -5,9 +5,9 @@
     </button>
   <% end %>
 </div>
+<hr style="margin: 5px">
 <% attachments = submission.attachments %>
 <% if attachments.any? %>
-  <hr style="margin: 5px">
   <div class="row">
     <span><strong>Attachments:</strong></span>
     <% attachments.each do |attachment| %>
@@ -27,7 +27,7 @@
       </div>
     <% end %>
   </div>
-  <div class="col-md-5">
+  <div class="col-md-5" style="padding: 0">
     <% @resume = @submission.resume %>
     <% if @job.consultant == current_user && @resume.resume_sections.collect(&:consultant_rating).include?(nil) %>
       <div class="row">
@@ -67,6 +67,7 @@
       </div>
     <% else %>
         <%= render partial: 'resumes/decisions' %>
+      <br>
     <% end %>
     <div class="row">
       <% resume_sections.each_with_index do |resume_section, i=0| %>
