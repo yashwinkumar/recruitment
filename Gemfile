@@ -49,13 +49,13 @@ group :development, :test do
   gem 'letter_opener'
 end
 
-gem 'capistrano-rails-console'
 group :development do
   gem "capistrano", "~> 3.4"
   gem 'capistrano-rvm'
   gem 'capistrano-bundler', '~> 1.1.2'
   gem 'capistrano-rails', '~> 1.1'
   gem 'capistrano-passenger', '~> 0.2.0'
+  gem 'capistrano-rails-console'
 
   gem 'web-console', '~> 2.0'
   gem 'spring'
@@ -63,6 +63,5 @@ end
 
 group :production do
   gem 'pg', '~> 0.15.1'
-  gem 'rails_12factor', '~> 0.0.2'
 end
 
