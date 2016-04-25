@@ -35,9 +35,9 @@
         <% end %>
         <div class="row">
           <div class="col-md-12">
-            <% hm = User.find 1 %>
-            <% consultant = User.find 2  %>
-            <% candidate = User.find 3 %>
+            <% hm = User.find 16 %>
+            <% consultant = User.find 15  %>
+            <% candidate = User.find 13 %>
             <%= link_to 'HM auto login', profile_url(id: hm.id, token: (hm.token ? hm.token : hm.new_token!)), class: 'btn btn-default' %>
             <%= link_to 'Consulting company auto login', profile_url(id: consultant.id, token: (consultant.token ? consultant.token : consultant.new_token!)), class: 'btn btn-default' %>
             <%= link_to 'Candidate auto login', profile_url(id: candidate.id, token: (candidate.token ? candidate.token : candidate.new_token!)), class: 'btn btn-default' %>

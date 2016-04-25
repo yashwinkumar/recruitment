@@ -33,7 +33,7 @@
 
         <div class="col-sm-9">
           <!--<input class="string optional form-control" type="text" value="Hyderabad India" name="job[location]" id="job_location">-->
-          <label class="form-control" style="    background: transparent;border: none;box-shadow: inherit;">
+          <label class="form-control" style="background: transparent;border:none;box-shadow:inherit;">
             <%= f.object.template.name %>
           </label>
         </div>
@@ -76,7 +76,7 @@
       <% end %>
 
       <%= f.input :compensation, placeholder: "Eg: 500000" ,hint: "Salary per annum. Eg: 500000 " %>
-      <%= f.input :experience, as: :float, hint: "Experience in Years.", placeholder: 'E.g: 2.6' %>
+      <%= f.input :experience, as: :float, hint: "Experience in Years.", placeholder: 'Eg: 2.6' %>
     <div class="form-group">
       <div class="col-md-offset-3 col-md-9">
         <%= f.button :submit, class: 'btn-primary' %>

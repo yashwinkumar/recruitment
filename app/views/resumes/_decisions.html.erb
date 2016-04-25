@@ -1,45 +1,45 @@
 <div class="row">
   <% if current_user.hm? %>
     <% if @submission.processing? %>
-      <%= link_to 'Hire', change_status_job_submission_path(@job, @submission, status: 'hire'), class: 'btn btn-default', data: {status: 'hire'}, confirm: "Are you sure you want to hire the candidate?" %>
-      <%= link_to 'Interview', new_job_submission_interview_path(@job, @submission), class: 'btn btn-default' %>
-      <%= link_to 'Park', '#', class: 'btn btn-default comment-btn', data: {status: 'park'} %>
-      <%= link_to 'Undecided', change_status_job_submission_path(@job, @submission, status: 'un_decided'), class: 'btn btn-default' %>
+      <%= link_to 'Hire', change_status_job_submission_path(@job, @submission, status: 'hire'), class: 'btn btn-primary', data: {status: 'hire'}, confirm: "Are you sure you want to hire the candidate?" %>
+      <%= link_to 'Interview', new_job_submission_interview_path(@job, @submission), class: 'btn btn-primary' %>
+      <%= link_to 'Park', '#', class: 'btn btn-primary comment-btn', data: {status: 'park'} %>
+      <%= link_to 'Undecided', change_status_job_submission_path(@job, @submission, status: 'un_decided'), class: 'btn btn-primary' %>
     <% elsif @submission.un_decided? %>
-      <%= link_to 'Hire', change_status_job_submission_path(@job, @submission, status: 'hire'), class: 'btn btn-default', data: {status: 'hire'}, confirm: "Are you sure you want to hire the candidate?" %>
-      <%= link_to 'Interview', new_job_submission_interview_path(@job, @submission), class: 'btn btn-default' %>
-      <%= link_to 'Park', '#', class: 'btn btn-default comment-btn', data: {status: 'park'} %>
+      <%= link_to 'Hire', change_status_job_submission_path(@job, @submission, status: 'hire'), class: 'btn btn-primary', data: {status: 'hire'}, confirm: "Are you sure you want to hire the candidate?" %>
+      <%= link_to 'Interview', new_job_submission_interview_path(@job, @submission), class: 'btn btn-primary' %>
+      <%= link_to 'Park', '#', class: 'btn btn-primary comment-btn', data: {status: 'park'} %>
     <% elsif @submission.parked? %>
-      <%= link_to 'Hire', change_status_job_submission_path(@job, @submission, status: 'hire'), class: 'btn btn-default', data: {status: 'hire'}, confirm: "Are you sure you want to hire the candidate?" %>
-      <%= link_to 'Interview', new_job_submission_interview_path(@job, @submission), class: 'btn btn-default' %>
-      <%= link_to 'Undecided', change_status_job_submission_path(@job, @submission, status: 'un_decided'), class: 'btn btn-default' %>
+      <%= link_to 'Hire', change_status_job_submission_path(@job, @submission, status: 'hire'), class: 'btn btn-primary', data: {status: 'hire'}, confirm: "Are you sure you want to hire the candidate?" %>
+      <%= link_to 'Interview', new_job_submission_interview_path(@job, @submission), class: 'btn btn-primary' %>
+      <%= link_to 'Undecided', change_status_job_submission_path(@job, @submission, status: 'un_decided'), class: 'btn btn-primary' %>
     <% elsif @submission.interview_scheduled? %>
-      <%= link_to 'Hire', change_status_job_submission_path(@job, @submission, status: 'hire'), class: 'btn btn-default', data: {status: 'hire'}, confirm: "Are you sure you want to hire the candidate?" %>
-      <%= link_to 'Edit Interview', edit_job_submission_interview_path(@job, @submission, @submission.interview), class: 'btn btn-default' %>
-      <%= link_to 'Park', '#', class: 'btn btn-default comment-btn', data: {status: 'park'} %>
-      <%= link_to 'Undecided', change_status_job_submission_path(@job, @submission, status: 'un_decided'), class: 'btn btn-default' %>
+      <%= link_to 'Hire', change_status_job_submission_path(@job, @submission, status: 'hire'), class: 'btn btn-primary', data: {status: 'hire'}, confirm: "Are you sure you want to hire the candidate?" %>
+      <%= link_to 'Edit Interview', edit_job_submission_interview_path(@job, @submission, @submission.interview), class: 'btn btn-primary' %>
+      <%= link_to 'Park', '#', class: 'btn btn-primary comment-btn', data: {status: 'park'} %>
+      <%= link_to 'Undecided', change_status_job_submission_path(@job, @submission, status: 'un_decided'), class: 'btn btn-primary' %>
     <% end %>
     <% unless @submission.discarded? || @submission.hired? %>
-      <%= link_to 'Reject', '#', class: 'btn btn-default comment-btn', data: {status: 'discard'} %>
+      <%= link_to 'Reject', '#', class: 'btn btn-primary comment-btn', data: {status: 'discard'} %>
     <% end %>
   <% elsif current_user.consultant? %>
     <% if @submission.submitted? %>
-      <%= link_to 'Submit to HM', change_status_job_submission_path(@job, @submission, status: 'process'), class: 'btn btn-default' %>
-      <%= link_to 'Park', '#', class: 'btn btn-default comment-btn', data: {status: 'park'} %>
-      <%= link_to 'Undecided', change_status_job_submission_path(@job, @submission, status: 'un_decided'), class: 'btn btn-default' %>
-      <%= link_to 'Reject', '#', class: 'btn btn-default comment-btn', data: {status: 'discard'} %>
+      <%= link_to 'Submit to HM', change_status_job_submission_path(@job, @submission, status: 'process'), class: 'btn btn-primary' %>
+      <%= link_to 'Park', '#', class: 'btn btn-primary comment-btn', data: {status: 'park'} %>
+      <%= link_to 'Undecided', change_status_job_submission_path(@job, @submission, status: 'un_decided'), class: 'btn btn-primary' %>
+      <%= link_to 'Reject', '#', class: 'btn btn-primary comment-btn', data: {status: 'discard'} %>
     <% elsif @submission.un_decided? %>
-      <%= link_to 'Submit to HM', change_status_job_submission_path(@job, @submission, status: 'process'), class: 'btn btn-default' %>
-      <%= link_to 'Park', '#', class: 'btn btn-default comment-btn', data: {status: 'park'} %>
-      <%= link_to 'Reject', '#', class: 'btn btn-default comment-btn', data: {status: 'discard'} %>
+      <%= link_to 'Submit to HM', change_status_job_submission_path(@job, @submission, status: 'process'), class: 'btn btn-primary' %>
+      <%= link_to 'Park', '#', class: 'btn btn-primary comment-btn', data: {status: 'park'} %>
+      <%= link_to 'Reject', '#', class: 'btn btn-primary comment-btn', data: {status: 'discard'} %>
     <% elsif @submission.parked? %>
-      <%= link_to 'Submit to HM', change_status_job_submission_path(@job, @submission, status: 'process'), class: 'btn btn-default' %>
-      <%= link_to 'Undecided', change_status_job_submission_path(@job, @submission, status: 'un_decided'), class: 'btn btn-default' %>
-      <%= link_to 'Reject', '#', class: 'btn btn-default comment-btn', data: {status: 'discard'} %>
+      <%= link_to 'Submit to HM', change_status_job_submission_path(@job, @submission, status: 'process'), class: 'btn btn-primary' %>
+      <%= link_to 'Undecided', change_status_job_submission_path(@job, @submission, status: 'un_decided'), class: 'btn btn-primary' %>
+      <%= link_to 'Reject', '#', class: 'btn btn-primary comment-btn', data: {status: 'discard'} %>
     <% elsif @submission.discarded? %>
-      <%= link_to 'Submit to HM', change_status_job_submission_path(@job, @submission, status: 'process'), class: 'btn btn-default' %>
-      <%= link_to 'Park', '#', class: 'btn btn-default comment-btn', data: {status: 'park'} %>
-      <%= link_to 'Undecided', change_status_job_submission_path(@job, @submission, status: 'un_decided'), class: 'btn btn-default' %>
+      <%= link_to 'Submit to HM', change_status_job_submission_path(@job, @submission, status: 'process'), class: 'btn btn-primary' %>
+      <%= link_to 'Park', '#', class: 'btn btn-primary comment-btn', data: {status: 'park'} %>
+      <%= link_to 'Undecided', change_status_job_submission_path(@job, @submission, status: 'un_decided'), class: 'btn btn-priamry' %>
 <% end %>
   <% end %>
 </div>

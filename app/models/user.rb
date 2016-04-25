@@ -90,8 +90,8 @@ class User < ActiveRecord::Base
 
   def build_profile
     p = Profile.new
-    p.user = self
-    p.first_name = email.split('@').first
+    p.user = User.last
+    p.first_name = User.last.email.split('@').first
     p.save(validate: false)
   end
 end

@@ -35,7 +35,7 @@
             <dt>Current Job Title:</dt>
             <dd><%= @profile.title %></dd>
             <br>
-            <dt>Current Employer</dt>
+            <dt>Current Employer:</dt>
             <dd><%= @profile.current_employer %></dd>
             <br>
             <% if current_user.candidate? %>
@@ -62,7 +62,7 @@
                 <% end if @profile.secondary_skills %>
               </dd>
               <br>
-              <dt>Preferred Locations</dt>
+              <dt>Preferred Locations:</dt>
               <dd>
                 <% @profile.preferred_locations.split(',').each do |loc| %>
                   <span><%= loc %></span>
