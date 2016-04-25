@@ -28,6 +28,7 @@ gem "active_decorator"
 gem 'ckeditor_rails'
 gem 'sunspot_rails'
 gem 'sunspot_solr'
+gem 'progress_bar'
 gem 'will_paginate-bootstrap'
 gem "html_truncator"
 
