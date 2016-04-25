@@ -92,6 +92,6 @@ class User < ActiveRecord::Base
     p = Profile.new
     p.user = self
     p.first_name = email.split('@').first
-    p.save
+    p.save(validate: false)
   end
 end
