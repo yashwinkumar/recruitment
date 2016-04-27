@@ -13,8 +13,6 @@ class Interview < ActiveRecord::Base
         to: submission.user.profile.phone,
         body: "#{job.title}. Your interview is scheduled on #{date}."
       )
-      # Notifier.meeting_request_with_calendar_to_hm(self).deliver_now
-      # Notifier.meeting_request_with_calendar_to_candidate(self).deliver_now
     rescue Exception => e
       self.errors.add(:user_id, "Phone number is not valid")
     end

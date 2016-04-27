@@ -35,9 +35,10 @@ class Notifier < ApplicationMailer
     hm = interview.user
     candidate = interview.submission.user
     availability = interview.available_time
+    job = interview.job
     date_time_start= (availability.date.to_s + " " +availability.from.to_s).to_datetime
     date_time_end= (availability.date.to_s + " " +availability.to.to_s).to_datetime
-    mail(:to => hm.email, :subject => "Interview with #{candidate.full_name}") do |format|
+    mail(:to => hm.email, :subject => "#{interview.mode.to_s.titlecase} interview with #{candidate.full_name} on #{availability.date.strftime('%d-%b-%Y')} at #{availability.from} – #{job.title}") do |format|
       format.ics {
         cal = Icalendar::Calendar.new
         event = Icalendar::Event.new
@@ -58,9 +59,10 @@ class Notifier < ApplicationMailer
     hm = interview.user
     candidate = interview.submission.user
     availability = interview.available_time
+    job = interview.job
     date_time_start= (availability.date.to_s + " " +availability.from.to_s).to_datetime
     date_time_end= (availability.date.to_s + " " +availability.to.to_s).to_datetime
-    mail(:to => candidate.email, :subject => "Interview Invitation") do |format|
+    mail(:to => candidate.email, :subject => "#{interview.mode.to_s.titlecase} interview invitation on #{availability.date.strftime('%d-%b-%Y')} at #{availability.from} – #{job.title}") do |format|
       format.ics {
         cal = Icalendar::Calendar.new
         event = Icalendar::Event.new
