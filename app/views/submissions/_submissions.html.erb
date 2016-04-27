@@ -9,7 +9,7 @@
             <% end %>
           <% end %>
         </ul>
-      </div>
+      </div><br>
     </div>
     <div class="col-md-9">
       <% @submission = submissions.first %>
@@ -28,7 +28,7 @@
 </div>
 
 <script>
-  $('.slim-scroll').slimScroll({height: 'calc(200% - 100px)'});break;
+  $('.slim-scroll').slimScroll({height: 'calc(100% - 100px)'});
   $('.applicants_list ul li a').on('click', function (e) {
     $('.applicants_list ul li a').removeClass('active');
     $(this).addClass('active');
