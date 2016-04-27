@@ -60,7 +60,7 @@ class Notifier < ApplicationMailer
     availability = interview.available_time
     date_time_start= (availability.date.to_s + " " +availability.from.to_s).to_datetime
     date_time_end= (availability.date.to_s + " " +availability.to.to_s).to_datetime
-    mail(:to => candidate.email, :subject => "Interview with #{candidate.full_name}") do |format|
+    mail(:to => candidate.email, :subject => "Interview Invitation") do |format|
       format.ics {
         cal = Icalendar::Calendar.new
         event = Icalendar::Event.new
