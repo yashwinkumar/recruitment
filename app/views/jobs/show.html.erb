@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-10">
-    <h2 class="text-primary">
+    <h2>
       <%= @job.title %>
     </h2>
 
@@ -9,7 +9,7 @@
         <span class="label label-primary"><%= @job.job_type %></span>&nbsp;|&nbsp;
       <% end %>
       <% if @job.job_type == 'permanent' %>
-        <span><%= number_to_currency(@job.compensation, unit: "$ ") %>.</span>&nbsp;|&nbsp;
+        <span><%= number_to_currency(@job.compensation, unit: "$", precision: 0) %></span>&nbsp;|&nbsp;
       <% elsif @job.job_type == 'contract' %>
         <span>Duration <%= @job.duration %> months.</span>&nbsp;|&nbsp;
       <% end %>
@@ -47,13 +47,13 @@
 <% end %>
 
 <hr style="margin: 5px">
-<h3 class="text-primary">Description:</h3>
 
 <div class="row">
-  <div class="col-md-12">
-    <P>
-      <%= raw @job.description %>
-    </P>
+  <div class="col-md-10">
+    <h2>Description:</h2>
+      <P>
+        <%= raw @job.description %>
+      </P>
   </div>
 </div>
 
