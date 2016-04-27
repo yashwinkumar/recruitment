@@ -81,8 +81,8 @@ class Submission < ActiveRecord::Base
   end
 
   def interview_email
-    Notifier.interview_email(self).deliver_now
-    Notifier.interview_email_to_consultant(self).deliver_now
+    Notifier.meeting_request_with_calendar_to_hm(self.interview).deliver_now
+    Notifier.meeting_request_with_calendar_to_candidate(self.interview).deliver_now
   end
 
   def hire_email
