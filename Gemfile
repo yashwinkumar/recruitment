@@ -31,7 +31,7 @@ gem 'sunspot_solr'
 gem 'progress_bar'
 gem 'will_paginate-bootstrap'
 gem "html_truncator"
-
+gem 'icalendar'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
