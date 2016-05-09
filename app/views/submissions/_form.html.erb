@@ -19,8 +19,11 @@
           <span class="text-muted" style="font-size: 11px;">
             formats: flv, mp4, avi, mkv. Size Limit: 13MB
           </span>
+          <progress id="progressBar" value= "0" max="100" style="width:280px; height:20px;"></progress>
+          <span id="status"></span>
         </div>
       </div>
+
       <div class="form-group">
         <%= resume_sec.label :rating, class: 'col-sm-2 control-label' %>
         <div class="col-sm-4">
@@ -70,8 +73,7 @@
   </div>
 <% end %>
 
-
-<script>
+<script type="text/javascript">
 
   $(function() {
     $(".has_datetimepicker_0").datetimepicker({
@@ -130,4 +132,22 @@
         $('.attachment_field').last().focus();
       });
   });
+
+  function progressBarSim(al) 
+    {
+      var bar = document.getElementById('progressBar');
+      var status = document.getElementById('status');
+      status.innerHTML =al+"%";
+      bar.value = al;
+      al++;
+      var sim = setTimeout("progressBarSim("+al+")",300);
+      if(al == 100)
+        {
+          status.innerHTML = "100%";
+          bar.value = 100;
+          clearTimeout(sim);
+        }
+    }
+    var amountLoaded = 0;
+    progressBarSim(amountLoaded);
 </script>

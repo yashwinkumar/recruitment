@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  namespace :admin do
+    resources :users do
+      post :verify
+    end
+  end
+
   resource :phones do
     put :verify
   end
@@ -23,6 +29,8 @@ Rails.application.routes.draw do
       resources :interviews
     end
   end
+  
+  get '/admin' => 'admin#index'
 
   get '/my_submissions' => 'submissions#my_submissions', as: 'my_submissions'
 

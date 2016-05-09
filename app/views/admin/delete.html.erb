@@ -1,0 +1,8 @@
+<%= link_to(" << Back to list", {:action => 'list'}, :class => 'back-link') %>
+<h2> Delete User </h2>
+ <%= form_for(:admin, :url => {:action =>'delete', :id =>@admin.id}) do |f| %>
+ 	<%= render(:partial => 'form', :locals => {:f => f}) %>
+ 	<p> Are you sure you want to permanently delete the user? </p>
+ 	<%= @admin.name %>
+ 	<%= submit_tag ('Delete User') %>
+ <% end %>
