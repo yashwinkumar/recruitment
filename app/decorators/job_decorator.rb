@@ -12,4 +12,16 @@ module JobDecorator
     end
   end
 
+  def user_submitted?
+    submissions.find_by_user_id current_user.id
+  end
+
+  def submissions_count
+    if hm == current_user
+      @submission_count ||= submissions.where("submissions.status != 'submitted'").count
+    else
+      @submission_count ||= submissions.count
+    end
+  end
+
 end

@@ -3,32 +3,32 @@
 <table class="table table-bordered table-responsive">
 <thead>
 	<tr>
-		<th width="50">Name</th>
-		<th width="50">Email</th>
-    <th width="50">Role</th>
-    <th width="50">Verification</th>
-		<th>Action</th>
+		<th width="20">Name</th>
+		<th width="20">Email</th>
+    <th width="20">Role</th>
+    <th width="20">Verification</th>
+		<th width="20">Action</th>
 	</tr>
   </thead>
   <tbody>
-    <% @admins.each do |admin| %>
+    <% @users.each do |user| %>
       <tr>
-        <td><%= admin.full_name %></td>
-        <td><%= admin.email %></td>
-        <td><%= admin.role.name %></td>
+        <td><%= user.full_name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.role.label %></td>
         <td>
-        <% if admin.verification %>
+        <% if user.verification %>
           <span class="label label-success">Verified</span>
         <% else %>
           Unverified
         <% end %>
         </td>
         <td class="actions">
-          <% unless admin.verification %>
-            <%= button_to 'Verify', admin_user_verify_path(admin, verification: 1), method: :post, class: 'btn btn-primary' %>
+          <% unless user.verification %>
+            <%= link_to 'Verify', admin_user_verify_path(user, verification: 1), method: :post, class: 'btn btn-primary' %>
           <% end %> 
-          <%= link_to 'Edit', edit_admin_user_path(admin) %>
-          <%= link_to 'Delete' , admin_path(admin), method: :delete, data: { confirm: 'Are you sure?' } %> 
+          <%#= link_to 'Edit', edit_admin_user_path(user), class: 'btn btn-default' %>
+          <%#= link_to 'Delete' , admin_path(user), class: 'btn btn-default', method: :delete, data: { confirm: 'Are you sure?' } %>
         </td> 
       </tr>
     <% end %>  
