@@ -18,9 +18,9 @@
               <%= current_user.profile.first_name %> <span class="caret"></span>
             <% end %>
             <ul class="dropdown-menu">
-              <li><%= link_to 'Profile', profile_path(current_user.profile) %></li>
+              <li><%= link_to ' Profile', profile_path(current_user.profile), class: 'glyphicon glyphicon-user' %></li>
               <li role="separator" class="divider"></li>
-              <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
+              <li><%= link_to ' Logout', destroy_user_session_path, method: :delete, class: 'glyphicon glyphicon-off' %></li>
             </ul>
           </li>
           <% else %>
