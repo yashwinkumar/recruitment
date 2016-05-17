@@ -1,12 +1,38 @@
 <div class="row">
-  <div class="col-sm-5 col-sm-offset-1" style="margin-top: 1%">
+  <div class="col-sm-6 col-sm-offset-1" style="margin-top: 1%">
     <div class="panel panel-info">
+      <div class="panel-heading">
+          <h3 class="panel-title">
+           <span class="glyphicon glyphicon-user"></span>
+              Creating New User
+          </h3>
+        </div>
       <div class="panel-body">
         <%= form_for([:admin, @user]) do |f| %>
+        
           <div class="form-group">
-            <%= f.label :email, class: "col-sm-3 control-label" %>
-            <div class="col-sm-7">
-              <%= f.text_field :email, class: 'form-control' %><br/>
+              <%= f.label :first_name, class: 'col-sm-4 control-label required' %>
+              <div class="col-sm-8">
+                <%= f.text_field :first_name, class: 'form-control', required: true %>
+              </div><br/>
+          </div>
+
+          <div class="form-group">
+              <%= f.label :last_name, class: 'col-sm-4 control-label required' %>
+              <div class="col-sm-8">
+                <%= f.text_field :last_name, class: 'form-control', required: true %>
+              </div><br/>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :email, class: "col-sm-4 control-label" %>
+            <div class="col-sm-8">
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="glyphicon glyphicon-envelope"></i>
+                </span>
+                <%= f.text_field :email, class: 'form-control' %><br/>
+              </div>
             </div>
           </div>
 
@@ -30,6 +56,7 @@
             </div>
           </div>
         <% end %>
+        </div>
       </div>
     </div>
   </div>

@@ -16,9 +16,7 @@
   <li role="presentation" class="">
     <a href="#un_decided" id="un_decided-tab" role="tab" data-toggle="tab" aria-controls="un_decided" aria-expanded="true">Undecided (<%= @un_decided_submissions.count %>)</a>
   </li>
-  <li role="presentation" class="">
-    <a href="#park" role="tab" id="park-tab" data-toggle="tab" aria-controls="park" aria-expanded="false">Parked (<%= @parked_submissions.count %>)</a>
-  </li>
+  
   <li role="presentation" class="">
     <a href="#interview" role="tab" id="close-tab" data-toggle="tab" aria-controls="interview" aria-expanded="false">Interview in Process (<%= @interview_submissions.count %>)</a>
   </li>
@@ -45,9 +43,7 @@
   <div role="tabpanel" class="tab-pane fade" id="un_decided" aria-labelledby="un_decided-tab">
     <%= render partial: 'submissions', locals: {job: @job, submissions: @un_decided_submissions, tab: 'un_decided'} %>
   </div>
-  <div role="tabpanel" class="tab-pane fade" id="park" aria-labelledby="park-tab">
-    <%= render partial: 'submissions', locals: {job: @job, submissions: @parked_submissions, tab: 'park'} %>
-  </div>
+  
   <div role="tabpanel" class="tab-pane fade" id="interview" aria-labelledby="interview-tab">
     <%= render partial: 'submissions', locals: {job: @job, submissions: @interview_submissions, tab: 'interview'} %>
   </div>

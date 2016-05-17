@@ -1,36 +1,57 @@
-<h1 class="text-primary"> All Users </h1>
-<a class="pull-right" href="/admin/users/new"> New User </a>
-<table class="table table-bordered table-responsive">
-<thead>
-	<tr>
-		<th width="20">Name</th>
-		<th width="20">Email</th>
-    <th width="20">Role</th>
-    <th width="20">Verification</th>
-		<th width="20">Action</th>
-	</tr>
-  </thead>
-  <tbody>
-    <% @users.each do |user| %>
-      <tr>
-        <td><%= user.full_name %></td>
-        <td><%= user.email %></td>
-        <td><%= user.role.label %></td>
-        <td>
-        <% if user.verification %>
-          <span class="label label-success">Verified</span>
-        <% else %>
-          Unverified
-        <% end %>
-        </td>
-        <td class="actions">
-          <% unless user.verification %>
-            <%= link_to 'Verify', admin_user_verify_path(user, verification: 1), method: :post, class: 'btn btn-primary' %>
-          <% end %> 
-          <%#= link_to 'Edit', edit_admin_user_path(user), class: 'btn btn-default' %>
-          <%#= link_to 'Delete' , admin_path(user), class: 'btn btn-default', method: :delete, data: { confirm: 'Are you sure?' } %>
-        </td> 
-      </tr>
-    <% end %>  
-  </tbody>
-</table>
+<div class="navbar navbar-fixed-left">
+  <div class="row">
+    <div class="col-md-2"></br>
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h5>Admin</h5>
+        </div>
+        <div class="panel-body">
+          <ul class="nav nav-stacked">
+            <li>
+              <a class="active" href="/admin/users">All Users</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <div class="col-md-10">
+    <h1 class="text-primary"> All Users </h1>
+      <a class="pull-right" href="/admin/users/new"> New User </a>
+        <table class="table table-bordered table-responsive">
+          <thead>
+          	<tr>
+          		<th width="20">Name</th>
+          		<th width="20">Email</th>
+              <th width="20">Role</th>
+              <th width="20">Verification</th>
+          		<th width="20">Action</th>
+          	</tr>
+          </thead>
+          <tbody>
+            <% @users.each do |user| %>
+              <tr>
+                <td><%= user.full_name %></td>
+                <td><%= user.email %></td>
+                <td><%= user.role.label %></td>
+                <td>
+                  <% if user.verification %>
+                    <span class="label label-success">Verified</span>
+                  <% else %>
+                    Unverified
+                  <% end %>
+                </td>
+                <td class="actions">
+                  <% unless user.verification %>
+                    <%= link_to 'Verify', admin_user_verify_path(user, verification: 1), method: :post, class: 'btn btn-primary' %>
+                  <% end %> 
+                    <%#= link_to 'Edit', edit_admin_user_path(user), class: 'btn btn-default' %>
+                    <%#= link_to 'Delete' , admin_path(user), class: 'btn btn-default', method: :delete, data: { confirm: 'Are you sure?' } %>
+                </td> 
+              </tr>
+            <% end %>  
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
