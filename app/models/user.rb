@@ -55,15 +55,19 @@ class User < ActiveRecord::Base
   end
 
   def candidate?
-    role_name == "candidate"
+    @candidate ||= roles.pluck(:name).include?("candidate")
   end
 
   def hm?
-    role_name == "hm"
+    @hm ||= roles.pluck(:name).include?("hm")
   end
 
   def consultant?
-    role_name == "consultant"
+    @consultant ||= roles.pluck(:name).include?("consultant")
+  end
+
+  def admin?
+    @admin ||= roles.pluck(:name).include?("admin")
   end
 
   def new_token!

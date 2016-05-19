@@ -17,9 +17,14 @@
               <%= current_user %> <span class="caret"></span>
             <% end %>
             <ul class="dropdown-menu">
-              <li><%= link_to ' Profile', profile_path(current_user.profile), class: 'glyphicon glyphicon-user' %></li>
+              <li><%= link_to ' Profile', profile_path(current_user.profile), class: "glyphicon glyphicon-user" %></li>
+              <% if current_user.admin? %>
+                <li role="separator" class="divider"></li>
+                <li><%= link_to ' Admin', admin_users_path, class: "glyphicon glyphicon-user"%></li>
+              <% end %>
               <li role="separator" class="divider"></li>
-              <li><%= link_to ' Logout', destroy_user_session_path, method: :delete, class: 'glyphicon glyphicon-off' %></li>
+              <li><%= link_to ' Logout', destroy_user_session_path, method: :delete, class: "glyphicon glyphicon-off" %></li>
+
             </ul>
           </li>
         <% else %>

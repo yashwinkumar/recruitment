@@ -2,9 +2,10 @@ module Admin
 
   class UsersController < AdminController
     before_action :find_user, only: [:edit, :update, :destroy]
+    layout 'dashboard'
 
     def index
-      @users = User.joins(:roles).where("roles.name = ? OR roles.name = ?", 'hm', 'consultant')
+      @users = User.joins(:roles).where("roles.name = ? OR roles.name = ? OR roles.name = ?", 'candidate', 'hm', 'consultant')
     end
 
     def verify
@@ -28,12 +29,22 @@ module Admin
     end
 
     def create
-      @user = User.new(params[:id])
-      if @user.save(validate: false)
-        flash[:notice] = "User created."
-        redirect_to admin_users_path
-      else
-        render 'new'
+      ActiveRecord::Base.transaction do
+        @user = User.new(user_params)
+        @user.password = user_params[:password]
+        @user.password_confirmation = user_params[:password]
+        # @user.skip_confirmation!
+        @user.add_role params[:role].to_sym
+        if @user.save(validate: false)
+          profile = @user.profile
+          profile.first_name = user_params[:first_name]
+          profile.last_name = user_params[:last_name]
+          profile.save(validate: false)
+          flash[:notice] = "User created."
+          redirect_to admin_users_path
+        else
+          render 'new'
+        end
       end
     end
 
@@ -48,11 +59,11 @@ module Admin
 
     private
     def user_params
-      params.require(:user).permit(:email)
+      params.require(:user).permit(:first_name, :last_name, :email, :password)
     end
 
     def find_user
-      @user = User.find(params[:id])
+      @user = User.where(params[:id]).first
     end
   end
 end
