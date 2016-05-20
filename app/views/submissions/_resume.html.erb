@@ -28,76 +28,13 @@
        </div>
      <% end %>
     </div>
+    <span><strong> Date of Submission: <%= Time.now.asctime  %></strong></span>
     <% if resume_sections.collect(&:consultant_rating).include?(nil) or resume_sections.collect(&:hiring_manager_rating).include?(nil) %>
     <br>
-      <div class="row">
-        <% resume_sections.each_with_index do |resume_section, i=0| %>
-          <div class="comments_section sections <%= "hide" if i > 0 %>" id="section_rating_<%= resume_section.id %>">
-            <%= render partial: 'resume_sections/ratings', locals: {resume_section: resume_section} %>
-            <% @comments = submission.comments.where(user_id: current_user.id) %>
-            <% if @comments.any? %>
-              <div>
-                <p><strong>Comments:</strong></p>
-                <ul class="bg-warning">
-                  <% @comments.each do |comment| %>
-                    <li>
-                      <% if comment.label.present? %>
-                        <span class="label label-default"><%= comment.label %></span>
-                      <% end %>
-                      <%= comment.description %>
-                    </li>
-                  <% end %>
-                </ul>
-              </div>
-            <% end %>
-          </div>
-        <% end %>      
-      </div>
     <% end %>  
   </div>
 
   <div class="col-sm-4 col-md-5" style="padding: 0">
-    <% if @job.consultant == current_user && resume_sections.collect(&:consultant_rating).include?(nil) %>
-      <div class="row">
-        <%= form_for([@job, @submission, @submission.resume], html:{id: 'consultant_rating_form'}) do |f| %>
-          <%= f.fields_for :resume_sections do |ff| %>
-            <div class="form-group" style="margin-bottom: 0">
-              <%= ff.label :consultant_rating, ff.object.section %>
-              <%#= ff.collection_radio_buttons :consultant_rating,  (1..5).map { |n| [n, n] }, :first, :last,{}, {class: 'radio-inline form-control', style: 'margin: 10px 5px 10px 10px'} %>
-              <%= ff.hidden_field :consultant_rating, class: 'form-control' %>
-              <p class="star_rating"></p>
-              <span class="help-block rating_hint hide" style="color: #a94442">Rating Required</span>
-            </div>
-          <% end %>
-          <%= render partial: 'resumes/decisions_radio' %>
-          <div class="form-group">
-            <%= f.submit "Submit Rating", class: 'btn btn-small btn-block btn-primary' %>
-          </div>
-        <% end %>
-      </div>
-    <% elsif @job.hm == current_user && resume_sections.collect(&:hiring_manager_rating).include?(nil) %>
-      <div class="row">
-        <%= form_for([@job, @submission, @submission.resume], html:{id: 'hm_rating_form'}) do |f| %>
-          <%= f.fields_for :resume_sections do |ff| %>
-            <div class="form-group" style="margin-bottom: 0">
-              <%= ff.label :hiring_manager_rating, ff.object.section %>
-              <%#= ff.collection_radio_buttons :hiring_manager_rating,  (1..5).map { |n| [n, n] }, :first, :last,{}, {class: 'radio-inline form-control', style: 'margin: 10px 5px 10px 10px'} %>
-              <%= ff.hidden_field :hiring_manager_rating, class: 'form-control' %>
-              <p class="star_rating"></p>
-              <span class="help-block rating_hint hide" style="color: #a94442">Rating Required</span>
-            </div>
-          <% end %>
-          <%= render partial: 'resumes/decisions_radio' %>
-          <div class="form-group">
-            <%= f.submit "Submit Rating", class: 'btn btn-small btn-block btn-primary' %>
-          </div>
-        <% end %>
-      </div>
-    <% else %>
-        <%= render partial: 'resumes/decisions' %>
-      <br>
-    <% end %>
-    <% unless resume_sections.collect(&:consultant_rating).include?(nil) or resume_sections.collect(&:hiring_manager_rating).include?(nil) %>
     <div class="row">
       <% resume_sections.each_with_index do |resume_section, i=0| %>
         <div class="comments_section sections <%= "hide" if i > 0 %>" id="section_rating_<%= resume_section.id %>">
@@ -121,6 +58,47 @@
         </div>
       <% end %>
     </div>
+    <% if @job.consultant == current_user && resume_sections.collect(&:consultant_rating).include?(nil) %>
+      <div class="row">
+        <%= form_for([@job, @submission, @submission.resume], html:{id: 'consultant_rating_form'}) do |f| %>
+          <%= f.fields_for :resume_sections do |ff| %>
+            <div class="form-group" style="margin-bottom: 0">
+              <%= ff.label :consultant_rating, ff.object.section %>
+              <%#= ff.collection_radio_buttons :consultant_rating,  (1..5).map { |n| [n, n] }, :first, :last,{}, {class: 'radio-inline form-control', style: 'margin: 10px 5px 10px 10px'} %>
+              <%= ff.hidden_field :consultant_rating, class: 'form-control' %>
+              <p class="star_rating"></p>
+              <span class="help-block rating_hint hide" style="color: #a94442">Rating Required</span>
+            </div>
+          <% end %>
+          <%= render partial: 'resumes/decisions_radio' %>
+          <div class="form-group">
+            <%= f.submit "Submit", class: 'btn btn-small btn-block btn-primary' %>
+          </div>
+        <% end %>
+      </div>
+    <% elsif @job.hm == current_user && resume_sections.collect(&:hiring_manager_rating).include?(nil) %>
+      <div class="row">
+        <%= form_for([@job, @submission, @submission.resume], html:{id: 'hm_rating_form'}) do |f| %>
+          <%= f.fields_for :resume_sections do |ff| %>
+            <div class="form-group" style="margin-bottom: 0">
+              <%= ff.label :hiring_manager_rating, ff.object.section %>
+              <%#= ff.collection_radio_buttons :hiring_manager_rating,  (1..5).map { |n| [n, n] }, :first, :last,{}, {class: 'radio-inline form-control', style: 'margin: 10px 5px 10px 10px'} %>
+              <%= ff.hidden_field :hiring_manager_rating, class: 'form-control' %>
+              <p class="star_rating"></p>
+              <span class="help-block rating_hint hide" style="color: #a94442">Rating Required</span>
+            </div>
+          <% end %>
+          <%= render partial: 'resumes/decisions_radio' %>
+          <div class="form-group">
+            <%= f.submit "Submit", class: 'btn btn-small btn-block btn-primary' %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+        <%= render partial: 'resumes/decisions' %>
+      <br>
+    <% end %>
+    <% unless resume_sections.collect(&:consultant_rating).include?(nil) or resume_sections.collect(&:hiring_manager_rating).include?(nil) %>
     <% end %>
   </div>
 </div>
