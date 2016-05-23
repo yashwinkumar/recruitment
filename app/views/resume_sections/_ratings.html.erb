@@ -33,18 +33,20 @@
   </p>
 <% end %>
 <p>
-  <strong>Application Status:</strong>
   <% if current_user.hm? %>
+    <strong>Application Status:</strong>
     <%= Submission::HM_STATUSES["#{@submission.status}"] %>
     <% if @submission.parked? %>
       <span class="label label-default"><%= @submission.activity_user_id == current_user.id ? 'by ME' : 'by HM' %></span>
     <% end %>
   <% elsif current_user.consultant? %>
+    <strong>Application Status:</strong>
     <%= Submission::HM_STATUSES["#{@submission.status}"] %>
     <% if @submission.parked? %>
       <span class="label label-default"><%= @submission.activity_user_id == current_user.id ? 'by ME' : 'by HM' %></span>
     <% end %>
-  <% else %>
+  <% elsif @submission.status %>
+    <strong>Application Status:</strong>
     <%= @submission.status.titlecase %>
   <% end %>
 </p>

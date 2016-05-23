@@ -24,12 +24,19 @@
     <div class="row">
       <% resume_sections.each_with_index do |resume_section, i=0| %>
         <div class="video_section sections <%= "hide" if i > 0 %>" id="section_video_<%= resume_section.id %>">
-            <%= video_tag resume_section.video, preload: 'metadata', :size => "350x240", :controls => true, class: 'section_player section_video' %>
-       </div>
-     <% end %>
+          <%= video_tag resume_section.video, preload: 'metadata', :size => "350x240", :controls => true, class: 'section_player section_video' %>
+        </div>
+      <% end %>
+    </div>
+    <div class="row">
+      <b>Submission Date:</b>
+      <%= submission.created_at.strftime("%b %d, %Y %H:%M %p") %>
+      <br>
+      <!--Screening Date: -->
+      <%#= submission.updated_at.strftime("%b %d, %Y %H:%M %p") %>
     </div>
     <% if resume_sections.collect(&:consultant_rating).include?(nil) or resume_sections.collect(&:hiring_manager_rating).include?(nil) %>
-    <br>
+      <br>
       <div class="row">
         <% resume_sections.each_with_index do |resume_section, i=0| %>
           <div class="comments_section sections <%= "hide" if i > 0 %>" id="section_rating_<%= resume_section.id %>">
@@ -51,15 +58,15 @@
               </div>
             <% end %>
           </div>
-        <% end %>      
+        <% end %>
       </div>
-    <% end %>  
+    <% end %>
   </div>
 
   <div class="col-sm-4 col-md-5" style="padding: 0">
     <% if @job.consultant == current_user && resume_sections.collect(&:consultant_rating).include?(nil) %>
       <div class="row">
-        <%= form_for([@job, @submission, @submission.resume], html:{id: 'consultant_rating_form'}) do |f| %>
+        <%= form_for([@job, @submission, @submission.resume], html: {id: 'consultant_rating_form'}) do |f| %>
           <%= f.fields_for :resume_sections do |ff| %>
             <div class="form-group" style="margin-bottom: 0">
               <%= ff.label :consultant_rating, ff.object.section %>
@@ -77,7 +84,7 @@
       </div>
     <% elsif @job.hm == current_user && resume_sections.collect(&:hiring_manager_rating).include?(nil) %>
       <div class="row">
-        <%= form_for([@job, @submission, @submission.resume], html:{id: 'hm_rating_form'}) do |f| %>
+        <%= form_for([@job, @submission, @submission.resume], html: {id: 'hm_rating_form'}) do |f| %>
           <%= f.fields_for :resume_sections do |ff| %>
             <div class="form-group" style="margin-bottom: 0">
               <%= ff.label :hiring_manager_rating, ff.object.section %>
@@ -94,33 +101,33 @@
         <% end %>
       </div>
     <% else %>
-        <%= render partial: 'resumes/decisions' %>
+      <%= render partial: 'resumes/decisions' %>
       <br>
     <% end %>
     <% unless resume_sections.collect(&:consultant_rating).include?(nil) or resume_sections.collect(&:hiring_manager_rating).include?(nil) %>
-    <div class="row">
-      <% resume_sections.each_with_index do |resume_section, i=0| %>
-        <div class="comments_section sections <%= "hide" if i > 0 %>" id="section_rating_<%= resume_section.id %>">
-          <%= render partial: 'resume_sections/ratings', locals: {resume_section: resume_section} %>
-          <% @comments = submission.comments.where(user_id: current_user.id) %>
-          <% if @comments.any? %>
-            <div>
-              <p><strong>Comments:</strong></p>
-              <ul class="bg-warning">
-                <% @comments.each do |comment| %>
-                  <li>
-                    <% if comment.label.present? %>
-                      <span class="label label-default"><%= comment.label %></span>
-                    <% end %>
-                    <%= comment.description %>
-                  </li>
-                <% end %>
-              </ul>
-            </div>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
+      <div class="row">
+        <% resume_sections.each_with_index do |resume_section, i=0| %>
+          <div class="comments_section sections <%= "hide" if i > 0 %>" id="section_rating_<%= resume_section.id %>">
+            <%= render partial: 'resume_sections/ratings', locals: {resume_section: resume_section} %>
+            <% @comments = submission.comments.where(user_id: current_user.id) %>
+            <% if @comments.any? %>
+              <div>
+                <p><strong>Comments:</strong></p>
+                <ul class="bg-warning">
+                  <% @comments.each do |comment| %>
+                    <li>
+                      <% if comment.label.present? %>
+                        <span class="label label-default"><%= comment.label %></span>
+                      <% end %>
+                      <%= comment.description %>
+                    </li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
     <% end %>
   </div>
 </div>
@@ -149,35 +156,42 @@
     size: 24,
     starOff: 'star-off-big.png',
     starOn: 'star-on-big.png',
-    noRatedMsg  : 'Not rated yet!',
+    noRatedMsg: 'Not rated yet!',
+    hints: ['Poor', 'Below Average', 'Regular', 'Very Good', 'Excellent'],
     click: function (score, evt) {
       $(this).prev('input').val(score);
       $(this).next('.rating_hint').remove();
     }
   });
 
-  $('form#consultant_rating_form, form#hm_rating_form').on('submit', function(){
+  $('form#consultant_rating_form, form#hm_rating_form').on('submit', function () {
+
     var scores = $('.star_rating').raty('score');
     var valid = true;
-    $.each(scores,function(index,value){
-      if(value == undefined){
+    var decisions = $("input[name='next_action']:checked").length;
+    $.each(scores, function (index, value) {
+      if (value == undefined) {
         valid = false;
       }
     });
-    if(valid){
-      return true
-    }else{
-     $('.rating_hint').removeClass('hide');
+
+    if (decisions === 0) {valid = false}
+
+    if (valid) {
+      return true;
+    } else {
+      $('.rating_hint').removeClass('hide');
       return false
     }
+
   });
 
   $('.comment-block').hide();
-  $("input[name=next_action]").on('change',function(){
-     var val = $(this).val();
-    if(val == "park" || val == 'reject'){
+  $("input[name=next_action]").on('change', function () {
+    var val = $(this).val();
+    if (val == "park" || val == 'reject') {
       $('.comment-block').show(500);
-    }else{
+    } else {
       $('.comment-block').hide(500);
     }
   });

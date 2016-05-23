@@ -58,3 +58,20 @@
     <%= render partial: 'submissions', locals: {job: @job, submissions: @rejected_submissions, tab: 'reject'} %>
   </div>
 </div>
+
+<script>
+  $(document).ready(function(){
+    resizeSubmission();
+  });
+
+  window.onresize = function(event) {
+    resizeSubmission();
+  };
+
+  function resizeSubmission() {
+    var content = $("#myTabContent");
+    var vph = content.offset().top - $('.navbar.navbar-default.navbar-fixed-top').offset().top;
+    var height = $(window).height() - vph;
+    $(".resume_sections").css({height: height + 'px'});
+  }
+</script>
