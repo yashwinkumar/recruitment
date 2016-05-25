@@ -32,6 +32,7 @@
     <% end %>
   </p>
 <% end %>
+
 <p>
   <% if current_user.hm? %>
     <strong>Application Status:</strong>
@@ -56,7 +57,7 @@
     <%= simple_form_for([@job, @submission, resume_sec]) do |f| %>
       <%= f.label :consultant_rating, label: "Consulting Company:", class: 'col-sm-3 col-md-3 control-label' %>
       <%= f.collection_radio_buttons :consultant_rating, (1..5).map { |n| [n, n] }, :first, :last, {}, {class: 'radio-inline', required: true, style: 'margin: 10px 5px 10px 10px'} %>
-      <%= f.submit "Submit Rating", class: 'btn btn-small btn-primary' %>
+      <%= f.submit "Submit", class: 'btn btn-small btn-primary' %>
     <% end %>
   <% elsif @job.hm == current_user && resume_sec.hiring_manager_rating.nil? %>
     <%= simple_form_for([@job, @submission, resume_sec]) do |f| %>
@@ -66,3 +67,4 @@
     <% end %>
   <% end %>
 <% end %>
+

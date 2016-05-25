@@ -78,7 +78,7 @@
           <% end %>
           <%= render partial: 'resumes/decisions_radio' %>
           <div class="form-group">
-            <%= f.submit "Submit Rating", class: 'btn btn-small btn-block btn-primary' %>
+            <%= f.submit "Submit", class: 'btn btn-small btn-block btn-primary' %>
           </div>
         <% end %>
       </div>
@@ -96,7 +96,7 @@
           <% end %>
           <%= render partial: 'resumes/decisions_radio' %>
           <div class="form-group">
-            <%= f.submit "Submit Rating", class: 'btn btn-small btn-block btn-primary' %>
+            <%= f.submit "Submit", class: 'btn btn-small btn-block btn-primary' %>
           </div>
         <% end %>
       </div>
@@ -105,29 +105,29 @@
       <br>
     <% end %>
     <% unless resume_sections.collect(&:consultant_rating).include?(nil) or resume_sections.collect(&:hiring_manager_rating).include?(nil) %>
-      <div class="row">
-        <% resume_sections.each_with_index do |resume_section, i=0| %>
-          <div class="comments_section sections <%= "hide" if i > 0 %>" id="section_rating_<%= resume_section.id %>">
-            <%= render partial: 'resume_sections/ratings', locals: {resume_section: resume_section} %>
-            <% @comments = submission.comments.where(user_id: current_user.id) %>
-            <% if @comments.any? %>
-              <div>
-                <p><strong>Comments:</strong></p>
-                <ul class="bg-warning">
-                  <% @comments.each do |comment| %>
-                    <li>
-                      <% if comment.label.present? %>
-                        <span class="label label-default"><%= comment.label %></span>
-                      <% end %>
-                      <%= comment.description %>
-                    </li>
-                  <% end %>
-                </ul>
-              </div>
-            <% end %>
-          </div>
-        <% end %>
-      </div>
+    <div class="row">
+      <% resume_sections.each_with_index do |resume_section, i=0| %>
+        <div class="comments_section sections <%= "hide" if i > 0 %>" id="section_rating_<%= resume_section.id %>">
+          <%= render partial: 'resume_sections/ratings', locals: {resume_section: resume_section} %>
+          <% @comments = submission.comments.where(user_id: current_user.id) %>
+          <% if @comments.any? %>
+            <div>
+              <p><strong>Comments:</strong></p>
+              <ul class="bg-warning">
+                <% @comments.each do |comment| %>
+                  <li>
+                    <% if comment.label.present? %>
+                      <span class="label label-default"><%= comment.label %></span>
+                    <% end %>
+                    <%= comment.description %>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
     <% end %>
   </div>
 </div>
