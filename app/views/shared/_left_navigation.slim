@@ -4,7 +4,7 @@ div class="panel panel-info"
       = current_user.role.label
   div class="panel-body"
     ul.nav.nav-stacked
-      - if current_user.consultant?
+      -if current_user.consultant?
         li
           = link_to 'Templates', templates_path, class: "#{params[:controller] == 'templates' ? 'active' : ''} "
       - if current_user.consultant? || current_user.hm?
@@ -15,6 +15,13 @@ div class="panel panel-info"
           = link_to "Openings", openings_jobs_path, class: "#{params[:controller] == 'jobs' && params[:action] == 'openings' ? 'active' : ''} "
         li
           = link_to "Submissions",my_submissions_path, class: "#{params[:controller] == 'submissions' && params[:action] == 'my_submissions' ? 'active' : ''} "
+div class="panel panel-info"
+  div class="panel-heading"
+    h5
+    -if current_user.admin? 
+      = current_user.role.label
+  div class="panel-body"
+    ul.nav.nav-stacked
       -if current_user.admin?
         li
           = link_to "All Users", admin_users_path, class: "#{params[:controller] == 'admin' ? 'active' : ''} " 
