@@ -54,6 +54,16 @@ class User < ActiveRecord::Base
     @role_name ||= role ? role.name : nil
   end
 
+  def user_role_name
+    if consultant?
+      @name ||= Role.where(name: "consultant").first.label
+    elsif hm?
+      @name ||= Role.where(name: "hm").first.label
+    elsif candidate?
+      @name ||= Role.where(name: "candidate").first.label
+    end
+  end
+
   def candidate?
     @candidate ||= roles.pluck(:name).include?("candidate")
   end

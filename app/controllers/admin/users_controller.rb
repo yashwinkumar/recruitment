@@ -2,10 +2,12 @@ module Admin
 
   class UsersController < AdminController
     before_action :find_user, only: [:edit, :update, :destroy]
+    
     layout 'dashboard'
 
     def index
       @users = User.joins(:roles).where("roles.name = ? OR roles.name = ? OR roles.name = ?", 'candidate', 'hm', 'consultant')
+      authorize :"admin/user"
     end
 
     def verify
