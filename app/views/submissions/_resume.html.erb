@@ -4,8 +4,7 @@
       <%= resume_section.section %>
     </button>
   <% end %>
-</div>
-<hr style="margin: 5px">
+</div><br>
 <% attachments = submission.attachments %>
 <% if attachments.any? %>
   <div class="row">
@@ -16,8 +15,7 @@
         <% unless attachment == attachments.last %>,<% end %>
       </span>
     <% end %>
-  </div>
-  <hr style="margin: 5px">
+  </div><br>
 <% end %>
 <div class="row">
   <div class="col-xs-12 col-sm-8 col-md-7">
@@ -29,7 +27,7 @@
       <% end %>
     </div>
     <div class="row">
-      <b>Submission Date:</b>
+      <span><strong>Submission Date:</strong></span>
       <%= submission.created_at.strftime("%b %d, %Y %H:%M %p") %>
       <br>
       <!--Screening Date: -->
