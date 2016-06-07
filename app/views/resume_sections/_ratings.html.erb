@@ -46,9 +46,6 @@
     <% if @submission.parked? %>
       <span class="label label-default"><%= @submission.activity_user_id == current_user.id ? 'by ME' : 'by HM' %></span>
     <% end %>
-  <% elsif @submission.status %>
-    <strong>Application Status:</strong>
-    <%= @submission.status.titlecase %>
   <% end %>
 </p>
 
