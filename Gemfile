@@ -22,8 +22,8 @@ gem 'rolify'
 gem 'state_machine'
 gem 'state_machines-activerecord'
 gem 'twilio-ruby'
-gem 'fog', '~> 1.27.0'
-gem 'fog-aws', '~> 0.0.7'
+gem 'fog', '~> 1.37'
+gem "fog-aws"
 gem "active_decorator"
 gem 'ckeditor_rails'
 gem 'sunspot_rails'
