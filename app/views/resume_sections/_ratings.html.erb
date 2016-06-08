@@ -40,7 +40,7 @@
     <% if @submission.parked? %>
       <span class="label label-default"><%= @submission.activity_user_id == current_user.id ? 'by ME' : 'by HM' %></span>
     <% end %>
-  <% elsif current_user.consultant? %>
+  <% elsif resume_section.consultant_rating && @job.consultant == current_user %>
     <strong>Application Status:</strong>
     <%= Submission::HM_STATUSES["#{@submission.status}"] %>
     <% if @submission.parked? %>
