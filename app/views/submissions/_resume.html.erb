@@ -94,10 +94,15 @@
           <% end %>
           <%= render partial: 'resumes/decisions_radio' %>
           <div class="form-group">
-            <%= f.submit "Submit", class: 'btn btn-small btn-block btn-primary' %>
+            <%= f.submit "Submit", class: 'btn btn-small btn-block btn-primary', id: 'hm_submit_rating' %>
           </div>
         <% end %>
       </div>
+      <script>
+        $('#hm_submit_rating').on('click', function(){
+          $('#hm_rating_form')[0].submit();
+        })
+      </script>
     <% else %>
       <%= render partial: 'resumes/decisions' %>
       <br>
