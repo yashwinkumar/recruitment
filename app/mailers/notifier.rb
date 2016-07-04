@@ -38,13 +38,14 @@ class Notifier < ApplicationMailer
     job = interview.job
     date_time_start= (availability.date.to_s + " " +availability.from.to_s).to_datetime
     date_time_end= (availability.date.to_s + " " +availability.to.to_s).to_datetime
-    mail(:to => hm.email, :subject => "#{interview.mode.to_s.titlecase} interview with #{candidate.full_name} on #{availability.date.strftime('%d-%b-%Y')} at #{availability.from} – #{job.title}") do |format|
+    interview_subject = "#{interview.mode.to_s.titlecase} interview with #{candidate.full_name} on #{availability.date.strftime('%d-%b-%Y')} at #{availability.from} – #{job.title}"
+    mail(:to => hm.email ) do |format|
       format.ics {
         cal = Icalendar::Calendar.new
         event = Icalendar::Event.new
         event.dtstart = Icalendar::Values::DateTime.new(date_time_start)
         event.dtend = Icalendar::Values::DateTime.new(date_time_end)
-        event.summary = 'Interview'
+        event.summary = interview_subject
         event.description = interview.description.to_s
         event.ip_class = "PRIVATE"
         event.organizer = Icalendar::Values::CalAddress.new("mailto:#{candidate.email}", cn: "#{candidate.full_name}")
@@ -62,13 +63,14 @@ class Notifier < ApplicationMailer
     job = interview.job
     date_time_start= (availability.date.to_s + " " +availability.from.to_s).to_datetime
     date_time_end= (availability.date.to_s + " " +availability.to.to_s).to_datetime
-    mail(:to => candidate.email, :subject => "#{interview.mode.to_s.titlecase} interview invitation on #{availability.date.strftime('%d-%b-%Y')} at #{availability.from} – #{job.title}") do |format|
+    interview_subject = "#{interview.mode.to_s.titlecase} interview invitation on #{availability.date.strftime('%d-%b-%Y')} at #{availability.from} – #{job.title}"
+    mail(:to => candidate.email) do |format|
       format.ics {
         cal = Icalendar::Calendar.new
         event = Icalendar::Event.new
         event.dtstart = Icalendar::Values::DateTime.new(date_time_start)
         event.dtend = Icalendar::Values::DateTime.new(date_time_end)
-        event.summary = 'Interview'
+        event.summary = interview_subject
         event.description = interview.description.to_s
         event.ip_class = "PRIVATE"
         event.organizer = Icalendar::Values::CalAddress.new("mailto:#{hm.email}", cn: "#{hm.full_name}")
