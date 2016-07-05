@@ -48,7 +48,7 @@ class Notifier < ApplicationMailer
         event.dtstart = Icalendar::Values::DateTime.new(date_time_start)
         event.dtend = Icalendar::Values::DateTime.new(date_time_end)
         event.summary = interview_subject
-        event.description = "#{interview.description.to_s} "\n" #{full_name} - #{phone}"
+        event.description = "#{interview.description.to_s}  #{full_name} - #{phone}"
         event.ip_class = "PRIVATE"
         event.organizer = Icalendar::Values::CalAddress.new("mailto:#{candidate.email}", cn: "#{candidate.full_name}")
         cal.add_event(event)
@@ -75,7 +75,7 @@ class Notifier < ApplicationMailer
         event.dtstart = Icalendar::Values::DateTime.new(date_time_start)
         event.dtend = Icalendar::Values::DateTime.new(date_time_end)
         event.summary = interview_subject
-        event.description = "#{interview.description.to_s} "\n" #{full_name} - #{phone}"
+        event.description ="#{interview.description.to_s}  #{full_name} - #{phone}"
         event.ip_class = "PRIVATE"
         event.organizer = Icalendar::Values::CalAddress.new("mailto:#{hm.email}", cn: "#{hm.full_name}")
         cal.add_event(event)
