@@ -31,7 +31,10 @@
       <%= submission.created_at.strftime("%b %d, %Y %H:%M %p") %>
       <br>
       <!--Screening Date: -->
-      <%#= submission.updated_at.strftime("%b %d, %Y %H:%M %p") %>
+      <%  if submission.hired? && submission.hiring_date  %>
+        <span><strong>Hiring Date:</strong></span>
+        <%= submission.hiring_date.strftime("%b %d, %Y %H:%M %p")%>
+      <% end %>
     </div>
     <% if resume_sections.collect(&:consultant_rating).include?(nil) or resume_sections.collect(&:hiring_manager_rating).include?(nil) %>
       <br>

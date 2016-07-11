@@ -87,6 +87,7 @@ class Submission < ActiveRecord::Base
 
   def hire_email
     Notifier.hire_email(self).deliver_now
+    add_hiring_date
   end
 
   def submitted?
@@ -116,5 +117,9 @@ class Submission < ActiveRecord::Base
 
   def hired?
     status == 'hired'
+  end
+
+  def add_hiring_date
+    update_columns(hiring_date: Time.now)
   end
 end
