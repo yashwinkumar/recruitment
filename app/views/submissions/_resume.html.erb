@@ -31,7 +31,12 @@
       <%= submission.created_at.strftime("%b %d, %Y %H:%M %p") %>
       <br>
       <!--Screening Date: -->
-      <%  if submission.hired? && submission.hiring_date  %>
+      <% if submission.status == 'interview_scheduled' %>
+      <b> Interview Scheduled Date:</b>
+      <!--TODO should configure interview date using to, from and zone. -->
+        <%= submission.interview.available_time.date.strftime("%b %d, %Y %H:%M %p") if submission.interview.available_time.date %>
+     <% end %>
+      <% if submission.hired? && submission.hiring_date  %>
         <span><strong>Hiring Date:</strong></span>
         <%= submission.hiring_date.strftime("%b %d, %Y %H:%M %p")%>
       <% end %>
