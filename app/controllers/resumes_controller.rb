@@ -4,7 +4,7 @@ class ResumesController < ApplicationController
 
   def show
     @resume_sections ||= @resume.resume_sections.order('id asc')
-    @comments = @submission.comments.where(user_id: current_user.id)
+    @comments = submission.comments.where(user_id: current_user.id, label: submission.status)
   end
 
   def update

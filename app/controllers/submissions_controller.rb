@@ -99,9 +99,8 @@ class SubmissionsController < ApplicationController
     comment = @submission.comments.new
     comment.description = params[:comment]
     comment.user_id = current_user.id
-    comment.label = params[:status]
     # comment.label = (params[:status] == 'discard' ? 'reject' : params[:status])
-    # Comment.where(label: 'reject').each {|c| c.update(label: c.commentable_type.constantize.where(id: c.id).first.status) }
+    # Comment.where(label: 'reject').each {|c| c.update(label: c.commentable_type.constantize.where(id: c.commentable_id).first.status) }
     if comment.save
       if params[:status] == 'park'
         @submission.park
@@ -114,6 +113,7 @@ class SubmissionsController < ApplicationController
         @submission.update_attribute(:activity_user_id, current_user.id)
         Notifier.delay.discard_email_to_consultant(@submission) if current_user.hm?
       end
+      comment.update(label: @submission.status)
       redirect_to job_submissions_path(@job)
     else
       flash[:danger] = 'Something went wrong.'

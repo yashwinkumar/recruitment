@@ -64,16 +64,16 @@ class Submission < ActiveRecord::Base
   end
 
   def submission_email
-    Notifier.submission_email(self).deliver_now
+    Notifier.delay.submission_email(self)
   end
 
   def discard_email
-     Notifier.discard_email(self).deliver_now
+     Notifier.delay.discard_email(self)
   end
 
   def processing_email
-    Notifier.processing_email(self).deliver_now
-    Notifier.processing_email_to_hm(self).deliver_now
+    Notifier.delay.processing_email(self)
+    Notifier.delay.processing_email_to_hm(self)
   end
 
   def parked_email
@@ -81,8 +81,8 @@ class Submission < ActiveRecord::Base
   end
 
   def interview_email
-    Notifier.meeting_request_with_calendar_to_hm(self.interview).deliver_now
-    Notifier.meeting_request_with_calendar_to_candidate(self.interview).deliver_now
+    Notifier.delay.meeting_request_with_calendar_to_hm(self.interview)
+    Notifier.delay.meeting_request_with_calendar_to_candidate(self.interview)
   end
 
   def hire_email
