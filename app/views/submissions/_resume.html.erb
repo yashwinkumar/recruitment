@@ -47,18 +47,15 @@
         <% resume_sections.each_with_index do |resume_section, i=0| %>
           <div class="comments_section sections <%= "hide" if i > 0 %>" id="section_rating_<%= resume_section.id %>">
             <%= render partial: 'resume_sections/ratings', locals: {resume_section: resume_section} %>
-            <% @comments = submission.comments.where(user_id: current_user.id) %>
+            <% @comments = submission.comments.where(user_id: current_user.id, label: submission.status) %>
+            <%# @comments = submission.comments.where(user_id: current_user.id) %>
             <% if @comments.any? %>
               <div>
-                <p><strong>Comments:</strong></p>
-                <ul class="bg-warning">
+                <p><strong>Comments: </strong></p>
+                <ul class="well">
                   <% @comments.each do |comment| %>
-                    <li>
-                      <% if comment.label.present? %>
-                        <span class="label label-default"><%= comment.label %></span>
-                      <% end %>
-                      <%= comment.description %>
-                    </li>
+                    <b><%= comment.user.role.label %>:</b>
+                    <%= comment.description %>
                   <% end %>
                 </ul>
               </div>
@@ -120,18 +117,15 @@
       <% resume_sections.each_with_index do |resume_section, i=0| %>
         <div class="comments_section sections <%= "hide" if i > 0 %>" id="section_rating_<%= resume_section.id %>">
           <%= render partial: 'resume_sections/ratings', locals: {resume_section: resume_section} %>
-          <% @comments = submission.comments.where(user_id: current_user.id) %>
+          <% @comments = submission.comments.where(user_id: current_user.id, label: submission.status) %>
+           <%# @comments = submission.comments.where(user_id: current_user.id) %>
           <% if @comments.any? %>
             <div>
               <p><strong>Comments:</strong></p>
-              <ul class="bg-warning">
+              <ul class="well">
                 <% @comments.each do |comment| %>
-                  <li>
-                    <% if comment.label.present? %>
-                      <span class="label label-default"><%= comment.label %></span>
-                    <% end %>
-                    <%= comment.description %>
-                  </li>
+                  <b><%= comment.user.role.label %>:</b>
+                  <%= comment.description %>
                 <% end %>
               </ul>
             </div>

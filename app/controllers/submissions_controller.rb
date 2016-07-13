@@ -99,18 +99,20 @@ class SubmissionsController < ApplicationController
     comment = @submission.comments.new
     comment.description = params[:comment]
     comment.user_id = current_user.id
-    comment.label = (params[:status] == 'discard' ? 'reject' : params[:status])
+    comment.label = params[:status]
+    # comment.label = (params[:status] == 'discard' ? 'reject' : params[:status])
+    # Comment.where(label: 'reject').each {|c| c.update(label: c.commentable_type.constantize.where(id: c.id).first.status) }
     if comment.save
       if params[:status] == 'park'
         @submission.park
         flash[:success] = "Successfully Parked resume."
         @submission.update_attribute(:activity_user_id, current_user.id)
-        Notifier.parked_email_to_consultant(@submission).deliver_now if current_user.hm?
+        Notifier.delay.parked_email_to_consultant(@submission) if current_user.hm?
       elsif params[:status] == 'discard'
         @submission.discard
         flash[:success] = "Successfully Discarded resume."
         @submission.update_attribute(:activity_user_id, current_user.id)
-        Notifier.discard_email_to_consultant(@submission).deliver_now if current_user.hm?
+        Notifier.delay.discard_email_to_consultant(@submission) if current_user.hm?
       end
       redirect_to job_submissions_path(@job)
     else

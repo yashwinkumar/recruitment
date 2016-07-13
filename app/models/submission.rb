@@ -86,7 +86,7 @@ class Submission < ActiveRecord::Base
   end
 
   def hire_email
-    Notifier.hire_email(self).deliver_now
+    Notifier.delay.hire_email(self)
     add_hiring_date
   end
 
