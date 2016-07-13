@@ -83,9 +83,10 @@
           <% if @comments.any? %>
             <div class="row">
               <p><strong>Comments:</strong></p>
-              <ul class="bg-warning">
+              <ul class="well">
                 <% @comments.each do |comment| %>
-                  <li><%= comment.description %></li>
+                  <b><%= comment.user.role.label %>:</b>
+                  <%= comment.description %>
                 <% end %>
               </ul>
             </div>
