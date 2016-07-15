@@ -5,10 +5,12 @@
       <%= link_to 'Interview', new_job_submission_interview_path(@job, @submission), class: 'btn btn-default', style: "margin: 1% 0;" %>
       <%#= link_to 'Park', '#', class: 'btn btn-default comment-btn', style: "margin: 1% 0;", data: {status: 'park'} %>
       <%= link_to 'Undecided', change_status_job_submission_path(@job, @submission, status: 'un_decided'), class: 'btn btn-default', style: "margin: 1% 0;" %>
+      <%= link_to 'Reject', '#', class: 'btn btn-default comment-btn', style: "margin: 1% 0;", data: {status: 'discard'} %>
     <% elsif @submission.un_decided? %>
       <%= link_to 'Hire', change_status_job_submission_path(@job, @submission, status: 'hire'), class: 'btn btn-default', style: "margin: 1% 0;", data: {status: 'hire'}, confirm: "Are you sure you want to hire the candidate?" %>
       <%= link_to 'Interview', new_job_submission_interview_path(@job, @submission), class: 'btn btn-default', style: "margin: 1% 0;" %>
       <%#= link_to 'Park', '#', class: 'btn btn-default comment-btn', style: "margin: 1% 0;", data: {status: 'park'} %>
+      <%= link_to 'Reject', '#', class: 'btn btn-default comment-btn', style: "margin: 1% 0;", data: {status: 'discard'} %>
     <% elsif @submission.parked? %>
       <%= link_to 'Hire', change_status_job_submission_path(@job, @submission, status: 'hire'), class: 'btn btn-default', style: "margin: 1% 0;", data: {status: 'hire'}, confirm: "Are you sure you want to hire the candidate?"%>
       <%= link_to 'Interview', new_job_submission_interview_path(@job, @submission), class: 'btn btn-default', style: "margin: 1% 0;" %>
@@ -18,9 +20,6 @@
       <%= link_to 'Edit Interview', edit_job_submission_interview_path(@job, @submission, @submission.interview), class: 'btn btn-default', style: "margin: 1% 0;" %>
       <%#= link_to 'Park', '#', class: 'btn btn-default comment-btn', style: "margin: 1% 0;", data: {status: 'park'} %>
       <%= link_to 'Undecided', change_status_job_submission_path(@job, @submission, status: 'un_decided'), class: 'btn btn-default', style: "margin: 1% 0;" %>
-    <% end %>
-    <% unless @submission.discarded? || @submission.hired? %>
-      <%= link_to 'Reject', '#', class: 'btn btn-default comment-btn', style: "margin: 1% 0;", data: {status: 'discard'} %>
     <% end %>
   <% elsif current_user.consultant? %>
     <% if @submission.submitted? %>
@@ -39,7 +38,6 @@
     <% elsif @submission.discarded? %>
       <%= link_to 'Submit to HM', change_status_job_submission_path(@job, @submission, status: 'process'), class: 'btn btn-default', style: "margin: 1% 0;" %>
       <%#= link_to 'Park', '#', class: 'btn btn-default comment-btn',style: "margin: 1% 0;", data: {status: 'park'} %>
-      <%= link_to 'Undecided', change_status_job_submission_path(@job, @submission, status: 'un_decided'), class: 'btn btn-default', style: "margin: 1% 0;" %>
 <% end %>
   <% end %>
 </div>
