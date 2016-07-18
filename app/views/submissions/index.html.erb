@@ -24,7 +24,7 @@
     <a href="#hire" role="tab" id="close-tab" data-toggle="tab" aria-controls="hire" aria-expanded="false">Hired (<%= @hired_submissions.count %>)</a>
   </li>
   <li role="presentation" class="">
-    <a href="#reject" role="tab" id="close-tab" data-toggle="tab" aria-controls="reject" aria-expanded="false">Rejected (<%= @rejected_submissions.count %>)</a>
+    <a href="#discard" role="tab" id="close-tab" data-toggle="tab" aria-controls="discard" aria-expanded="false">Rejected (<%= @rejected_submissions.count %>)</a>
   </li>
 </ul>
 <div id="myTabContent" class="tab-content">
@@ -50,8 +50,8 @@
   <div role="tabpanel" class="tab-pane fade" id="hire" aria-labelledby="hire-tab">
     <%= render partial: 'submissions', locals: {job: @job, submissions: @hired_submissions, tab: 'hire'} %>
   </div>
-  <div role="tabpanel" class="tab-pane fade" id="reject" aria-labelledby="reject-tab">
-    <%= render partial: 'submissions', locals: {job: @job, submissions: @rejected_submissions, tab: 'reject'} %>
+  <div role="tabpanel" class="tab-pane fade" id="discard" aria-labelledby="discard-tab">
+    <%= render partial: 'submissions', locals: {job: @job, submissions: @rejected_submissions, tab: 'discard'} %>
   </div>
 </div>
 

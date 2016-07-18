@@ -4,7 +4,7 @@ class ResumesController < ApplicationController
 
   def show
     @resume_sections ||= @resume.resume_sections.order('id asc')
-    @comments = submission.comments.where(user_id: current_user.id, label: submission.status)
+    @comments = @submission.comments.where(user_id: current_user.id, label: @submission.status)
   end
 
   def update
@@ -30,8 +30,8 @@ class ResumesController < ApplicationController
                                                 user_id: current_user.id,
                                                 label: params[:next_action]
                                               })
-      when "reject"
-        @submission.reject
+      when "discard"
+        @submission.discard
         @submission.update_attribute(:activity_user_id, current_user.id)
         Notifier.discard_email_to_consultant(@submission).deliver_now if current_user.hm?
         comment = @submission.comments.create({

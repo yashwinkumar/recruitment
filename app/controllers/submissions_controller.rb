@@ -91,6 +91,9 @@ class SubmissionsController < ApplicationController
     elsif params[:status] == 'un_decided'
       @submission.un_decide
       flash[:success] = "Successfully moved to Undecided state."
+    elsif params[:status] == 'discard'
+      @submission.discard
+      flash[:success] = "Candidate Discarded Successfully."
     end
     redirect_to :back
   end
