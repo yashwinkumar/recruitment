@@ -106,6 +106,8 @@ GEM
       responders
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
+    devise-async (0.10.2)
+      devise (>= 3.2, < 4.0)
     erubis (2.7.0)
     eventmachine (1.0.9.1)
     excon (0.47.0)
@@ -423,6 +425,7 @@ DEPENDENCIES
   ckeditor_rails
   coffee-rails (~> 4.1.0)
   devise
+  devise-async
   figaro
   fog (~> 1.37)
   fog-aws
@@ -458,4 +461,4 @@ DEPENDENCIES
   will_paginate-bootstrap
 
 BUNDLED WITH
-   1.11.2
+   1.12.5
