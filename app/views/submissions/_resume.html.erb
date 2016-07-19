@@ -32,17 +32,18 @@
       <br>
       <!--Screening Date: -->
       <% if submission.status == 'interview_scheduled' %>
-      <b> Interview Scheduled Date:</b>
-      <!--TODO should configure interview date using to, from and zone. -->
+        <b> Interview Scheduled Date:</b>
+        <!--TODO should configure interview date using to, from and zone. -->
         <%= submission.interview.available_time.date.strftime("%b %d, %Y %H:%M %p") if submission.interview.available_time.date %>
-     <% end %>
-      <% if submission.hired? && submission.hiring_date  %>
+      <% end %>
+      <% if submission.hired? && submission.hiring_date %>
         <span><strong>Hiring Date:</strong></span>
-        <%= submission.hiring_date.strftime("%b %d, %Y %H:%M %p")%>
+        <%= submission.hiring_date.strftime("%b %d, %Y %H:%M %p") %>
       <% end %>
     </div>
     <% if resume_sections.collect(&:consultant_rating).include?(nil) or resume_sections.collect(&:hiring_manager_rating).include?(nil) %>
       <br>
+
       <div class="row">
         <% resume_sections.each_with_index do |resume_section, i=0| %>
           <div class="comments_section sections <%= "hide" if i > 0 %>" id="section_rating_<%= resume_section.id %>">
@@ -106,27 +107,29 @@
     <% else %>
       <%= render partial: 'resumes/decisions' %>
       <br>
-    <% end %>  
-    <div class="row">
-      <% resume_sections.each_with_index do |resume_section, i=0| %>
-        <div class="comments_section sections <%= "hide" if i > 0 %>" id="section_rating_<%= resume_section.id %>">
-          <%= render partial: 'resume_sections/ratings', locals: {resume_section: resume_section} %>
-          <% @comments = submission.comments.where(user_id: current_user.id, label: submission.status) %>
-           <%# @comments = submission.comments.where(user_id: current_user.id) %>
-          <% if @comments.any? %>
-            <div>
-              <p><strong>Comments:</strong></p>
-              <ul class="well">
-                <% @comments.each do |comment| %>
-                  <b><%= comment.user.role.label %>:</b>
-                  <%= comment.description %>
-                <% end %>
-              </ul>
-            </div>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
+    <% end %>
+    <% unless resume_sections.collect(&:consultant_rating).include?(nil) or resume_sections.collect(&:hiring_manager_rating).include?(nil) %>
+      <div class="row">
+        <% resume_sections.each_with_index do |resume_section, i=0| %>
+          <div class="comments_section sections <%= "hide" if i > 0 %>" id="section_rating_<%= resume_section.id %>">
+            <%= render partial: 'resume_sections/ratings', locals: {resume_section: resume_section} %>
+            <% @comments = submission.comments.where(user_id: current_user.id, label: submission.status) %>
+            <%# @comments = submission.comments.where(user_id: current_user.id) %>
+            <% if @comments.any? %>
+              <div>
+                <p><strong>Comments:</strong></p>
+                <ul class="well">
+                  <% @comments.each do |comment| %>
+                    <b><%= comment.user.role.label %>:</b>
+                    <%= comment.description %>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 </div>
 
@@ -173,7 +176,9 @@
       }
     });
 
-    if (decisions === 0) {valid = false}
+    if (decisions === 0) {
+      valid = false
+    }
 
     if (valid) {
       return true;
