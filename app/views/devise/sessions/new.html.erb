@@ -38,9 +38,13 @@
             <% hm = User.find ENV['HIRING_MANAGER_ID'].to_i %>
             <% consultant = User.find ENV['CONSULTANT_ID'].to_i  %>
             <% candidate = User.find ENV['CANDIDATE_ID'].to_i %>
-            <%= link_to 'HM auto login', profile_url(id: hm.id, token: (hm.token ? hm.token : hm.new_token!)), class: 'btn btn-default' %>
+            <%= link_to t('auto_login.hm1'), profile_url(id: hm.id, token: (hm.token ? hm.token : hm.new_token!)), class: 'btn btn-default' %>
             <%= link_to 'Consulting company auto login', profile_url(id: consultant.id, token: (consultant.token ? consultant.token : consultant.new_token!)), class: 'btn btn-default' %>
             <%= link_to 'Candidate auto login', profile_url(id: candidate.id, token: (candidate.token ? candidate.token : candidate.new_token!)), class: 'btn btn-default' %>
+          </div>
+          <div class="col-md-12" style="margin: 1% 0;">
+            <% hm2 = User.where(id: ENV['HIRING_MANAGER_ID2'].to_i).first %>
+            <%= link_to t('auto_login.hm2'), profile_url(id: hm2.id, token: (hm2.token ? hm2.token : hm2.new_token!)), class: 'btn btn-default' %>
           </div>
         </div>
 
