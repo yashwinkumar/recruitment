@@ -21,7 +21,7 @@ class Interview < ActiveRecord::Base
   end
   
   def update_interview_again
-    Notifier.meeting_request_with_calendar_to_hm(self).deliver_now
-    Notifier.meeting_request_with_calendar_to_candidate(self).deliver_now
+    Notifier.delay.meeting_request_with_calendar_to_hm(self)
+    Notifier.delay.meeting_request_with_calendar_to_candidate(self)
   end
 end
