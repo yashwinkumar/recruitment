@@ -22,7 +22,7 @@
     <div class="row">
       <% resume_sections.each_with_index do |resume_section, i=0| %>
         <div class="video_section sections <%= "hide" if i > 0 %>" id="section_video_<%= resume_section.id %>">
-          <%= video_tag resume_section.video, preload: 'metadata', :size => "350x240", :controls => true, class: 'section_player section_video' %>
+          <%#= video_tag resume_section.video, preload: 'metadata', :size => "350x240", :controls => true, class: 'section_player section_video' %>
         </div>
       <% end %>
     </div>
@@ -104,6 +104,11 @@
           </div>
         <% end %>
       </div>
+      <script>
+        $('#hm_submit_rating').on('click', function(){
+          $('#hm_rating_form')[0].submit();
+        })
+      </script>
     <% else %>
       <%= render partial: 'resumes/decisions' %>
       <br>
