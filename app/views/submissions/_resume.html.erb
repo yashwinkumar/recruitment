@@ -103,16 +103,10 @@
           </div>
         <% end %>
       </div>
-      <script>
-        $('#hm_submit_rating').on('click', function(){
-          $('#hm_rating_form')[0].submit();
-        })
-      </script>
     <% else %>
       <%= render partial: 'resumes/decisions' %>
       <br>
-    <% end %>
-    <% unless resume_sections.collect(&:consultant_rating).include?(nil) or resume_sections.collect(&:hiring_manager_rating).include?(nil) %>
+    <% end %>  
     <div class="row">
       <% resume_sections.each_with_index do |resume_section, i=0| %>
         <div class="comments_section sections <%= "hide" if i > 0 %>" id="section_rating_<%= resume_section.id %>">
@@ -133,7 +127,6 @@
         </div>
       <% end %>
     </div>
-    <% end %>
   </div>
 </div>
 

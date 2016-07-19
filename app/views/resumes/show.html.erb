@@ -127,17 +127,22 @@
   $('form#consultant_rating_form, form#hm_rating_form').on('submit', function(){
     var scores = $('.star_rating').raty('score');
     var valid = true;
+    var decisions = $("input[name='next_action']:checked").length;
     $.each(scores,function(index,value){
       if(value == undefined){
         valid = false;
       }
     });
+
+    if (decisions === 0) {valid = false}
+
     if(valid){
       return true
     }else{
       $('.rating_hint').removeClass('hide');
       return false
     }
+
   });
 
   $('.comment-block').hide();
