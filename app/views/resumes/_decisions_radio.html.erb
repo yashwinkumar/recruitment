@@ -5,21 +5,21 @@
         <input type="radio" name="next_action" value="hire" id="option1" autocomplete="off" required> Hire
       </label>
       <label class="btn btn-default">
-        <input type="radio" name="next_action" value="interview" id="option2" autocomplete="off"> Interview
+        <input type="radio" name="next_action" value="interview" id="option2" autocomplete="off" required> Interview
       </label>
     <% elsif current_user.consultant? %>
       <label class="btn btn-default">
-        <input type="radio" name="next_action" value="process" id="option1" autocomplete="off"> Submit to HM
+        <input type="radio" name="next_action" value="process" id="option1" autocomplete="off" required> Submit to HM
       </label>
     <% end %>
     <!-- <label class="btn btn-default">
       <input type="radio" name="next_action" value="park" id="option3" autocomplete="off"> Park
     </label>   <br> -->
     <label class="btn btn-default">
-      <input type="radio" name="next_action" value="undecided" id="option5" autocomplete="off"> Undecided
+      <input type="radio" name="next_action" value="undecided" id="option5" autocomplete="off" required> Undecided
     </label>
     <label class="btn btn-default">
-      <input type="radio" name="next_action" value="reject" id="option4" autocomplete="off"> Reject
+      <input type="radio" name="next_action" value="reject" id="option4" autocomplete="off" required> Reject
     </label>
   </div>
 </div>
