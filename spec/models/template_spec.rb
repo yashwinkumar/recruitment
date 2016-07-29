@@ -1,9 +1,15 @@
 require 'rails_helper'
 require 'spec_helper'
 
-RSpec.describe Template, type: :model do
-	it { is_expected.to validate_presence_of(:name) }
-	it { is_expected.to validate_length_of(:name).is_at_least(5) }
-	it { is_expected.to validate_presence_of(:user_id) }
-	it {should validate_numericality_of(:user_id).only_integer }
+RSpec.describe Template do
+	subject {Template.new}
+
+	it "is not valid without a name" do
+		expect(subject).not_to be_valid
+	end
+    
+    it "is not valid with a name longer than 100 symbols" do
+    	subject.name = 'a' * 101
+		expect(subject).not_to be_valid
+	end
 end
